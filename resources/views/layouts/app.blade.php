@@ -49,15 +49,22 @@
                                 </li>
                             @endif
                         @else
+                            @can('read_users')
                             <li class="nav-item">
                                 <a class="nav-link" href="/">Usuarios</a>
                             </li>
+                            @endcan
+                            @can('read_permissions')
                             <li class="nav-item">
                                 <a class="nav-link" href="/">Permisos</a>
                             </li>
+                            @endcan
+                            @can('read_roles')
                             <li class="nav-item">
                                 <a class="nav-link" href="/">Roles</a>
                             </li>
+                            @endcan
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

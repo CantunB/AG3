@@ -48,7 +48,7 @@ class RolesAndPermissions extends Seeder
         $sa = Role::create(['name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
-        // create demo users
+        // create personal users
         $user = User::create([
             'name' => 'Berna Cantun',
             'email' => 'cantunberna@gmail.com',
