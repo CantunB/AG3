@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class TypeServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,8 @@ class TypeServiceController extends Controller
      */
     public function index()
     {
-        //
+        $typeService = new TypeService;
+        return view('services.index');
     }
 
     /**

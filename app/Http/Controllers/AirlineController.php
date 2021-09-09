@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AirlineController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,8 @@ class AirlineController extends Controller
      */
     public function index()
     {
-        //
+        $airlines = new Airline;
+        return view('airlines.index');
     }
 
     /**
