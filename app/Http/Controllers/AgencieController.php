@@ -18,7 +18,8 @@ class AgencieController extends Controller
      */
     public function index()
     {
-        return 'Agencias';
+        $agencies = new Agency;
+        return view('agencies.index');
     }
 
     /**

@@ -22,7 +22,7 @@ class CreateOperatorsTable extends Migration
             $table->string('email');
             $table->date('birthday_date')->nullable();
             $table->string('address')->nullable();
-            $table->number('cp')->nullable();
+            $table->integer('cp')->nullable();
             $table->string('driver_license');
             $table->string('operator_photo')->nullable();
             $table->tinyInteger('status')->default('1');

@@ -70,23 +70,26 @@
             </div> <!-- end widget-rounded-circle-->
         </div> <!-- end col-->
 
-        <div class="col-md-6 col-xl-3">
-            <div class="widget-rounded-circle card-box">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                            <i class="fe-truck font-22 avatar-title text-success"></i>
+        @can('read_operators')
+            <div class="col-md-6 col-xl-3">
+                <div class="widget-rounded-circle card-box">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
+                                <i class="fe-truck font-22 avatar-title text-success"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-right">
-                            <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
-                            <p class="text-muted mb-1 text-truncate">{{ __('Operators') }}</p>
+                        <div class="col-6">
+                            <div class="text-right">
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
+                                <p class="text-muted mb-1 text-truncate">{{ __('Operators') }}</p>
+                            </div>
                         </div>
-                    </div>
-                </div> <!-- end row-->
-            </div> <!-- end widget-rounded-circle-->
-        </div> <!-- end col-->
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+        @endcan
+
 
         <div class="col-md-6 col-xl-3">
             <div class="widget-rounded-circle card-box">

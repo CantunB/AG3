@@ -26,4 +26,8 @@ Route::resource('agencias', 'AgencieController');
 Route::resources([
     'usuarios' => 'UserController',
     'agencias' => 'AgencieController',
-]);
+    'operadores' => 'OperatorController',
+    'aerolineas' => 'AirlineController',
+    'unidades' => 'UnitController',
+    'servicios' => 'TypeServiceController',
+ ]);
