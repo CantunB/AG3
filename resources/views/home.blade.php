@@ -34,6 +34,7 @@
     <!-- end page title -->
 
     <div class="row">
+        @can('read_sales')
         <div class="col-md-6 col-xl-3">
             <div class="widget-rounded-circle card-box">
                 <div class="row">
@@ -51,7 +52,9 @@
                 </div> <!-- end row-->
             </div> <!-- end widget-rounded-circle-->
         </div> <!-- end col-->
+        @endcan
 
+        @can('read_sales')
         <div class="col-md-6 col-xl-3">
             <div class="widget-rounded-circle card-box">
                 <div class="row">
@@ -69,6 +72,7 @@
                 </div> <!-- end row-->
             </div> <!-- end widget-rounded-circle-->
         </div> <!-- end col-->
+        @endcan
 
         @can('read_operators')
             <div class="col-md-6 col-xl-3">
@@ -90,24 +94,25 @@
             </div> <!-- end col-->
         @endcan
 
-
-        <div class="col-md-6 col-xl-3">
-            <div class="widget-rounded-circle card-box">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
-                            <i class="fe-star-on font-22 avatar-title text-warning"></i>
+        @can('read_agencies')
+            <div class="col-md-6 col-xl-3">
+                <div class="widget-rounded-circle card-box">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
+                                <i class="fe-star-on font-22 avatar-title text-warning"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-right">
-                            <h3 class="text-dark mt-1"><span data-plugin="counterup">78.41</span>k</h3>
-                            <p class="text-muted mb-1 text-truncate">{{ __('Agencies') }}</p>
+                        <div class="col-6">
+                            <div class="text-right">
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">78.41</span>k</h3>
+                                <p class="text-muted mb-1 text-truncate">{{ __('Agencies') }}</p>
+                            </div>
                         </div>
-                    </div>
-                </div> <!-- end row-->
-            </div> <!-- end widget-rounded-circle-->
-        </div> <!-- end col-->
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+        @endcan
     </div>
     <!-- end row-->
 

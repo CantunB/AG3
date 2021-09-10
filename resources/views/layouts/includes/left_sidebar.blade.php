@@ -53,7 +53,7 @@
 
                 <li class="menu-title">Navigation</li>
                 <li>
-                    <a href="apps-calendar.html">
+                    <a href="{{ route('home') }}">
                         <i data-feather="home" class="icon-dual-dark"></i>
                         <span> {{ __('Dashboard') }} </span>
                     </a>
@@ -62,7 +62,7 @@
 
                 @can('read_administrators')
                     <li>
-                        <a href="apps-calendar.html">
+                        <a href="{{ route('settings.index') }}">
                             <i data-feather="settings" class="icon-dual-dark"></i>
                             <span> {{ __('Administrator') }} </span>
                         </a>
@@ -71,7 +71,7 @@
 
                 @can('read_agencies')
                     <li>
-                        <a href="{{ route('agencias.index') }}">
+                        <a href="{{ route('agencies.index') }}">
                             <i data-feather="package" class="icon-dual-blue"></i>
                             <span> {{ __('Agencies') }} </span>
                         </a>
@@ -79,7 +79,7 @@
                 @endcan
                 @can('read_airlines')
                 <li>
-                    <a href="{{ route('aerolineas.index') }}">
+                    <a href="{{ route('airlines.index') }}">
                         <i data-feather="figma" class="icon-dual-pink"></i>
                         <span> {{ __('Airlines') }} </span>
                     </a>
@@ -87,7 +87,7 @@
                 @endcan
                 @can('read_services')
                 <li>
-                    <a href="{{ route('servicios.index') }}">
+                    <a href="{{ route('services.index') }}">
                         <i data-feather="layers" class="icon-dual-warning"></i>
                         <span> {{ __('Services') }} </span>
                     </a>
@@ -95,7 +95,7 @@
                 @endcan
                 @can('read_operators')
                     <li>
-                        <a href="{{ route('operadores.index') }}">
+                        <a href="{{ route('operators.index') }}">
                             <i data-feather="users" class="icon-dual-danger"></i>
                             <span> {{ __('Operators') }} </span>
                         </a>
@@ -104,7 +104,7 @@
 
                 @can('read_units')
                     <li>
-                        <a href="{{ route('unidades.index') }}">
+                        <a href="{{ route('units.index') }}">
                             <i data-feather="truck" class="icon-dual-success"></i>
                             <span> {{ __('Units') }} </span>
                         </a>
