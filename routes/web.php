@@ -24,10 +24,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('agencias', 'AgencieController');
 
 Route::resources([
-    'usuarios' => 'UserController',
-    'agencias' => 'AgencieController',
-    'operadores' => 'OperatorController',
-    'aerolineas' => 'AirlineController',
-    'unidades' => 'UnitController',
-    'servicios' => 'TypeServiceController',
+    'users' => 'UserController',
+    'agencies' => 'AgencieController',
+    'operators' => 'OperatorController',
+    'airlines' => 'AirlineController',
+    'units' => 'UnitController',
+    'services' => 'TypeServiceController',
+    'settings' => 'Controller',
  ]);

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
- <!-- Start Content-->
- <div class="container-fluid">
+<!-- Start Content-->
+<div class="container-fluid">
 
     <!-- start page title -->
     <div class="row">
@@ -10,11 +10,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">CRM</a></li>
-                        <li class="breadcrumb-item active">Contacts</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                        <li class="breadcrumb-item active">Companies</li>
                     </ol>
                 </div>
-                <h4 class="page-title">{{ __('Operators') }}</h4>
+                <h4 class="page-title">Companies</h4>
             </div>
         </div>
     </div>
@@ -22,334 +22,245 @@
 
 
     <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <form class="form-inline">
-                                <div class="form-group mb-2">
-                                    <label for="inputPassword2" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-right">
-                                <button type="button" class="btn btn-success waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-cog"></i></button>
-                                <button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-toggle="modal" data-target="#custom-modal">Add Contact</button>
+        <div class="col-12">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="inputPassword2" class="sr-only">Search</label>
+                                <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
                             </div>
-                        </div><!-- end col-->
+                            <div class="form-group mx-sm-3">
+                                <label for="status-select" class="mr-2">Sort By</label>
+                                <select class="custom-select" id="status-select">
+                                    <option>Select</option>
+                                    <option>Date</option>
+                                    <option selected>Name</option>
+                                    <option>Revenue</option>
+                                    <option>Employees</option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="text-lg-right mt-3 mt-lg-0">
+                            <button type="button" class="btn btn-success waves-effect waves-light mr-1"><i class="mdi mdi-cog"></i></button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light mr-1"><i class="mdi mdi-plus-circle mr-1"></i> Add New</button>
+                        </div>
+                    </div><!-- end col-->
+                </div> <!-- end row -->
+            </div> <!-- end card-box -->
+        </div><!-- end col-->
+    </div>
+    <!-- end row -->
 
-                    <div class="table-responsive">
-                        <table class="table table-centered table-nowrap table-hover mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Basic Info</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    <th>Company</th>
-                                    <th>Created Date</th>
-                                    <th style="width: 82px;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-4.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Paul J. Friend</a>
-                                    </td>
-                                    <td>
-                                        937-330-1634
-                                    </td>
-                                    <td>
-                                        pauljfrnd@jourrapide.com
-                                    </td>
-                                    <td>
-                                        Vine Corporation
-                                    </td>
-                                    <td>
-                                        07/07/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card-box bg-pattern">
+                <div class="text-center">
+                    <img src="../assets/images/companies/amazon.png" alt="logo" class="avatar-xl rounded-circle mb-3">
+                    <h4 class="mb-1 font-18">Amazon Inc.</h4>
+                    <p class="text-muted  font-14">Seattle, Washington</p>
+                </div>
 
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-3.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Bryan J. Luellen</a>
-                                    </td>
-                                    <td>
-                                        215-302-3376
-                                    </td>
-                                    <td>
-                                        bryuellen@dayrep.com
-                                    </td>
-                                    <td>
-                                        Blue Motors
-                                    </td>
-                                    <td>
-                                        09/12/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
+                <p class="font-14 text-center text-muted">
+                    Amazon.com, Inc., doing business as Amazon, is an American electronic commerce and cloud computing company based in Seattle..
+                </p>
 
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-3.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Kathryn S. Collier</a>
-                                    </td>
-                                    <td>
-                                        828-216-2190
-                                    </td>
-                                    <td>
-                                        collier@jourrapide.com
-                                    </td>
-                                    <td>
-                                        Arcanetworks
-                                    </td>
-                                    <td>
-                                        06/30/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
+                <div class="text-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-light">View more info</a>
+                </div>
 
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-1.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Timothy Kauper</a>
-                                    </td>
-                                    <td>
-                                        (216) 75 612 706
-                                    </td>
-                                    <td>
-                                        thykauper@rhyta.com
-                                    </td>
-                                    <td>
-                                        Boar Records
-                                    </td>
-                                    <td>
-                                        09/08/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-5.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Zara Raws</a>
-                                    </td>
-                                    <td>
-                                        (02) 75 150 655
-                                    </td>
-                                    <td>
-                                        austin@dayrep.com
-                                    </td>
-                                    <td>
-                                        Bearings
-                                    </td>
-                                    <td>
-                                        07/15/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-6.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Annette P. Kelsch</a>
-                                    </td>
-                                    <td>
-                                        (+15) 73 483 758
-                                    </td>
-                                    <td>
-                                        annette@email.net
-                                    </td>
-                                    <td>
-                                        Shadowshine
-                                    </td>
-                                    <td>
-                                        09/05/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-7.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Jenny C. Gero</a>
-                                    </td>
-                                    <td>
-                                        078 7173 9261
-                                    </td>
-                                    <td>
-                                        jennygero@teleworm.us
-                                    </td>
-                                    <td>
-                                        Crowares
-                                    </td>
-                                    <td>
-                                        08/02/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-8.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Edward Roseby</a>
-                                    </td>
-                                    <td>
-                                        078 6013 3854
-                                    </td>
-                                    <td>
-                                        edwardR@armyspy.com
-                                    </td>
-                                    <td>
-                                        Orangations
-                                    </td>
-                                    <td>
-                                        08/23/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-9.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Anna Ciantar</a>
-                                    </td>
-                                    <td>
-                                        (216) 76 298 896
-                                    </td>
-                                    <td>
-                                        annac@hotmai.us
-                                    </td>
-                                    <td>
-                                        Surprise Brews
-                                    </td>
-                                    <td>
-                                        05/06/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="../assets/images/users/user-10.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body font-weight-normal">Dean Smithies</a>
-                                    </td>
-                                    <td>
-                                        077 6157 4248
-                                    </td>
-                                    <td>
-                                        deanes@dayrep.com
-                                    </td>
-                                    <td>
-                                        Apexlife
-                                    </td>
-                                    <td>
-                                        04/09/2018
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="row mt-4 text-center">
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Revenue (USD)</h5>
+                        <h4>17,786 cr</h4>
                     </div>
-
-                    <ul class="pagination pagination-rounded justify-content-end mb-0 mt-2">
-                        <li class="page-item">
-                            <a class="page-link" href="javascript: void(0);" aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="javascript: void(0);" aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                </div> <!-- end card-body-->
-            </div> <!-- end card-->
-        </div> <!-- end col -->
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Number of employees</h5>
+                        <h4>566k</h4>
+                    </div>
+                </div>
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
 
         <div class="col-lg-4">
-            <div class="card-box">
-                <div class="media mb-3">
-                    <img class="d-flex mr-3 rounded-circle avatar-lg" src="../assets/images/users/user-8.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h4 class="mt-0 mb-1">Jade M. Walker</h4>
-                        <p class="text-muted">Branch manager</p>
-                        <p class="text-muted"><i class="mdi mdi-office-building"></i> Vine Corporation</p>
+            <div class="card-box bg-pattern">
+                <div class="text-center">
+                    <img src="../assets/images/companies/apple.png" alt="logo" class="avatar-xl rounded-circle mb-3">
+                    <h4 class="mb-1 font-18">Apple Inc.</h4>
+                    <p class="text-muted  font-14">Cupertino, California</p>
+                </div>
 
-                        <a href="javascript: void(0);" class="btn- btn-xs btn-info">Send Email</a>
-                        <a href="javascript: void(0);" class="btn- btn-xs btn-secondary">Call</a>
-                        <a href="javascript: void(0);" class="btn- btn-xs btn-secondary">Edit</a>
+                <p class="font-14 text-center text-muted">
+                    Apple Inc. is an American multinational technology company headquartered in Cupertino, California, that designs, develops,
+                    and sells..
+                </p>
+
+                <div class="text-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-light">View more info</a>
+                </div>
+
+                <div class="row mt-4 text-center">
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Revenue (USD)</h5>
+                        <h4>22,923.4 cr</h4>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Number of employees</h5>
+                        <h4>47k</h4>
                     </div>
                 </div>
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
 
-                <h5 class="mb-3 mt-4 text-uppercase bg-light p-2"><i class="mdi mdi-account-circle mr-1"></i> Personal Information</h5>
-                <div class="">
-                    <h4 class="font-13 text-muted text-uppercase">About Me :</h4>
-                    <p class="mb-3">
-                        Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printer took a galley of type.
-                    </p>
-
-                    <h4 class="font-13 text-muted text-uppercase mb-1">Date of Birth :</h4>
-                    <p class="mb-3"> March 23, 1984 (34 Years)</p>
-
-                    <h4 class="font-13 text-muted text-uppercase mb-1">Company :</h4>
-                    <p class="mb-3">Vine Corporation</p>
-
-                    <h4 class="font-13 text-muted text-uppercase mb-1">Added :</h4>
-                    <p class="mb-3"> April 22, 2016</p>
-
-                    <h4 class="font-13 text-muted text-uppercase mb-1">Updated :</h4>
-                    <p class="mb-0"> Dec 13, 2017</p>
-
+        <div class="col-lg-4">
+            <div class="card-box bg-pattern">
+                <div class="text-center">
+                    <img src="../assets/images/companies/google.png" alt="logo" class="avatar-xl rounded-circle mb-3">
+                    <h4 class="mb-1 font-18">Google LLC</h4>
+                    <p class="text-muted  font-14">Menlo Park, California</p>
                 </div>
 
-            </div> <!-- end card-box-->
+                <p class="font-14 text-center text-muted">
+                    Google LLC is an American multinational technology company that specializes in Internet-related services and products, which
+                    include..
+                </p>
+
+                <div class="text-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-light">View more info</a>
+                </div>
+
+                <div class="row mt-4 text-center">
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Revenue (USD)</h5>
+                        <h4>110 bn</h4>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Number of employees</h5>
+                        <h4>72k</h4>
+                    </div>
+                </div>
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card-box bg-pattern">
+                <div class="text-center">
+                    <img src="../assets/images/companies/airbnb.png" alt="logo" class="avatar-xl rounded-circle mb-3">
+                    <h4 class="mb-1 font-18">Airbnb Inc.</h4>
+                    <p class="text-muted  font-14">San Francisco, California</p>
+                </div>
+
+                <p class="font-14 text-center text-muted">
+                    A‌i‌r‌b‌n‌b‌, ‌ ‌I‌n‌c‌.‌ is a company based in San Francisco that operates an online marketplace and hospitality service
+                    for people to lease or rent..
+                </p>
+
+                <div class="text-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-light">View more info</a>
+                </div>
+
+                <div class="row mt-4 text-center">
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Revenue (USD)</h5>
+                        <h4>260 cr</h4>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Number of employees</h5>
+                        <h4>3.1k</h4>
+                    </div>
+                </div>
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
+
+        <div class="col-lg-4">
+            <div class="card-box bg-pattern">
+                <div class="text-center">
+                    <img src="../assets/images/companies/facebook.png" alt="logo" class="avatar-xl rounded-circle mb-3">
+                    <h4 class="mb-1 font-18">Facebook Inc.</h4>
+                    <p class="text-muted  font-14">Cambridge, Massachusetts</p>
+                </div>
+
+                <p class="font-14 text-center text-muted">
+                    Facebook is an American online social media and social networking service company based in Menlo Park, California..
+                </p>
+
+                <div class="text-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-light">View more info</a>
+                </div>
+
+                <div class="row mt-4 text-center">
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Revenue (USD)</h5>
+                        <h4>9.16 bn</h4>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Number of employees</h5>
+                        <h4>25.1k</h4>
+                    </div>
+                </div>
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
+
+        <div class="col-lg-4">
+            <div class="card-box bg-pattern">
+                <div class="text-center">
+                    <img src="../assets/images/companies/cisco.png" alt="logo" class="avatar-xl rounded-circle mb-3">
+                    <h4 class="mb-1 font-18">Cisco Systems</h4>
+                    <p class="text-muted  font-14">San Jose, California</p>
+                </div>
+
+                <p class="font-14 text-center text-muted">
+                    Cisco Systems, Inc. is an American multinational technology conglomerate headquartered in San Jose, California..
+                </p>
+
+                <div class="text-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-light">View more info</a>
+                </div>
+
+                <div class="row mt-4 text-center">
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Revenue (USD)</h5>
+                        <h4>4,800.5 cr</h4>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="font-weight-normal text-muted">Number of employees</h5>
+                        <h4>73.4k</h4>
+                    </div>
+                </div>
+            </div> <!-- end card-box -->
+        </div><!-- end col -->
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="text-right">
+                <ul class="pagination pagination-rounded justify-content-end">
+                    <li class="page-item">
+                        <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+                            <span aria-hidden="true">«</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript: void(0);" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <!-- end row -->
