@@ -21,14 +21,19 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('agencias', 'AgencieController');
-
 Route::resources([
-    'users' => 'UserController',
+    //'users' => 'UserController',
     'agencies' => 'AgencieController',
     'operators' => 'OperatorController',
     'airlines' => 'AirlineController',
     'units' => 'UnitController',
     'services' => 'TypeServiceController',
-    'settings' => 'Controller',
+  //  'settings' => 'Controller',
  ]);
+
+Route::group(['web', 'settings'], function(){
+    Route::get('users','Controller@users')->name('settings.users');
+    Route::get('roles', 'Controller@roles')->name('settings.roles');
+    Route::get('permissions', 'Controller@permissions')->name('settings.permissions');
+});
+
