@@ -62,7 +62,7 @@
 
                 @can('read_administrators')
                     <li>
-                        <a href="{{ route('settings.index') }}">
+                        <a href="{{ route('settings.users') }}">
                             <i data-feather="settings" class="icon-dual-dark"></i>
                             <span> {{ __('Administrator') }} </span>
                         </a>
