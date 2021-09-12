@@ -15,6 +15,21 @@ class CreateRegistersTable extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->id();
+            $table->date('date');
+            $table->foreignId('agency_id')->references('id')->on('agencies');
+            $table->foreignId('type_service_id')->references('id')->on('type_services');
+            $table->foreignId('airline_id')->references('id')->on('airlines');
+            $table->string('origin');
+            $table->string('terminal')->nullable();
+            $table->string('flight_number');
+            $table->time('flight_time', 0);
+            $table->string('destiny')->nullable();
+            $table->string('passenger')->nullable();
+            $table->string('passenger_number')->nullable();
+            $table->time('pickup', 0);
+            $table->string('requested_unit');
+            $table->string('place_service');
+            $table->string('observations')->nullable();
             $table->timestamps();
         });
     }

@@ -17,7 +17,8 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        return view('registers.index');
+        $registers = Register::with(['Agency','Type_service','Airline'])->get();
+        return view('registers.index',compact('registers'));
     }
 
     /**
@@ -43,7 +44,8 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        Register::create($request->all());
+        return redirect()->route('registers.index');
     }
 
     /**
