@@ -27,7 +27,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('Agency') }}</label>
-                                <select id="agency" name="agency" class="form-control" data-toggle="select2">
+                                <select id="agency" name="agency_id" class="form-control" data-toggle="select2">
                                     @foreach ($agencies as $agency)
                                         <option value="{{ $agency->id }}">{{ $agency->name }}</option>
                                     @endforeach
@@ -37,7 +37,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('Type of service') }}</label>
-                                <select id="type_service" name="type_service" class="form-control" data-toggle="select2">
+                                <select id="type_service" name="type_service_id" class="form-control" data-toggle="select2">
                                     @foreach ($services as $service)
                                         <option value="{{ $service->id }}">{{ $service->name }}</option>
                                     @endforeach
@@ -47,7 +47,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('Airlines') }}</label>
-                                <select id="airline" name="airline" class="form-control" data-toggle="select2">
+                                <select id="airline" name="airline_id" class="form-control" data-toggle="select2">
                                     @foreach ($airlines as $airline)
                                         <option value="{{ $airline->id }}">{{ $airline->name }}</option>
                                     @endforeach
@@ -69,18 +69,29 @@
                         <div class="col-xl-2">
                             <div class="form-group">
                                 <label for="projectname">{{ __('Flight number') }}</label>
-                                <input id="flight_number" id="flight number" type="text" id="projectname" class="form-control" placeholder="{{ __('Enter flight number') }}">
+                                <input id="flight_number"name="flight_number" type="text" class="form-control" placeholder="{{ __('Enter flight number') }}">
+                            </div>
+                        </div>
+                        <div class="col-xl-2">
+                            <div class="form-group">
+                                <label>{{ __('Flight time') }}</label>
+                                <input id="flight_time" name="flight_time" type="text" class="form-control select" placeholder="{{ date('H:i') }}" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+
                         <div class="col-xl-4">
                             <div class="form-group">
-                                <label>{{ __('Flight time') }}</label>
-                                <input id="flight_time" name="flight_time" type="text" class="form-control select" id="time" placeholder="{{ date('H:i') }}" required>
+                                <label for="project-priority">{{ __('Origin') }}</label>
+                                <input id="origin" name="origin" class="form-control" list="my_origin">
+                                    <datalist id="my_origin">
+                                        <option value="ALAYA TULUM">
+                                        <option value="AEROPUERTO">
+                                    </datalist>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('Destiny') }}</label>
                                 <input id="destiny" name="destiny" class="form-control" list="my_destiny">
@@ -126,6 +137,12 @@
                                     <option value="Local">Local</option>
                                     <option value="Corredor">Corredor</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>{{ __('Observations') }}</label>
+                                <input type="text" class="form-control" id="observations" name="observations" >
                             </div>
                         </div>
                     </div>
