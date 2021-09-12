@@ -19,8 +19,8 @@ class AirlineController extends Controller
      */
     public function index()
     {
-        $airlines = new Airline;
-        return view('airlines.index');
+        $airlines = Airline::paginate(6);
+        return view('airlines.index', compact('airlines'));
     }
 
     /**
@@ -41,7 +41,8 @@ class AirlineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Airline::create($request->all());
+        return redirect()->route('airlines.index');
     }
 
     /**

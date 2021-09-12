@@ -18,8 +18,8 @@ class AgencieController extends Controller
      */
     public function index()
     {
-        $agencies = new Agency;
-        return view('agencies.index');
+        $agencies = Agency::paginate(6);
+        return view('agencies.index', compact('agencies'));
     }
 
     /**
@@ -40,7 +40,13 @@ class AgencieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //return $request->all();
+        Agency::create($request->all());
+        return redirect()->route('agencies.index');
+
+        //Role::create($request->all());
+        //return redirect()->route('admin.index')->with('status_success', 'ROLE CREADO CORRECTAMENTE');
+
     }
 
     /**
