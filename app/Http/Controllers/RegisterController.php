@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agency;
+use App\Models\Airline;
+use App\Models\Register;
 use App\Models\TypeService;
 use Illuminate\Http\Request;
 
-class TypeServiceController extends Controller
+class RegisterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +17,7 @@ class TypeServiceController extends Controller
      */
     public function index()
     {
-        $typeService = new TypeService;
-        return view('services.index');
+        return view('registers.index');
     }
 
     /**
@@ -29,7 +27,12 @@ class TypeServiceController extends Controller
      */
     public function create()
     {
-        //
+        $agencies = Agency::all();
+        $services = TypeService::all();
+        $airlines = Airline::all();
+
+        return view('registers.create', compact('agencies','services','airlines'));
+
     }
 
     /**
@@ -40,17 +43,16 @@ class TypeServiceController extends Controller
      */
     public function store(Request $request)
     {
-        TypeService::create($request->all());
-        return redirect()->route('services.index');
+        return $request->all();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TypeService  $typeService
+     * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function show(TypeService $typeService)
+    public function show(Register $register)
     {
         //
     }
@@ -58,10 +60,10 @@ class TypeServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TypeService  $typeService
+     * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function edit(TypeService $typeService)
+    public function edit(Register $register)
     {
         //
     }
@@ -70,10 +72,10 @@ class TypeServiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TypeService  $typeService
+     * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeService $typeService)
+    public function update(Request $request, Register $register)
     {
         //
     }
@@ -81,10 +83,10 @@ class TypeServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TypeService  $typeService
+     * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeService $typeService)
+    public function destroy(Register $register)
     {
         //
     }

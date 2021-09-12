@@ -17,9 +17,10 @@ class CreateAgenciesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address')->nullable();
-            $table->integer('telephone')->nullable();
+            $table->string('telephone')->nullable();
             $table->string('email')->unique();
             $table->string('agency_logo')->nullable();
+            $table->string('agencies_photo')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

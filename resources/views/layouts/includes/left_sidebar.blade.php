@@ -69,6 +69,15 @@
                     </li>
                 @endcan
 
+                @can('read_registers')
+                    <li>
+                        <a href="{{ route('registers.index') }}">
+                            <i data-feather="book-open" class="icon-dual-info"></i>
+                            <span> {{ __('Registers') }} </span>
+                        </a>
+                    </li>
+                @endcan
+
                 @can('read_agencies')
                     <li>
                         <a href="{{ route('agencies.index') }}">

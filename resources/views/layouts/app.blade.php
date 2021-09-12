@@ -3,7 +3,7 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Dashboard | UBold - Responsive Admin Dashboard Template</title>
+        <title> {{ config('app.name', 'Laravel') }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -69,7 +69,7 @@
         <!-- Right Sidebar -->
         @include('layouts.includes.rightbar')
         <!-- /Right-bar -->
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
         <!-- Vendor js -->
@@ -77,6 +77,10 @@
         <!-- Plugins js-->
         <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
         <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+
+        <script src="{{ asset('assets/libs/dropzone/min/dropzone.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
         <script src="{{ asset('assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 
@@ -91,6 +95,7 @@
         <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
         <!-- Bootstrap JavaScript -->
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
         <!-- App scripts -->
         @stack('scripts')
     </body>
