@@ -98,8 +98,8 @@ class OperatorController extends Controller
             'birthday_date' => $request['birthday_date'],
             'address' => $request['address'],
             'cp' => $request['cp'],
-            'driver_license' => "/images/driver_licenses" . $driverLicense,
-            'operator_photo' => "/images/operators" . $operatorPhoto,
+            'driver_license' => "/images/driver_licenses/" . $driverLicense,
+            'operator_photo' => "/images/operators/" . $operatorPhoto,
         ]);
         return redirect()->route('operators.index');
     }

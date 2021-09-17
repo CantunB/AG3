@@ -39,8 +39,6 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('guest:operator')->except('logout');
-
-
     }
 
     public function showOperatorLoginForm()
@@ -57,11 +55,11 @@ class LoginController extends Controller
 
         if (Auth::guard('operator')->attempt(
             ['email' => $request->email,
-             'password' => $request->password
+            'password' => $request->password
             ], $request->get('remember')
             )) {
 
-            return redirect()->intended('/operator');
+            return redirect()->intended('/operators');
         }
         return back()->withInput($request->only('email', 'remember'));
     }

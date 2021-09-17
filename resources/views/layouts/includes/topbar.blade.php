@@ -143,7 +143,7 @@
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="../assets/images/users/user-6.jpg" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
-                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
+                        {{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}  <i class="mdi mdi-chevron-down"></i>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
