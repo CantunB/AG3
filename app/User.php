@@ -6,11 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    use HasRoles;
+    use HasApiTokens, HasRoles, Notifiable;
 
 
     /**
@@ -36,7 +36,17 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    protected $appends = ['avatar'];
+
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAvatarAttribute(){
+
+        return  "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) );
+    }
+
 }
