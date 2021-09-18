@@ -8,7 +8,7 @@
                 class="rounded-circle avatar-md">
             <div class="dropdown">
                 <a href="javascript: void(0);" class="text-dark font-weight-normal dropdown-toggle h5 mt-2 mb-1 d-block"
-                    data-toggle="dropdown">   {{ Auth::user()->name }}</a>
+                    data-toggle="dropdown">   {{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}</a>
                 <div class="dropdown-menu user-pro-dropdown">
 
                     <!-- item-->
@@ -43,7 +43,7 @@
 
                 </div>
             </div>
-            <p class="text-muted">{{ Auth::user()->roles[0]->name }}</p>
+            <p class="text-muted">{{ Auth::user()->roles[0]->name  ?? 'OPERADOR'}}</p>
         </div>
 
         <!--- Sidemenu -->

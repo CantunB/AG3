@@ -46,12 +46,14 @@
                                             </span>
                                         </a>
                                     </div>
-                                    <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.</p>
+                                    <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel. {{ isset($url) ? ucwords($url) : ""}} {{ __('Login') }}</p>
                                 </div>
-
-                                <form method="POST" action="{{ route('login') }}">
+                                @isset($url)
+                                <form method="POST" action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
+                                @else
+                                <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                                @endisset
                                     @csrf
-
                                     <div class="form-group mb-3">
                                         <label for="emailaddress">{{ __('Email address') }}</label>
                                         <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"  value="{{ old('email') }}" id="email" required="" autocomplete="email" autofocus placeholder="Enter your email">

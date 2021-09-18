@@ -2,7 +2,6 @@
 @section('content')
  <!-- Start Content-->
  <div class="container-fluid">
-
     <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
         @slot('title') {{ config('app.name', 'Laravel') }} @endslot

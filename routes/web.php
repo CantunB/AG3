@@ -18,7 +18,8 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register' => false]);
-
+Route::get('/login/operator', 'Auth\LoginController@showOperatorLoginForm');
+Route::post('/login/operator', 'Auth\LoginController@operatorLogin');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
@@ -30,11 +31,14 @@ Route::resources([
     'services' => 'TypeServiceController',
     'registers' => 'RegisterController'
   //  'settings' => 'Controller',
- ]);
+]);
 
 Route::group(['web', 'settings'], function(){
     Route::get('users','Controller@users')->name('settings.users');
     Route::get('roles', 'Controller@roles')->name('settings.roles');
     Route::get('permissions', 'Controller@permissions')->name('settings.permissions');
 });
+
+Route::view('/operator', 'operator');
+
 
