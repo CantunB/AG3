@@ -72,13 +72,51 @@
                                 <input id="cp" name="cp" type="text" class="form-control">
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3">
                             <div class="form-group">
-                                <label for="project-priority">{{ __('Driver License') }}</label>
-                                <input type="file" class="dropify" id="driver_license" name="driver_license" data-default-file="{{ asset('assets/images/attached-files/img-4.jpeg') }}" />
+                                <label for="project-priority">{{ __('Birth Certificate') }}</label>
+                                <input type="file" class="dropify" id="birth_certificate" name="birth_certificate" data-default-file="{{ asset('assets/images/attached-files/img-6.png') }}" />
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <label for="project-priority">{{ __('Proof address') }}</label>
+                                <input type="file" class="dropify" id="proof_address" name="proof_address" data-default-file="{{ asset('assets/images/attached-files/img-7.png') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <label for="project-priority">{{ __('NSS') }}</label>
+                                <input type="file" class="dropify" id="nss" name="nss" data-default-file="{{ asset('assets/images/attached-files/img-8.jpg') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <label for="project-priority">{{ __('CURP') }}</label>
+                                <input type="file" class="dropify" id="curp" name="curp" data-default-file="{{ asset('assets/images/attached-files/img-9.jpg') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <label for="project-priority">{{ __('RFC') }}</label>
+                                <input type="file" class="dropify" id="rfc" name="rfc" data-default-file="{{ asset('assets/images/attached-files/img-10.png') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <label for="project-priority">{{ __('INE') }}</label>
+                                <input type="file" class="dropify" id="ine" name="ine" data-default-file="{{ asset('assets/images/attached-files/img-11.jpg') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <label for="project-priority">{{ __('Driver License') }}</label>
+                                <input type="file" class="dropify" id="driver_license" name="driver_license" data-default-file="{{ asset('assets/images/attached-files/img-12.png') }}" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('Operator Photo') }}</label>
                                 <input type="file" class="dropify" id="operator_photo" name="operator_photo" data-default-file="{{ asset('assets/images/attached-files/img-5.jpg') }}" />

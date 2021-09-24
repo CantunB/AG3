@@ -24,11 +24,16 @@ class Operator extends Authenticatable
             'birthday_date',
             'address',
             'cp',
+            'birth_certificate',
+            'proof_address',
+            'nss',
+            'curp',
+            'rfc',
+            'ine',
             'driver_license',
             'operator_photo',
             'status'
         ];
-
         protected $hidden = [
             'password', 'remember_token',
         ];

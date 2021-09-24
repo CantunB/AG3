@@ -75,16 +75,52 @@ class OperatorController extends Controller
     public function store(Request $request)
     {
         //Operator::create($request->all());
+        if ($request->has('birth_certificate')) {
+            $bc = $request->file('birth_certificate');
+            $birthC = time() . '.' . $bc->getClientOriginalExtension();
+            $birthCPath = public_path('/documents/'.$request->email);
+            $bc->move($birthCPath, $birthC);
+        }
+        if ($request->has('proof_address')) {
+            $proof = $request->file('proof_address');
+            $proof_address = time() . '.' . $proof->getClientOriginalExtension();
+            $proofPath = public_path('/documents/'.$request->email);
+            $proof->move($proofPath, $proof_address);
+        }
+        if ($request->has('nss')) {
+            $nss = $request->file('nss');
+            $nss_file = time() . '.' . $nss->getClientOriginalExtension();
+            $nssPath = public_path('/documents/'.$request->email);
+            $nss->move($nssPath, $nss_file);
+        }
+        if ($request->has('curp')) {
+            $curp = $request->file('curp');
+            $curpFile = time() . '.' . $curp->getClientOriginalExtension();
+            $curpPath = public_path('/documents/'.$request->email);
+            $curp->move($curpPath, $curpFile);
+        }
+        if ($request->has('rfc')) {
+            $rfc = $request->file('rfc');
+            $rfcFile = time() . '.' . $rfc->getClientOriginalExtension();
+            $rfcPath = public_path('/documents/'.$request->email);
+            $rfc->move($rfcPath, $rfcFile);
+        }
+        if ($request->has('ine')) {
+            $ine = $request->file('ine');
+            $ineFile = time() . '.' . $ine->getClientOriginalExtension();
+            $inePath = public_path('/documents/'.$request->email);
+            $ine->move($inePath, $ineFile);
+        }
         if ($request->has('driver_license')) {
             $driver = $request->file('driver_license');
             $driverLicense = time() . '.' . $driver->getClientOriginalExtension();
-            $driverPath = public_path('/images/driver_licenses/');
+            $driverPath = public_path('/documents/'.$request->email);
             $driver->move($driverPath, $driverLicense);
         }
         if ($request->has('operator_photo')) {
             $operator = $request->file('operator_photo');
             $operatorPhoto = time() . '.' . $operator->getClientOriginalExtension();
-            $operatorPath = public_path('/images/operators/');
+            $operatorPath = public_path('/documents/'.$request->email);
             $operator->move($operatorPath, $operatorPhoto);
         }
 
@@ -98,8 +134,14 @@ class OperatorController extends Controller
             'birthday_date' => $request['birthday_date'],
             'address' => $request['address'],
             'cp' => $request['cp'],
-            'driver_license' => "/images/driver_licenses/" . $driverLicense,
-            'operator_photo' => "/images/operators/" . $operatorPhoto,
+            'birth_certificate' => "/documents/" . $request->email ."/" . $birthC,
+            'proof_address' => "/documents/" . $request->email . "/" . $proof_address,
+            'nss' => "/documents/" . $request->email . "/" . $nss_file,
+            'curp' => "/documents/" .$request->email ."/". $curpFile,
+            'rfc' => "/documents/" .$request->email ."/". $rfcFile,
+            'ine' => "/documents/" .$request->email ."/". $ineFile,
+            'driver_license' => "/documents/" .$request->email ."/". $driverLicense ,
+            'operator_photo' => "/documents/" .$request->email ."/". $operatorPhoto,
         ]);
         return redirect()->route('operators.index');
     }

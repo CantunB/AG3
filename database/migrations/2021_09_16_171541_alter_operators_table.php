@@ -15,7 +15,7 @@ class AlterOperatorsTable extends Migration
     {
         Schema::table('operators',function($table){
             $table->timestamp('email_verified_at')->nullable()->after('email');
-            $table->string('second_email')->after('email');
+            $table->string('second_email')->nullable()->after('email');
             $table->string('password')->after('email_verified_at');
             $table->rememberToken()->after('password');
             $table->string('birth_certificate')->after('cp');
@@ -37,7 +37,7 @@ class AlterOperatorsTable extends Migration
     {
         Schema::table('operators', function ($table) {
             $table->dropColumn('email_verified_at');
-            $table->dropColum('second_email');
+            $table->dropColumn('second_email');
             $table->dropColumn('password');
             $table->dropColumn('remember_token');
             $table->dropColumn('birth_certificate');
