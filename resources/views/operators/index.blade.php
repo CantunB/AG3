@@ -5,8 +5,8 @@
     <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
         @slot('title') {{ config('app.name', 'Laravel') }} @endslot
-        @slot('subtitle') {{ __('Operators') }} @endslot
-        @slot('teme') {{ __('List') }} @endslot
+        @slot('subtitle') {{ __('translation.Operators') }} @endslot
+        @slot('teme') {{ __('translation.List') }} @endslot
     @endcomponent
     <!-- end page title -->
     <div class="row">
@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-right">
-                                <a href="{{ route('operators.create') }}" class="btn btn-danger waves-effect waves-light mb-2">{{ __('Add') }}</a>
+                                <a href="{{ route('operators.create') }}" class="btn btn-danger waves-effect waves-light mb-2">{{ __('translation.Add New') }}</a>
                             </div>
                         </div><!-- end col-->
                     </div>
@@ -26,10 +26,10 @@
                         <table id="table_operators" class="table table-centered table-nowrap table-hover mb-0">
                             <thead>
                                 <tr>
-                                    <th>{{ __('Fullname') }}</th>
-                                    <th>{{ __('Phone') }}</th>
-                                    <th>{{ __('Email') }}</th>
-                                    <th style="width: 82px;">{{ __('Action') }}</th>
+                                    <th>{{ __('translation.Fullname') }}</th>
+                                    <th>{{ __('translation.Phone') }}</th>
+                                    <th>{{ __('translation.Email') }}</th>
+                                    <th style="width: 82px;">{{ __('translation.Options') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -6,8 +6,8 @@
     <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
         @slot('title') {{ config('app.name', 'Laravel') }} @endslot
-        @slot('subtitle') {{ __('Agencies') }} @endslot
-        @slot('teme') {{ __('List') }} @endslot
+        @slot('subtitle') {{ __('translation.Agencies') }} @endslot
+        @slot('teme') {{ __('translation.List') }} @endslot
     @endcomponent
     <!-- end page title -->
 
@@ -36,7 +36,7 @@
                     </div> -->
                     <div class="col-lg-12">
                         <div class="text-lg-right mt-3 mt-lg-0">
-                            <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#custom-modal"><i class="mdi mdi-plus-circle mr-1"></i>{{ __('Add New')}}</button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#custom-modal"><i class="mdi mdi-plus-circle mr-1"></i>{{ __('translation.Add New')}}</button>
                         </div>
                     </div><!-- end col-->
                 </div> <!-- end row -->
@@ -60,16 +60,16 @@
                         </p>
 
                         <div class="text-center">
-                            <a href="javascript:void(0);" class="btn btn-sm btn-light">{{ __('View more info') }}</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-light">{{ __('translation.View more info') }}</a>
                         </div>
 
                         <div class="row mt-4 text-center">
                             <div class="col-6">
-                                <h5 class="font-weight-normal text-muted">{{ __('Revenue') }}</h5>
+                                <h5 class="font-weight-normal text-muted">{{ __('translation.Revenue') }}</h5>
                                 <h4>17,786 cr</h4>
                             </div>
                             <div class="col-6">
-                                <h5 class="font-weight-normal text-muted">{{ __('Services') }}</h5>
+                                <h5 class="font-weight-normal text-muted">{{ __('translation.Services') }}</h5>
                                 <h4>566k</h4>
                             </div>
                         </div>

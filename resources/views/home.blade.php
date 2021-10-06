@@ -27,7 +27,7 @@
                         </a>
                     </form>
                 </div>
-                <h4 class="page-title">{{ __('Dashboard') }}</h4>
+                <h4 class="page-title">{{ __('translation.Dashboard') }}</h4>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
                     <div class="col-6">
                         <div class="text-right">
                             <h3 class="mt-1 text-dark">$<span data-plugin="counterup">58,947</span></h3>
-                            <p class="text-muted mb-1 text-truncate">Total Recaudaciones</p>
+                            <p class="text-muted mb-1 text-truncate">Total {{ __('translation.Revenue') }}</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -66,7 +66,7 @@
                     <div class="col-6">
                         <div class="text-right">
                             <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span></h3>
-                            <p class="text-muted mb-1 text-truncate">{{ __('Todays Sales') }}</p>
+                            <p class="text-muted mb-1 text-truncate">{{ __('translation.Todays Sales') }}</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -86,7 +86,7 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
-                                <p class="text-muted mb-1 text-truncate">{{ __('Operators') }}</p>
+                                <p class="text-muted mb-1 text-truncate">{{ __('translation.Operators') }}</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -106,7 +106,7 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1"><span data-plugin="counterup">78.41</span>k</h3>
-                                <p class="text-muted mb-1 text-truncate">{{ __('Agencies') }}</p>
+                                <p class="text-muted mb-1 text-truncate">{{ __('translation.Agencies') }}</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
