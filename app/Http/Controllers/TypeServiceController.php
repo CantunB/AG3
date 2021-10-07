@@ -18,8 +18,8 @@ class TypeServiceController extends Controller
      */
     public function index()
     {
-        $typeService = new TypeService;
-        return view('services.index');
+        $services = TypeService::Active();
+        return view('services.index', compact('services'));
     }
 
     /**

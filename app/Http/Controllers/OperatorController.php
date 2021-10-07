@@ -77,7 +77,7 @@ class OperatorController extends Controller
     public function store(Request $request)
     {
         //Operator::create($request->all());
-        $directory = '/documents/' . $request->email .'/';
+        $directory = '/documents/operators/'. $request->email .'/';
         if ($request->has('birth_certificate')) {
             $bc = $request->file('birth_certificate');
             $birthC = 'ActaNacimiento'. '.' . $bc->getClientOriginalExtension();

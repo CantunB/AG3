@@ -71,4 +71,6 @@ return [
     'Welcome' => 'Bienvenido',
     'Description' => 'Descripcion',
     'Enter' => 'Ingresa',
+    'Location' => 'Localizacion',
+    'Category' => 'Categoria'
 ];

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
  <!-- Start Content-->
- <div class="container-fluid">
+<div class="container-fluid">
 
     <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
@@ -28,20 +28,21 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>{{ __('translation.Date') }}</th>
-                                    <th>{{ __('translation.Pick Up') }}</th>
+                                <!--    <th>{{ __('translation.Pick Up') }}</th> -->
                                     <th>{{ __('translation.Agency') }}</th>
                                     <th>{{ __('translation.Service') }}</th>
-                                    <th>{{ __('translation.Origin') }}</th>
-                                    <th>{{ __('translation.Destiny') }}</th>
-                                    <th>{{ __('translation.Terminal') }}</th>
-                                    <th>{{ __('translation.Airline') }}</th>
+                                <!--   <th>{{ __('translation.Origin') }}</th>
+                                    <th>{{ __('translation.Destiny') }}</th> -->
+                                <!--    <th>{{ __('translation.Terminal') }}</th> -->
+                                <!--    <th>{{ __('translation.Airline') }}</th> -->
                                     <th>{{ __('translation.Flight number') }}</th>
-                                    <th>{{ __('translation.Flight time') }}</th>
-                                    <th>{{ __('translation.Passenger') }}</th>
-                                    <th>{{ __('translation.Passenger number') }}</th>
+                                <!--    <th>{{ __('translation.Flight time') }}</th> -->
+                                <!--    <th>{{ __('translation.Passenger') }}</th> -->
+                                <!--    <th>{{ __('translation.Passenger number') }}</th> -->
                                     <th>{{ __('translation.Requested unit') }}</th>
                                     <th>{{ __('translation.Place of service') }}</th>
-                                    <th>{{ __('translation.Observations') }}</th>
+                                    <th>{{ __('translation.Status') }}</th>
+                                <!--    <th>{{ __('translation.Observations') }}</th> -->
                                     <th style="width: 82px;">{{ __('translation.Options') }}</th>
                                 </tr>
                             </thead>
@@ -49,20 +50,20 @@
                                 @foreach ($registers as $register)
                                 <tr>
                                     <td>{{ Carbon\Carbon::createFromTimeString($register->pickup)->toFormattedDateString()  }}</td>
-                                    <td>{{ Carbon\Carbon::createFromTimeString($register->pickup)->format('g:i a')  }}</td>
+                                <!-- <td>{{ Carbon\Carbon::createFromTimeString($register->pickup)->format('g:i a')  }}</td> -->
                                     <td>{{ $register->agency->name }}</td>
                                     <td>{{ $register->type_service->name }}</td>
-                                    <td>{{ $register->origin }}</td>
-                                    <td>{{ $register->destiny }}</td>
-                                    <td>{{ $register->terminal }}</td>
-                                    <td>{{ $register->airline->name }}</td>
+                                <!--   <td>{{ $register->origin }}</td>
+                                    <td>{{ $register->destiny }}</td> -->
+                                <!--    <td>{{ $register->terminal }}</td> -->
+                                <!--   <td>{{ $register->airline->name }}</td> -->
                                     <td>{{ $register->flight_number }}</td>
-                                    <td>{{ Carbon\Carbon::createFromTimeString($register->flight_time)->format('g:i a')  }}</td>
-                                    <td>{{ $register->passenger }}</td>
-                                    <td>{{ $register->passenger_number }}</td>
+                                <!--    <td>{{ Carbon\Carbon::createFromTimeString($register->flight_time)->format('g:i a')  }}</td> -->
+                                <!--    <td>{{ $register->passenger }}</td> -->
+                                <!--    <td>{{ $register->passenger_number }}</td> -->
                                     <td>
                                         @if($register->requested_unit == 1)
-                                        Suburbam
+                                        Suburban
                                         @else
                                         VAN
                                         @endif
@@ -74,7 +75,12 @@
                                         CORREDOR
                                         @endif
                                     </td>
-                                    <td>{{ $register->observations }}</td>
+                                <!--    <td>{{ $register->observations }}</td> -->
+                                    <td>
+                                        <div class="text-center button-list">
+                                            <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Assign</a>
+                                        </div>
+                                    </td>
                                     <td>
                                         <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                         <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>

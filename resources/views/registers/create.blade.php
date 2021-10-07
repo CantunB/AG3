@@ -28,6 +28,7 @@
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Agency') }}</label>
                                 <select id="agency" name="agency_id" class="form-control" data-toggle="select2">
+                                    <option value="" disabled selected>Selecciona una agencia</option>
                                     @foreach ($agencies as $agency)
                                         <option value="{{ $agency->id }}">{{ $agency->name }}</option>
                                     @endforeach
@@ -38,6 +39,7 @@
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Type of service') }}</label>
                                 <select id="type_service" name="type_service_id" class="form-control" data-toggle="select2">
+                                    <option value="" disabled selected>Selecciona un servicio</option>
                                     @foreach ($services as $service)
                                         <option value="{{ $service->id }}">{{ $service->name }}</option>
                                     @endforeach
@@ -48,6 +50,7 @@
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Airlines') }}</label>
                                 <select id="airline" name="airline_id" class="form-control" data-toggle="select2">
+                                    <option value="" disabled selected>Selecciona una aerolinea</option>
                                     @foreach ($airlines as $airline)
                                         <option value="{{ $airline->id }}">{{ $airline->name }}</option>
                                     @endforeach
@@ -58,6 +61,7 @@
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Terminal') }}</label>
                                 <select id="terminal" name="terminal" class="form-control" data-toggle="select2">
+                                    <option value="" disabled selected>Selecciona una terminal</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

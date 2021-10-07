@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label for="address">{{ __('translation.Address') }}</label>
-                        <input type="text" class="form-control" id="category" name="address" placeholder="{{ __('Enter Address') }}">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="{{ __('Enter Address') }}">
                     </div>
                     <div class="form-group">
                         <label for="email">{{ __('translation.Email') }}</label>

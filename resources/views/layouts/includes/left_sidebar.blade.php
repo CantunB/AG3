@@ -4,9 +4,11 @@
 
         <!-- User box -->
         <div class="user-box text-center">
-            <img src="../assets/images/users/user-6.jpg" alt="user-img" title="Mat Helme"
+
+            <img src="../assets/images/users/user-6.jpg" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
                 class="rounded-circle avatar-md">
             <div class="dropdown">
+
                 <a href="javascript: void(0);" class="text-dark font-weight-normal dropdown-toggle h5 mt-2 mb-1 d-block"
                     data-toggle="dropdown">   {{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}</a>
                 <div class="dropdown-menu user-pro-dropdown">

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Airline extends Model
 {
     protected $table = 'airlines';
-    protected $fillable = [ 'name', 'telephone', 'email', 'status' ];
+    protected $fillable = [ 'name','address', 'telephone', 'email', 'status' ];
 
 }
