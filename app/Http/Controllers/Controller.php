@@ -7,6 +7,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 use App\User;
 use Spatie\Permission\Models\Role;
@@ -114,6 +116,18 @@ class Controller extends BaseController
                 })  */
                 ->rawColumns(['name'])
                 ->make(true);
+        }
+    }
+
+    public function lang($locale)
+    {
+        if ($locale) {
+            App::setLocale($locale);
+            Session::put('lang', $locale);
+            Session::save();
+            return redirect()->back()->with('locale', $locale);
+        } else {
+            return redirect()->back();
         }
     }
 }

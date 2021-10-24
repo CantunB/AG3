@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Register extends Model
 {
@@ -37,7 +39,20 @@ class Register extends Model
     {
         return $this->belongsTo(Airline::class, 'airline_id');
     }
+    /**
+     * The roles that belong to the Register
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function isAssigned(): BelongsTo
+    {
+        return $this->belongsTo(AssingRegister::class, 'id','id_register');
+    }
 
+    public function counter()
+    {
+     return $this::where('clave_elector', 'not like', "%@%")->select('seccion')->where('seccion', $seccion)->count();
 
+    }
 
 }

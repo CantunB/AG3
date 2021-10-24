@@ -17,9 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Language Translation
+//Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+
 Auth::routes(['register' => false]);
 Route::get('/login/operator', 'Auth\LoginController@showOperatorLoginForm');
 Route::post('/login/operator', 'Auth\LoginController@operatorLogin');
+Route::view('/operator', 'operator');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
@@ -29,7 +34,8 @@ Route::resources([
     'airlines' => 'AirlineController',
     'units' => 'UnitController',
     'services' => 'TypeServiceController',
-    'registers' => 'RegisterController'
+    'registers' => 'RegisterController',
+    'assign' => 'AssignRegisterController'
   //  'settings' => 'Controller',
 ]);
 
@@ -37,8 +43,9 @@ Route::group(['web', 'settings'], function(){
     Route::get('users','Controller@users')->name('settings.users');
     Route::get('roles', 'Controller@roles')->name('settings.roles');
     Route::get('permissions', 'Controller@permissions')->name('settings.permissions');
+    Route::get('{locale}', 'Controller@lang');
+
 });
 
-Route::view('/operator', 'operator');
 
 

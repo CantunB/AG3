@@ -5,8 +5,8 @@
 
         @component('layouts.includes.components.breadcrumb')
             @slot('title') {{ config('app.name', 'Laravel') }} @endslot
-            @slot('subtitle') {{ __('Settings') }} @endslot
-            @slot('teme') {{ __('Administrator') }} @endslot
+            @slot('subtitle') {{ __('translation.Settings') }} @endslot
+            @slot('teme') {{ __('translation.Administrator') }} @endslot
         @endcomponent
 
         <div class="row">
@@ -17,17 +17,17 @@
                     <ul class="nav nav-pills navtab-bg nav-justified">
                         <li class="nav-item">
                             <a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link active">
-                                {{ __('Users') }}
+                                {{ __('translation.Users') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#roles" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="rolesDataTables()">
-                                {{ __('Roles') }}
+                                {{ __('translation.Roles') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#permissions" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="permisosDataTables()">
-                                {{ __('Permissions') }}
+                                {{ __('translation.Permissions') }}
                             </a>
                         </li>
                     </ul>
@@ -50,9 +50,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>{{ __('#') }}</th>
-                                                    <th>{{ __('Fullname') }}</th>
-                                                    <th>{{ __('Email') }}</th>
-                                                    <th>{{ __('Options') }}</th>
+                                                    <th>{{ __('translation.Fullname') }}</th>
+                                                    <th>{{ __('translation.Email') }}</th>
+                                                    <th>{{ __('translation.Options') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -75,8 +75,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th>{{ __('#') }}</th>
-                                                        <th>{{ __('Name') }}</th>
-                                                        <th>{{ __('Options') }}</th>
+                                                        <th>{{ __('translation.Name') }}</th>
+                                                        <th>{{ __('translation.Options') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -98,7 +98,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>{{ __('#') }}</th>
-                                                        <th>{{ __('Name') }}</th>
+                                                        <th>{{ __('translation.Name') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

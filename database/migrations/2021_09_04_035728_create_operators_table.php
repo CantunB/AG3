@@ -18,8 +18,8 @@ class CreateOperatorsTable extends Migration
             $table->string('name');
             $table->string('paterno');
             $table->string('materno')->nullable();
-            $table->string('phone');
-            $table->string('email');
+            $table->string('phone')->unique();
+            $table->string('email')->unique();
             $table->date('birthday_date')->nullable();
             $table->string('address')->nullable();
             $table->integer('cp')->nullable();
