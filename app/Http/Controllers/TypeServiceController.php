@@ -18,6 +18,7 @@ class TypeServiceController extends Controller
      */
     public function index()
     {
+     //$se = TypeService::where('id','type_service_id')->get();
         $services = TypeService::Active();
         return view('services.index', compact('services'));
     }
@@ -84,8 +85,27 @@ class TypeServiceController extends Controller
      * @param  \App\Models\TypeService  $typeService
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeService $typeService)
+    public function destroy(Request $request)
     {
-        //
+        $typeService = TypeService::findOrFail($request->id);
+        $delete = $typeService->delete();
+        //return response()->json(['data' => $typeService], 200);
+
+       // $delete = Tocados::findOrFail($id)->delete();
+        //return $delete;
+        //return back();
+        if ($delete == 1){
+            $success = true;
+            $message = "Servicio eliminado correctamente";
+        } else {
+            $success = true;
+            $message = "No se elimino el servicio";
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
+
     }
 }

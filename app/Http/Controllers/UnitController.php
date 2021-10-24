@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
+use File;
 
 use Illuminate\Support\Str;
 
@@ -18,10 +21,39 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $units = Unit::Active();
-        return view('units.index', compact('units'));
+        //$units = Unit::with('isAssigned')->Active();
+        if ($request->ajax()){
+            $operators = Unit::with('isAssigned')->Active();
+            return DataTables::of($operators)
+            ->addIndexColumn()
+            ->addColumn('status', function($operator){
+                $status = '';
+                if ($operator->isAssigned) {
+                    $status .= '<span class="badge badge-primary">Unidad Asignada</span>';
+                }else{
+                    $status .= '<span class="badge badge-success">Unidad Disponible</span>';
+                }
+                return $status;
+            })
+            ->addColumn('options', function ($operators){
+                $opciones = '';
+                if (Auth::user()->can('read_units')){
+                    $opciones .= '<button type="button"  onclick="btnInfo('.$operators->id.')" class="btn btn-sm action-icon getInfo icon-dual-info"><i class="mdi mdi-car-info"></i></button>';
+                    // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
+                }
+                if (Auth::user()->can('update_units')){
+                    $opciones .= '<button type="button" class="btn btn-soft btn-sm action-icon action-icon icon-dual-blue"><i class="mdi mdi-car-door-lock"></i></button>';
+                }
+                return $opciones;
+            })
+            ->rawColumns(['status','options'])
+            ->toJson();
+        }
+
+        return view('units.index');
+        //return view('units.index', compact('units'));
     }
 
     /**
@@ -119,7 +151,43 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        $files = [
+            'Seguro' => $unit->file_car_insurance,
+            'TarjetaCirculacion' => $unit->file_circulation_card,
+            'Contrato' => $unit->file_contract,
+            'Factura' => $unit->file_invoice_unit,
+            'PermisoSCT' => $unit->file_permission_sct,
+            'PlacasSCT' => $unit->file_plate_number,
+            ];
+        foreach ($files as $key => $file) {
+            $archivos[] = '<div class="p-1">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div class="avatar-sm">
+                        <span class="avatar-title badge-soft-primary text-primary rounded">
+                        '. pathinfo(storage_path($file), PATHINFO_EXTENSION).'
+                        </span>
+                    </div>
+                </div>
+                <div class="col pl-0">
+                    <a href="'.$file.'" class="text-muted font-weight-bold">'.$key.' </a>
+                    <p class="mb-0 font-12">'.   round(File::size(public_path($file)) / 1024 ) . 'KB'.'</p>
+                </div>
+                <div class="col-auto">
+                    <!-- Button -->
+                    <a href="'.$file.'" class="btn btn-link font-16 text-muted" download>
+                        <i class="dripicons-download"></i>
+                    </a>
+                </div>
+            </div>
+        </div>';
+        }
+
+        return response()->json([
+            'data' => $unit,
+            'files' => $archivos,
+
+        ],200);
     }
 
     /**

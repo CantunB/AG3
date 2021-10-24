@@ -77,9 +77,15 @@
                                     </td>
                                 <!--    <td>{{ $register->observations }}</td> -->
                                     <td>
-                                        <div class="text-center button-list">
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Assign</a>
-                                        </div>
+                                        @if(!isset($register->isAssigned))
+                                            <div class="text-center button-list">
+                                                <a href="{{ route('assign.show', $register->id) }}" class="btn btn-xs btn-secondary waves-effect waves-light">Assign</a>
+                                            </div>
+                                        @else
+                                            <div class="text-center button-list">
+                                                <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Verify</a>
+                                            </div>
+                                        @endif
                                     </td>
                                     <td>
                                         <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>

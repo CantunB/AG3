@@ -22,6 +22,15 @@ return [
     'Lock Screen' => 'Lock Screen',
     'Logout' => 'Logout',
     'Users' => 'Users',
-
+    'Status' => 'Status',
+    'Fullname' => 'Fullname',
+    'Phone' => 'Phone',
+    'Email' => 'Email',
+    'Options' => 'Options',
+    'Add New' => 'Add New',
+    'List' => 'List',
+    'Attachments' => 'Attachments',
+    'Date of Birth' => 'Date of Birth',
+    'Personal Information' => 'Personal Information',
 
 ];

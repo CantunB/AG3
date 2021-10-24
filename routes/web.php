@@ -34,7 +34,8 @@ Route::resources([
     'airlines' => 'AirlineController',
     'units' => 'UnitController',
     'services' => 'TypeServiceController',
-    'registers' => 'RegisterController'
+    'registers' => 'RegisterController',
+    'assign' => 'AssignRegisterController'
   //  'settings' => 'Controller',
 ]);
 

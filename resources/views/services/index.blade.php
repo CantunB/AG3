@@ -67,34 +67,32 @@
                                             {{ Str::substr($service->name, 0, 2) }}
                                         </p>
                                     </div>
-                                    <div class="col-sm-3">
-
-
+                                    <div class="col-sm-4">
                                         <div class="media">
                                             <div class="media-body">
                                                 <h4 class="mt-0 mb-2 font-16">{{ $service->name }}</h4>
-                                                <p class="mb-1"><b>{{ __('translation.Location') }}:</b> Seattle, Washington</p>
+                                                <p class="mb-1"><b>{{ __('translation.Description') }}:</b> {{ $service->description }}</p>
                                                 <p class="mb-0"><b>{{ __('translation.Category') }}:</b> Ecommerce</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="text-center my-3 my-sm-0">
-                                            <p class="mb-0 text-muted">{{ $service->created_at }}</p>
+                                            <p class="mb-0 text-muted">{{ Carbon\Carbon::createFromTimeString($service->created_at)->toFormattedDateString() }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-1">
                                         <div class="text-center button-list">
                                             <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Assign</a>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Call</a>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Email</a>
+                                        <!--    <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Call</a>
+                                            <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Email</a> -->
                                         </div>
                                     </div>
 
                                     <div class="col-sm-2">
                                         <div class="text-sm-right text-center mt-2 mt-sm-0">
                                             <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            <button type="button" onclick="deleteService({{ $service->id }})" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>
                                         </div>
                                     </div> <!-- end col-->
                                 </div> <!-- end row -->
@@ -141,9 +139,58 @@
 </div> <!-- container -->
 @include('services.partials.create_modal')
 @push('scripts')
-<!--Morris Chart-->
-    <script src="../assets/libs/morris.js06/morris.min.js"></script>
-    <script src="../assets/libs/raphael/raphael.min.js"></script>
-    <script src="../assets/js/pages/crm-leads.init.js"></script>
+<script src="../assets/libs/morris.js06/morris.min.js"></script>
+<script src="../assets/libs/raphael/raphael.min.js"></script>
+<script src="../assets/js/pages/crm-leads.init.js"></script>
+<script>
+function deleteService(id) {
+    console.log('Boton Presionado');
+    Swal.fire({
+        title: "Desea eliminar el servicio?",
+        text: "Por favor asegúrese y luego confirme!",
+        icon: 'warning',
+        showCancelButton: !0,
+        confirmButtonText: "¡Sí, borrar!",
+        cancelButtonText: "¡No, cancelar!",
+        reverseButtons: !0
+    }).then(function (e) {
+        if (e.value === true) {
+            $.ajax({
+                type: 'DELETE',
+                url: "{{url('/services')}}/" + id,
+                data: {
+                    id: id,
+                    _token: '{!! csrf_token() !!}'
+                },
+                dataType: 'JSON',
+                success: function (results) {
+                    if (results.success === true) {
+                        Swal.fire({
+                            title: "Hecho!",
+                            text: results.message,
+                            icon: "success",
+                            confirmButtonText: "Hecho!",
+                        });
+                        location.reload();
+                        //$('#table-sympathizers').DataTable().ajax.reload();
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: results.message,
+                            icon: "error",
+                            confirmButtonText: "Cancelar!",
+                        });
+                    }
+                }
+            });
+        } else {
+            e.dismiss;
+        }
+    }, function (dismiss) {
+        return false;
+    })
+    }
+</script>
+
 @endpush
 @endsection

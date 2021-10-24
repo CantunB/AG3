@@ -12,4 +12,8 @@ class TypeService extends Model
     public function scopeActive($query){
         return $query->where('status',1)->get();
     }
+
+    public function countServices(){
+
+    }
 }

@@ -86,6 +86,8 @@
         <script src="{{ asset('assets/js/app.min.js') }}"></script>        <!-- jQuery -->
         <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- App scripts -->
         @stack('scripts')
     </body>

@@ -50,7 +50,6 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-
         'driver' => [
             'driver' => 'sanctum',
             'provider' => 'operators',

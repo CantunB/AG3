@@ -52,7 +52,7 @@
                         <div class="text-center">
                             <img src="https://images.vexels.com/media/users/3/128923/isolated/preview/0f916b8448f91ec54ddde2efb8a74ddb-icono-redondo-de-maleta-de-aeropuerto-de-viaje.png" alt="logo" class="avatar-xl rounded-circle mb-3">
                             <h4 class="mb-1 font-18"></h4>
-                            <p class="text-muted  font-14">{{ $agencie->name }}</p>
+                            <p class="text-muted  font-14">{{ $agencie->business_name }}</p>
                         </div>
 
                         <p class="font-14 text-center text-muted">

@@ -50,14 +50,14 @@ class RolesAndPermissions extends Seeder
 
         // create personal users
         $user = User::create([
-            'name' => 'Berna Cantun',
+            'name' => 'Berna',
             'email' => 'cantunberna@gmail.com',
             'password' => bcrypt('Cantun97.-')
         ]);
         $user->assignRole($sa);
 
         $user = User::create([
-            'name' => 'Victor Cantun',
+            'name' => 'Victor',
             'email' => 'cantundominguez@gmail.com',
             'password' => bcrypt('vicocapri')
 
@@ -65,7 +65,7 @@ class RolesAndPermissions extends Seeder
         $user->assignRole($sa);
 
         $user = User::create([
-            'name' => 'Abreu Giral',
+            'name' => 'Abreu',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('1234')
 

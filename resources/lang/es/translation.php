@@ -72,5 +72,14 @@ return [
     'Description' => 'Descripcion',
     'Enter' => 'Ingresa',
     'Location' => 'Localizacion',
-    'Category' => 'Categoria'
+    'Category' => 'Categoria',
+    'Assign' => 'Asignar',
+    'Status' => 'Estado',
+    'Attachments' => 'Archivos adjuntos',
+    'Date of Birth' => 'Fecha de Nacimiento',
+    'Personal Information' => 'Informacion Personal',
+    'Type' => 'Tipo',
+    'License plate' => 'Placa',
+    'Circulation card' => 'Tarjeta Circulacion',
+    'Car insurance' => 'Seguro de auto',
 ];

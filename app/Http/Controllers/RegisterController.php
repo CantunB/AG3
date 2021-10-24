@@ -17,7 +17,7 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        $registers = Register::with(['Agency','Type_service','Airline'])->get();
+        $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
         return view('registers.index',compact('registers'));
     }
 
