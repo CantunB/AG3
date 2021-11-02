@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Unit extends Model
 {
     protected $table = 'units';
@@ -38,5 +40,20 @@ class Unit extends Model
     public function isAssigned(): BelongsTo
     {
         return $this->belongsTo(AssingRegister::class, 'id', 'id_unit');
+    }
+
+    /**
+     * Get all of the comments for the Unit
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bitacora(): HasMany
+    {
+        return $this->hasMany(UnitService::class, 'unit_id');
+    }
+
+    public function galery(): HasMany
+    {
+        return $this->hasMany(UnitGalery::class, 'unit_id');
     }
 }

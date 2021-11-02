@@ -5,7 +5,7 @@
         <!-- User box -->
         <div class="user-box text-center">
 
-            <img src="../assets/images/users/user-6.jpg" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
+            <img src="{{ asset('assets/images/users/user-6.jpg') }}" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
                 class="rounded-circle avatar-md">
             <div class="dropdown">
 

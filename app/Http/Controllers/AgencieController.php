@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use AgencieSeeder;
+use App\Http\Requests\Agencies\StoreAgenciesRequest;
 use App\Models\Agency;
+use App\Models\Register;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 class AgencieController extends Controller
 {
     public function __construct()
@@ -16,10 +21,36 @@ class AgencieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $agencies = Agency::paginate(6);
-        return view('agencies.index', compact('agencies'));
+        if ($request->ajax()){
+            $agencies = Agency::with(['services'])->orderBy('business_name','asc');
+            return DataTables::of($agencies)
+            ->addIndexColumn()
+            ->editColumn('contact', function($agencies){
+                 return $contact = '<img src="'.$agencies->agency_logo.'" alt="table-user" class="mr-2 rounded-circle avatar-xs">
+                <a href="javascript:void(0);" class="text-body font-weight-semibold">'.$agencies->contact.'</a>';
+            })
+            ->addColumn('services', function($agencies){
+                return $contador = $agencies->services->count();
+            })
+            ->addColumn('created', function($agencies){
+                return $created = $agencies->created_at->toFormattedDateString();
+            })
+            ->addColumn('options', function ($agencies){
+                $opciones = '';
+                if (Auth::user()->can('read_agencies')) {
+                    $opciones .= '<a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>';
+                }
+                if (Auth::user()->can('edit_column')) {
+                    $opciones .= '<button type="button" onclick="btnInfo('.$agencies->id.')" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>';
+                }
+                return $opciones;
+            })
+            ->rawColumns(['contact','options'])
+            ->toJson();
+        }
+        return view('agencies.index');
     }
 
     /**
@@ -38,11 +69,12 @@ class AgencieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAgenciesRequest $request)
     {
         //return $request->all();
         Agency::create($request->all());
-        return redirect()->route('agencies.index');
+        return response()->json(['data' => 'Agencia registrada correctamente'], 201);
+        //return redirect()->route('agencies.index');
 
         //Role::create($request->all());
         //return redirect()->route('admin.index')->with('status_success', 'ROLE CREADO CORRECTAMENTE');

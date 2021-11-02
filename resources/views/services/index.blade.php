@@ -71,8 +71,7 @@
                                         <div class="media">
                                             <div class="media-body">
                                                 <h4 class="mt-0 mb-2 font-16">{{ $service->name }}</h4>
-                                                <p class="mb-1"><b>{{ __('translation.Description') }}:</b> {{ $service->description }}</p>
-                                                <p class="mb-0"><b>{{ __('translation.Category') }}:</b> Ecommerce</p>
+                                                <p class="mb-1"><b>{{ __('translation.Description') }}:</b> {{ $service->description ?? 'Sin descripcion'}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +82,7 @@
                                     </div>
                                     <div class="col-sm-1">
                                         <div class="text-center button-list">
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Assign</a>
+                                            {{-- <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Assign</a> --}}
                                         <!--    <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Call</a>
                                             <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Email</a> -->
                                         </div>

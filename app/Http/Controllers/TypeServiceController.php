@@ -22,17 +22,6 @@ class TypeServiceController extends Controller
         $services = TypeService::Active();
         return view('services.index', compact('services'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -55,18 +44,6 @@ class TypeServiceController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TypeService  $typeService
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TypeService $typeService)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *

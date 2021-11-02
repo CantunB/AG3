@@ -14,9 +14,8 @@ class CreateTableUnitsImages extends Migration
     public function up()
     {
         Schema::create('units_images', function (Blueprint $table) {
-            //$table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('photo_car_insurance')->nullable();
+            $table->id();
+            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
             $table->string('photo_front_unit')->nullable();
             $table->string('photo_rear_unit')->nullable();
             $table->string('photo_right_unit')->nullable();
@@ -24,7 +23,7 @@ class CreateTableUnitsImages extends Migration
             $table->string('photo_inside_unit_1')->nullable();
             $table->string('photo_inside_unit_2')->nullable();
             $table->string('photo_inside_unit_3')->nullable();
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

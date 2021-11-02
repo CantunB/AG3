@@ -8,15 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Register extends Model
 {
+    const SUBURBAN = '1';
+    const VAN = '2';
+
     protected $table = 'registers';
     protected $fillable = [ 'date',
                             'agency_id',
                             'type_service_id',
-                            'airline_id',
+                            'origin',
                             'terminal',
+                            'time',
+                            'duration',
                             'flight_number',
                             'flight_time',
-                            'origin',
                             'destiny',
                             'passenger',
                             'passenger_number',
@@ -34,11 +38,6 @@ class Register extends Model
     {
         return $this->belongsTo(TypeService::class, 'type_service_id');
     }
-
-    public function Airline()
-    {
-        return $this->belongsTo(Airline::class, 'airline_id');
-    }
     /**
      * The roles that belong to the Register
      *
@@ -47,12 +46,6 @@ class Register extends Model
     public function isAssigned(): BelongsTo
     {
         return $this->belongsTo(AssingRegister::class, 'id','id_register');
-    }
-
-    public function counter()
-    {
-     return $this::where('clave_elector', 'not like', "%@%")->select('seccion')->where('seccion', $seccion)->count();
-
     }
 
 }

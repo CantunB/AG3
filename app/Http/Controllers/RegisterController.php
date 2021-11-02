@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Registers\StoreRegistersRequest;
 use App\Models\Agency;
 use App\Models\Airline;
+use App\Models\Hotel;
+use App\Models\OriginDestiny;
 use App\Models\Register;
 use App\Models\TypeService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -15,10 +22,57 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
-        return view('registers.index',compact('registers'));
+        if ($request->ajax()){
+            $registers = Register::with(['Agency','Type_service', 'isAssigned']);
+//          $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
+            return DataTables::of($registers)
+            ->addIndexColumn()
+            ->editColumn('date', function($registers){
+              return Carbon::createFromTimeString($registers->pickup)->toFormattedDateString();
+            })
+            ->editColumn('agencia', function($registers){
+                return $registers->Agency->business_name;
+            })
+            ->editColumn('service', function($registers){
+                return $registers->Type_service->name;
+            })
+            ->editColumn('status', function($registers){
+                $status = '';
+                if(!isset($registers->isAssigned)){
+                    $status = '<div class="text-center button-list">
+                                    <a href="'. route('assign.show', $registers->id) .'" class="btn btn-xs btn-secondary waves-effect waves-light">Sin asignar</a>
+                            </div>';
+                }
+                else{
+                    $status = '<div class="text-center button-list">
+                                    <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Verify</a>
+                                </div>';
+                }
+                return $status;
+            })
+            ->editColumn('requested_unit', function($registers){
+                if ($registers->requested_unit == 1) {
+                    return 'SUBURBAN';
+                }else{
+                    return 'VAN';
+                }
+
+            })
+            ->addColumn('options', function ($registers){
+                $opciones = '';
+                if (Auth::user()->can('read_operators')){
+                    $opciones .= '<button type="button"  onclick="btnInfo('.$registers->id.')" class="btn btn-sm action-icon getInfo icon-dual-blue"><i class="mdi mdi-menu-right-outline"></i></button>';
+                    // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
+                }
+                return $opciones;
+            })
+            ->rawColumns(['status','options'])
+            ->toJson();
+        }
+        //$registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
+        return view('registers.index');
     }
 
     /**
@@ -30,9 +84,16 @@ class RegisterController extends Controller
     {
         $agencies = Agency::all();
         $services = TypeService::all();
-        $airlines = Airline::all();
-
-        return view('registers.create', compact('agencies','services','airlines'));
+        $airlines = DB::table('airlines')->groupBy('airline')->get();
+        $origins_destiny =  OriginDestiny::all();
+        $hotels = Hotel::all();
+        return view('registers.create', compact(
+                'agencies',
+            'services',
+            'airlines',
+            'hotels',
+            'origins_destiny')
+        );
 
     }
 
@@ -42,9 +103,15 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRegistersRequest $request)
     {
-        Register::create($request->all());
+        $origins_destiny = OriginDestiny::where('name',$request->destiny)->first();
+        if ( true === ( $origins_destiny ?? null ) ) {
+            $origins_destiny = OriginDestiny::create([
+            'name' => $request->destiny,
+            ]);
+        }
+
         return redirect()->route('registers.index');
     }
 

@@ -17,6 +17,7 @@
         <link href="{{ asset('assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <link href="{{ asset('assets/libs/dropify/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App css -->
 
@@ -81,6 +82,8 @@
         <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
         <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
         <script src="{{ asset('assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/parsleyjs/i18n/es.js') }}"></script>
         <script src="{{ asset('assets/libs/dropify/js/dropify.min.js') }}"></script>
         <script src="{{ asset('assets/js/pages/dashboard-1.init.js') }}"></script>
         <script src="{{ asset('assets/js/app.min.js') }}"></script>        <!-- jQuery -->

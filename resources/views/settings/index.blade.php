@@ -52,6 +52,7 @@
                                                     <th>{{ __('#') }}</th>
                                                     <th>{{ __('translation.Fullname') }}</th>
                                                     <th>{{ __('translation.Email') }}</th>
+                                                    <th>{{ __('translation.Phone') }}</th>
                                                     <th>{{ __('translation.Options') }}</th>
                                                 </tr>
                                             </thead>
@@ -131,9 +132,8 @@
                 columns: [
                     {data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center'},
                     {data: 'name', name:'name' },
-                //    {data: 'celular', name:'celular', orderable: false },
                     {data: 'email', name:'email',orderable: false },
-                //    {data: 'rol', name:'rol', orderable: false },
+                    {data: 'phone', name:'phone', orderable: false },
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],
         });
@@ -173,6 +173,7 @@
                 columns: [
                     {data: 'DT_RowIndex', name:'DT_RowIndex' , width: '10px'},
                     {data: 'name', name: 'name', width: '110px'},
+
                     //{data: 'rol', name: 'rol', className: 'text-center', width: '110px',searchable: false, orderable: false},
                     //{data: 'options', name: 'options', className: 'text-center',width: '110px', searchable: false, orderable: false},
                     ],

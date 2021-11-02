@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Units;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Units\StoreUnitsRequest;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
-use File;
-
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class UnitController extends Controller
@@ -25,26 +26,29 @@ class UnitController extends Controller
     {
         //$units = Unit::with('isAssigned')->Active();
         if ($request->ajax()){
-            $operators = Unit::with('isAssigned')->Active();
-            return DataTables::of($operators)
+            $unit = Unit::with('isAssigned')->Active();
+            return DataTables::of($unit)
             ->addIndexColumn()
-            ->addColumn('status', function($operator){
+            ->addColumn('status', function($unit){
                 $status = '';
-                if ($operator->isAssigned) {
+                if ($unit->isAssigned) {
                     $status .= '<span class="badge badge-primary">Unidad Asignada</span>';
                 }else{
                     $status .= '<span class="badge badge-success">Unidad Disponible</span>';
                 }
                 return $status;
             })
-            ->addColumn('options', function ($operators){
+            ->addColumn('options', function ($unit){
                 $opciones = '';
                 if (Auth::user()->can('read_units')){
-                    $opciones .= '<button type="button"  onclick="btnInfo('.$operators->id.')" class="btn btn-sm action-icon getInfo icon-dual-info"><i class="mdi mdi-car-info"></i></button>';
+                    $opciones .= '<button type="button"  onclick="btnInfo('.$unit->id.')" class="btn btn-sm action-icon getInfo icon-dual-info"><i class="mdi mdi-car-info"></i></button>';
                     // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
                 }
                 if (Auth::user()->can('update_units')){
-                    $opciones .= '<button type="button" class="btn btn-soft btn-sm action-icon action-icon icon-dual-blue"><i class="mdi mdi-car-door-lock"></i></button>';
+                    $opciones .= '<a href="'.route('bitacora.index', $unit->id).'" class="btn btn-soft btn-sm action-icon action-icon icon-dual-blue"><i class="mdi mdi-car-door-lock"></i></a>';
+                }
+                if (Auth::user()->can('delete_units')) {
+                    $opciones .= '<button type="button" onclick="btnDelete('.$unit->id.')" class="btn btn-sm action-icon icon-dual-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
                 }
                 return $opciones;
             })
@@ -72,7 +76,7 @@ class UnitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUnitsRequest $request)
     {
         $units = Unit::all();
         $last = $units->last();
@@ -86,7 +90,7 @@ class UnitController extends Controller
         $unit = Str::upper(Str::substr($request->type, 0, 3));
         $slug_unit = $unit . $count ;
 
-        $directory = '/documents/units/'. $request->email .'/';
+        $directory = '/documents/units/'. $slug_unit .'/';
 
 
         if ($request->has('file_invoice_unit')) {
@@ -140,7 +144,9 @@ class UnitController extends Controller
             'file_car_insurance' =>  $directory . $insurance_name,
         ]);
 
-        return redirect()->route('units.index');
+        return response()->json(['data' => 'Unidad Almacenada'],200);
+
+        //return redirect()->route('units.index');
     }
 
     /**
@@ -159,6 +165,17 @@ class UnitController extends Controller
             'PermisoSCT' => $unit->file_permission_sct,
             'PlacasSCT' => $unit->file_plate_number,
             ];
+
+        $images = [
+            'Imagen01' => $unit->galery[0]->photo_front_unit,
+            'Imagen02' => $unit->galery[0]->photo_rear_unit,
+            'Imagen03' => $unit->galery[0]->photo_right_unit,
+            'Imagen04' => $unit->galery[0]->photo_left_unit,
+            'Imagen05' => $unit->galery[0]->photo_inside_unit_1,
+            'Imagen06' => $unit->galery[0]->photo_inside_unit_2,
+            'Imagen07' => $unit->galery[0]->photo_inside_unit_3,
+        ];
+
         foreach ($files as $key => $file) {
             $archivos[] = '<div class="p-1">
             <div class="row align-items-center">
@@ -183,10 +200,14 @@ class UnitController extends Controller
         </div>';
         }
 
+        foreach ($images as $key => $image) {
+            $galery[] = '<img class="d-flex mr-3 rounded-circle avatar-lg" src="'.asset($image).'" alt="Generic placeholder image">';
+        }
+
         return response()->json([
             'data' => $unit,
             'files' => $archivos,
-
+            'galery' => $galery
         ],200);
     }
 
@@ -219,8 +240,25 @@ class UnitController extends Controller
      * @param  \App\Models\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Unit $unit)
+    public function destroy(Request $request)
     {
-        //
+        $unit = Unit::findOrFail($request->id);
+        $directory = '/documents/units/'. $unit->unit;
+       // if(File::exists(public_path($directory))){
+            File::deleteDirectory(public_path($directory));
+        //}
+        $delete = $unit->delete();
+        if ($delete == 1){
+            $success = true;
+            $message = "Unidad eliminada correctamente";
+        } else {
+            $success = true;
+            $message = "No se elimino la unidad";
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
 }

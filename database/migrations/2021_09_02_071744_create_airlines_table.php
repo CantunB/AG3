@@ -14,14 +14,13 @@ class CreateAirlinesTable extends Migration
     public function up()
     {
         Schema::create('airlines', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('telephone')->nullable();
-            $table->string('email')->unique();
-            $table->string('airline_logo')->nullable();
-            $table->tinyInteger('status')->default(1);
-            $table->timestamps();
+            //$table->id();
+            $table->string('terminal',10)->nullable();
+            $table->string('airport',100)->nullable();
+            $table->string('airline',120)->nullable();
+            $table->string('destiny')->nullable();
+            $table->string('code',3)->nullable();
+            //$table->timestamps();
         });
     }
 

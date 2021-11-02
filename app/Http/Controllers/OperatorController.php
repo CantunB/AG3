@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Operators\StoreOperatorsRequest;
 use App\Models\Operator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,30 +28,22 @@ class OperatorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()){
-            $operators = Operator::with('isAssigned')->Active();
+            $operators = Operator::with('isAssigned')->withTrashed();
 //          $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
-
             return DataTables::of($operators)
             ->addIndexColumn()
             ->addColumn('name', function ($operators){
-                return ' <img src="'.$operators->operator_photo.'" alt="table-user" class="mr-2 rounded-circle avatar-xs">
-                <a href="javascript:void(0);" class="text-body font-weight-normal">'. $operators->name .' '. $operators->paterno .' '. $operators->materno.'</a>';
+                return ' <img src="'.$operators->operator_photo.'" alt="table-user" class="mr-2 rounded-circle avatar-xs">'.
+                $operators->name .' '. $operators->paterno .' '. $operators->materno;
             })
-
-        /* ->addColumn('rol', function ($usuarios){
-                $roles = $usuarios->getRoleNames();
-                $rol = '<ul>';
-                for( $i = 0; $i < count($roles); $i++){
-                    $rol .= '<li>'.'<strong style="text-transform: uppercase;">'.$roles[$i].'</strong></li>';
-                }
-                $rol .= '</ul>';
-                return $rol;
-            })*/
             ->addColumn('status', function($operator){
                 $status = '';
                 if ($operator->isAssigned) {
                     $status .= '<span class="badge badge-primary">Asignado</span>';
-                }else{
+                }elseif ($operator->deleted_at != null) {
+                    $status .= '<span class="badge badge-danger">Inactivo</span>';
+                }
+                else{
                     $status .= '<span class="badge badge-success">Disponible</span>';
                 }
                 return $status;
@@ -63,6 +56,10 @@ class OperatorController extends Controller
                 }
                 if (Auth::user()->can('update_operators')){
                     $opciones .= '<button type="button" class="btn btn-sm action-icon btnModalEdit icon-dual-warning"><i class="mdi mdi-account-cog"></i></button>';
+                }
+                if (Auth::user()->can('delete_operators')){
+                    $opciones .= '<button type="button" onclick="btnDelete('.$operators->id.')" class="btn btn-sm action-icon icon-dual-danger"><i class="mdi mdi-delete-empty"></i></button>';
+
                 }
                 return $opciones;
             })
@@ -89,7 +86,7 @@ class OperatorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOperatorsRequest $request)
     {
         //Operator::create($request->all());
         $directory = '/documents/operators/'. $request->email .'/';
@@ -164,7 +161,9 @@ class OperatorController extends Controller
             'driver_license' => $directory . $driverLicense ,
             'operator_photo' => $directory . $operatorPhoto,
         ]);
-        return redirect()->route('operators.index');
+
+        //return redirect()->route('operators.index');
+        return response()->json(['data' => 'Operador registrado correctamente'],200);
     }
 
     /**
@@ -267,8 +266,20 @@ class OperatorController extends Controller
      * @param  \App\Models\Operator  $operator
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Operator $operator)
+    public function destroy(Request $request)
     {
-        //
+        $operator = Operator::findOrFail($request->id);
+        $delete = $operator->delete();
+        if ($delete == 1){
+            $success = true;
+            $message = "Operador eliminado correctamente";
+        } else {
+            $success = true;
+            $message = "No se elimino el operador";
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
 }

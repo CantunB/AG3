@@ -2,6 +2,9 @@
 
 use App\Models\Agency;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class AgencieSeeder extends Seeder
 {
@@ -12,6 +15,19 @@ class AgencieSeeder extends Seeder
      */
     public function run()
     {
+
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        Permission::create(['name' => 'create_agencies']);
+        Permission::create(['name' => 'read_agencies']);
+        Permission::create(['name' => 'update_agencies']);
+        Permission::create(['name' => 'delete_agencies']);
+        $super_admin = Role::findByName('Super-Admin');
+        $super_admin->givePermissionTo([
+            'create_agencies',
+            'read_agencies',
+            'update_agencies',
+            'delete_agencies'
+            ]);
         $agency = Agency::create([
             'business_name' => 'COMERCIALIZADORA BETANCOURT, SA DE CV',
             'rfc' => 'CBE060703MN0',
