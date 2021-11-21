@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    if(auth()->check()){
+        return view('home');
+    }else{
+        return view('auth.login');
+    }
 });
 
 //Language Translation
@@ -28,24 +33,34 @@ Route::view('/operator', 'operator');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
-    //'users' => 'UserController',
     'agencies' => 'AgencieController',
     'operators' => 'OperatorController',
     'airlines' => 'AirlineController',
-    'units' => 'UnitController',
-    'services' => 'TypeServiceController',
+    'units' => 'Units\UnitController',
+    //'bitacora' => '',
     'registers' => 'RegisterController',
-    'assign' => 'AssignRegisterController'
-  //  'settings' => 'Controller',
+    'assign' => 'AssignRegisterController',
+    'users' => 'UserController'
 ]);
+
+Route::apiResources([
+    'services' => 'TypeServiceController',
+    'origen_destiny' =>'OriginDestinyController',
+
+]);
+
+Route::group(['prefix' => 'units'], function(){
+    Route::group(['prefix' => '{unit_id}'], function($unit_id){
+      Route::resource('bitacora', 'Units\UnitServiceController');
+      Route::resource('galery', 'Units\UnitGaleryController');
+    });
+  });
 
 Route::group(['web', 'settings'], function(){
     Route::get('users','Controller@users')->name('settings.users');
     Route::get('roles', 'Controller@roles')->name('settings.roles');
     Route::get('permissions', 'Controller@permissions')->name('settings.permissions');
     Route::get('{locale}', 'Controller@lang');
-
 });
-
 
 

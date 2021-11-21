@@ -7,11 +7,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 class Operator extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, SoftDeletes;
+
+    const operador_activo = '1';
+    const operador_no_activo = '0';
 
     protected $table ='operators';
 
@@ -41,11 +44,9 @@ class Operator extends Authenticatable
             'password', 'remember_token',
         ];
 
-
     public function scopeActive($query){
         return $query->where('status',1)->get();
     }
-
     /**
      * Get the user that owns the Operator
      *
@@ -54,6 +55,11 @@ class Operator extends Authenticatable
     public function isAssigned(): BelongsTo
     {
         return $this->belongsTo(AssingRegister::class, 'id','id_operator');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->name} {$this->paterno} {$this->materno}";
     }
 
 }

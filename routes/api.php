@@ -56,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('user/revoke', 'Api\Auth\UserAuthController@logout');
 });
 
- Route::group(['middleware' => ['auth:sanctum']], function(){
+Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('operator/me', 'Api\Auth\OperatorAuthController@me');
     Route::get('operator/logout', 'Api\Auth\OperatorAuthController@logout');
 });
@@ -64,3 +64,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::apiResources([
     '/services' => 'Api\ServicesController',
 ]);
+

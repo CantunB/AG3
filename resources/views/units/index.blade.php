@@ -1,16 +1,11 @@
 @extends('layouts.app')
 @section('content')
- <!-- Start Content-->
  <div class="container-fluid">
-
-    <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
         @slot('title') {{ config('app.name', 'Laravel') }} @endslot
         @slot('subtitle') {{ __('translation.Units') }} @endslot
         @slot('teme') {{ __('translation.List') }} @endslot
     @endcomponent
-    <!-- end page title -->
-
     <div class="row">
         <div class="col-8">
             <div class="card">
@@ -30,7 +25,6 @@
                                     <th>{{ __('translation.Units') }}</th>
                                     <th>{{ __('translation.License plate') }}</th>
                                     <th>{{ __('translation.Circulation card') }}</th>
-                                    <th>{{ __('translation.Car insurance') }}</th>
                                     <th>{{ __('translation.Status') }}</th>
                                     <th style="width: 82px;">{{ __('translation.Options') }}</th>
                                 </tr>
@@ -46,7 +40,7 @@
         <div class="col-lg-4">
             <div class="card-box">
                 <div class="media mb-3">
-                    <img class="d-flex mr-3 rounded-circle avatar-lg" id="getFoto" src="../assets/images/users/user-8.png" alt="Generic placeholder image">
+                    <div class="row" id="getImages"></div>
                     <div class="media-body">
                         <h4 class="mt-0 mb-1" id="getNombre"></h4>
                         {{-- <p class="text-muted"><i class="mdi mdi-car-arrow-right"></i>Operador</p> --}}
@@ -71,64 +65,14 @@
                 <div id="getFiles" class="card mb-1 shadow-none border">
 
                 </div>
-
-                {{-- <div class="card mb-1 shadow-none border">
-                    <div class="p-1">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <div class="avatar-sm">
-                                    <span class="avatar-title badge-soft-primary text-primary rounded">
-                                        doc
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col pl-0">
-                                <a href="javascript:void(0);" class="text-muted font-weight-bold">paypal-statement.docs</a>
-                                <p class="mb-0 font-12">0.25 MB</p>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Button -->
-                                <a href="javascript:void(0);" class="btn btn-link font-16 text-muted">
-                                    <i class="dripicons-download"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-0 shadow-none border">
-                    <div class="p-1">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <div class="avatar-sm">
-                                    <span class="avatar-title bg-secondary rounded">
-                                        pdf
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col pl-0">
-                                <a href="javascript:void(0);" class="text-muted font-weight-bold">visa-credit-card.pdf</a>
-                                <p class="mb-0 font-12">1.05 MB</p>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Button -->
-                                <a href="javascript:void(0);" class="btn btn-link font-16 text-muted">
-                                    <i class="dripicons-download"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
             </div>
         </div>
-
     </div>
-
-
-
-</div> <!-- container -->
+</div>
 @push('scripts')
+<script>
+    $('#form_register').parsley();
+  </script>
 <script>
     $(document).ready(function(){
         $('#table_units').DataTable({
@@ -141,9 +85,8 @@
                 columns: [
                     //{data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center'},
                     {data: 'unit', name:'unit', className: 'text-center'},
-                    {data: 'plate_number', name:'plate_number', className:'text-center'},
-                    {data: 'circulation_card', name: 'circulation_card', className: 'text-center'},
-                    {data: 'car_insurance', name: 'car_insurance', className: 'text-center'},
+                    {data: 'sct_plate_number', name:'sct_plate_number', className:'text-center'},
+                    {data: 'circulation_card_number', name: 'circulation_card_number', className: 'text-center'},
                     {data: 'status', name:'status', className: 'text-center'},
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],
@@ -156,20 +99,82 @@
             url: 'units/'+ id,
             data: {
                  id : id
-               // 'id': id,
-              //  '_token': "{{ csrf_token() }}"
             },
             type: "GET",
             success: function (response){
-            console.log(response);
-            $.each( response, function( key, value ) {
-                //console.log( key + ": " + value );
-                $('#getFiles').html(value) ;
-              });
-            }
 
+
+                var files = response.files;
+                var images = response.galery;
+            console.log(response);
+            //files.forEach(function(file, index) {
+                 $('#getFiles').html(files);
+                 $('#getImages').html(images);
+
+                //$('#getFiles').remove();
+                //$('#getImages').remove();
+                //console.log("Persona " + index + " | Nombre: " + persona.nombre + " Edad: " + persona.Edad)
+              //  });
+            //$.each( response.files, function( key, val ) {
+                //console.log( key + ": " + file );
+              //  $('#getFiles').html(val);
+             // });
+            //$.each( response.galery, function( key, val ) {
+                //console.log( key + ": " + galery );
+            //    $('#getImages').html(val);
+             // });
+            }
         });
     }
+</script>
+<script>
+    /** DESTROY UNIT*/
+    function btnDelete(id) {
+        Swal.fire({
+            title: "Desea eliminar?",
+            text: "Por favor asegúrese y luego confirme!",
+            icon: 'warning',
+            showCancelButton: !0,
+            confirmButtonText: "¡Sí, borrar!",
+            cancelButtonText: "¡No, cancelar!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: "{{url('/units')}}/" + id,
+                    data: {
+                        id: id,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            Swal.fire({
+                                title: "Hecho!",
+                                text: results.message,
+                                icon: "success",
+                                confirmButtonText: "Hecho!",
+                            });
+                            $('#table_units').DataTable().ajax.reload();
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: results.message,
+                                icon: "error",
+                                confirmButtonText: "Cancelar!",
+                            });
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+    /** DESTROY UNIT*/
 </script>
 @endpush
 @endsection

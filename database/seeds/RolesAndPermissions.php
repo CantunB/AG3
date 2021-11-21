@@ -17,67 +17,57 @@ class RolesAndPermissions extends Seeder
     {
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
         // USUARIOS
         Permission::create(['name' => 'create_users']);
         Permission::create(['name' => 'read_users']);
         Permission::create(['name' => 'update_users']);
         Permission::create(['name' => 'delete_users']);
-
         // ROLES
-         Permission::create(['name' => 'create_roles']);
-         Permission::create(['name' => 'read_roles']);
-         Permission::create(['name' => 'update_roles']);
-         Permission::create(['name' => 'delete_roles']);
-
+        Permission::create(['name' => 'create_roles']);
+        Permission::create(['name' => 'read_roles']);
+        Permission::create(['name' => 'update_roles']);
+        Permission::create(['name' => 'delete_roles']);
         // PERMISOS
         Permission::create(['name' => 'create_permissions']);
         Permission::create(['name' => 'read_permissions']);
         Permission::create(['name' => 'update_permissions']);
         Permission::create(['name' => 'delete_permissions']);
-
         // create roles and assign existing permissions
         $admin = Role::create(['name' => 'administrador']);
         $admin->givePermissionTo('create_users');
         $admin->givePermissionTo('read_users');
         $admin->givePermissionTo('delete_users');
 
-        $supervisor = Role::create(['name' => 'supervisor']);
-        $supervisor->givePermissionTo('read_users');
-
         $sa = Role::create(['name' => 'Super-Admin']);
-        // gets all permissions via Gate::before rule; see AuthServiceProvider
 
+        $operator = Role::create(['name' => 'operator']);
+        // gets all permissions via Gate::before rule; see AuthServiceProvider
         // create personal users
         $user = User::create([
-            'name' => 'Berna',
+            'name' => 'Bernabé',
+            'paterno' => 'Cantún',
+            'materno' => 'Domínguez',
             'email' => 'cantunberna@gmail.com',
+            'phone' => '9381726488',
+            'status' => 2,
             'password' => bcrypt('Cantun97.-')
         ]);
         $user->assignRole($sa);
-
         $user = User::create([
-            'name' => 'Victor',
+            'name' => 'Victor José',
+            'paterno' => 'Cantún',
+            'materno' => 'Domínguez',
             'email' => 'cantundominguez@gmail.com',
+            'phone' => '9381609121',
+            'status' => 2,
             'password' => bcrypt('vicocapri')
-
         ]);
         $user->assignRole($sa);
-
         $user = User::create([
             'name' => 'Abreu',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('1234')
-
         ]);
         $user->assignRole($admin);
-
-        $user = User::create([
-            'name' => 'AG3 LUXI',
-            'email' => 'ag3@gmail.com',
-            'password' => bcrypt('1234')
-
-        ]);
-        $user->assignRole($supervisor);
     }
 }

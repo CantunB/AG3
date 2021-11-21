@@ -17,6 +17,7 @@
         <link href="{{ asset('assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <link href="{{ asset('assets/libs/dropify/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App css -->
 
@@ -24,6 +25,7 @@
         <link href="{{ asset('assets/css/app-modern.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
         <link href="{{ asset('assets/css/bootstrap-modern-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
         <link href="{{ asset('assets/css/app-modern-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+        <link href="{{ asset('assets/libs/flexdatalist/jquery.flexdatalist.min.css') }}" rel="stylesheet" type="text/css">
 
         <!-- icons -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -68,6 +70,7 @@
         <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/chartist/chartist.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
@@ -81,13 +84,15 @@
         <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
         <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
         <script src="{{ asset('assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/parsleyjs/i18n/es.js') }}"></script>
         <script src="{{ asset('assets/libs/dropify/js/dropify.min.js') }}"></script>
         <script src="{{ asset('assets/js/pages/dashboard-1.init.js') }}"></script>
         <script src="{{ asset('assets/js/app.min.js') }}"></script>        <!-- jQuery -->
         <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+        <script src="{{ asset('assets/libs/flexdatalist/jquery.flexdatalist.min.js') }}"></script>
         <!-- App scripts -->
         @stack('scripts')
     </body>

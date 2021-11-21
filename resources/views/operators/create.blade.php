@@ -9,7 +9,7 @@
     @endcomponent
     <!-- end page title -->
 <!-- end page title -->
-<form id="form_register" method="POST" action="{{ route('operators.store') }}" enctype="multipart/form-data">
+<form id="form_register" method="POST" action="{{ route('operators.store') }}" enctype="multipart/form-data" data-parsley-validate>
     @csrf
     <div class="row">
         <div class="col-12">
@@ -19,19 +19,19 @@
                         <div class="col-xl-4">
                             <div class="form-group ">
                                 <label>{{ __('translation.Name') }}</label>
-                                <input id="name" name="name" type="text" class="form-control"  required placeholder="{{ __('Enter name') }}">
+                                <input id="name" name="name" type="text" class="form-control" placeholder="{{ __('Enter name') }}" required minlength="3" >
                             </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="projectname">{{ __('translation.Last name') }}</label>
-                                <input id="paterno" name="paterno" type="text" class="form-control" required placeholder="{{ __('Enter last name') }}">
+                                <input id="paterno" name="paterno" type="text" class="form-control"  placeholder="{{ __('Enter last name') }}" required minlength="3">
                             </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>{{ __('translation.Mother last name') }}</label>
-                                <input id="materno" name="materno" type="text" class="form-control" required placeholder="{{ __('Enter mother last name') }}">
+                                <input id="materno" name="materno" type="text" class="form-control" placeholder="{{ __('Enter mother last name') }}">
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,8 @@
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Phone') }}</label>
-                                <input name="phone" id="phone" class="form-control" required placeholder="{{ __('Phone') }}">
+                                <input type="number" name="phone" id="phone" class="form-control" required placeholder="{{ __('Phone') }}" data-parsley-type="digits"
+                                data-parsley-validation-threshold="1"   data-parsley-trigger="keyup" min="10" value="{{ old('phone') }}">
                             </div>
                         </div>
                         <div class="col-xl-3">
@@ -51,7 +52,7 @@
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Birthday Date') }}</label>
-                                <input id="birthday_date" name="birthday_date" type="date" class="form-control" required>
+                                <input id="birthday_date" name="birthday_date" type="date" class="form-control" >
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -77,43 +78,43 @@
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Proof address') }}</label>
-                                <input type="file" class="dropify" id="proof_address" name="proof_address" data-default-file="{{ asset('assets/images/attached-files/img-7.png') }}" />
+                                <input type="file" class="dropify" id="proof_address" name="proof_address" data-default-file="{{ asset('assets/images/attached-files/img-7.png') }}" required />
                             </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('NSS') }}</label>
-                                <input type="file" class="dropify" id="nss" name="nss" data-default-file="{{ asset('assets/images/attached-files/img-8.jpg') }}" />
+                                <input type="file" class="dropify" id="nss" name="nss" data-default-file="{{ asset('assets/images/attached-files/img-8.jpg') }}" required/>
                             </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('CURP') }}</label>
-                                <input type="file" class="dropify" id="curp" name="curp" data-default-file="{{ asset('assets/images/attached-files/img-9.jpg') }}" />
+                                <input type="file" class="dropify" id="curp" name="curp" data-default-file="{{ asset('assets/images/attached-files/img-9.jpg') }}" required />
                             </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('RFC') }}</label>
-                                <input type="file" class="dropify" id="rfc" name="rfc" data-default-file="{{ asset('assets/images/attached-files/img-10.png') }}" />
+                                <input type="file" class="dropify" id="rfc" name="rfc" data-default-file="{{ asset('assets/images/attached-files/img-10.png') }}" required/>
                             </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('INE') }}</label>
-                                <input type="file" class="dropify" id="ine" name="ine" data-default-file="{{ asset('assets/images/attached-files/img-11.jpg') }}" />
+                                <input type="file" class="dropify" id="ine" name="ine" data-default-file="{{ asset('assets/images/attached-files/img-11.jpg') }}" required />
                             </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Driver License') }}</label>
-                                <input type="file" class="dropify" id="driver_license" name="driver_license" data-default-file="{{ asset('assets/images/attached-files/img-12.png') }}" />
+                                <input type="file" class="dropify" id="driver_license" name="driver_license" data-default-file="{{ asset('assets/images/attached-files/img-12.png') }}" required />
                             </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Operator Photo') }}</label>
-                                <input type="file" class="dropify" id="operator_photo" name="operator_photo" data-default-file="{{ asset('assets/images/attached-files/img-5.jpg') }}" />
+                                <input type="file" class="dropify" id="operator_photo" name="operator_photo" data-default-file="{{ asset('assets/images/attached-files/img-5.jpg') }}" required />
                             </div>
                         </div>
                     </div>
@@ -132,22 +133,54 @@
 </div>
 <!-- end row-->
 @push('scripts')
-<script>
-    document.getElementById("birthday_date").flatpickr({
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-    //  defaultDate: "{!! date('Y-m-d') !!}"
-    });
-</script>
+
 <script>
     $('.dropify').dropify({
     messages: {
-        'default': 'Drag and drop a file here or click',
-        'replace': 'Drag and drop or click to replace',
-        'remove':  'Remove',
-        'error':   'Ooops, something wrong happended.'
+        'default': 'Arrastre y suelte un archivo aquí o haga clic',
+        'replace': 'Arrastra y suelta o haz clic para reemplazar',
+        'remove':  'Eliminar',
+        'error':   'Vaya, sucedió algo mal.'
     }
+});
+</script>
+<script>
+    $("#form_register").submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: "{!! route('operators.store') !!}",
+            data: formData,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(response){
+               //console.log('Formulario enviado');
+                Swal.fire({
+                    title: "Registro creado!",
+                    text: response.data,
+                    icon: "success",
+                    timer: 3500
+                });
+                window.location = '{!! route('operators.index') !!}';
+            },
+            error: function(response){
+                //console.log(response);
+                var errors = response.responseJSON;
+                errorsHtml = '<ul>';
+                $.each(errors.errors,function (k,v) {
+                errorsHtml += '<li>'+ v + '</li>';
+                });
+                errorsHtml += '</ul>';
+                Swal.fire({
+                    title: "Ooops!",
+                    html: errorsHtml,
+                    icon: "error",
+                    confirmButtonText: "Volver!",
+                });
+            }
+        });
 });
 </script>
 @endpush

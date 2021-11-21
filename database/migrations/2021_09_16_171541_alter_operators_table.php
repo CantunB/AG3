@@ -15,15 +15,15 @@ class AlterOperatorsTable extends Migration
     {
         Schema::table('operators',function($table){
             $table->timestamp('email_verified_at')->nullable()->after('email');
-            $table->string('second_email')->nullable()->after('email');
+            $table->string('second_email')->unique()->nullable()->after('email');
             $table->string('password')->after('email_verified_at');
             $table->rememberToken()->after('password');
-            $table->string('birth_certificate')->after('cp');
-            $table->string('proof_address')->after('birth_certificate');
-            $table->string('nss')->after('proof_address');
-            $table->string('curp')->after('nss');
-            $table->string('rfc')->after('curp');
-            $table->string('ine')->after('rfc');
+            $table->string('birth_certificate')->after('cp')->nullable();
+            $table->string('proof_address')->after('birth_certificate')->nullable();
+            $table->string('nss')->after('proof_address')->nullable();
+            $table->string('curp')->after('nss')->nullable();
+            $table->string('rfc')->after('curp')->nullable();
+            $table->string('ine')->after('rfc')->nullable();
             //$table->string('operator_photo');
         });
     }

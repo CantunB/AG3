@@ -35,7 +35,8 @@ class Controller extends BaseController
             return DataTables::of($users)
             ->addIndexColumn()
             ->addColumn('name', function ($users){
-                return '<strong style="text-transform: uppercase;">'. $users->name .' '. $users->paterno .' '. $users->materno.'</strong>';
+                return '<img src="'.asset($users->photo_user).'" alt="table-user" class="mr-2 avatar-xs rounded-circle">
+                <strong style="text-transform: uppercase;">'. $users->FullName .'</strong>';
             })
            /* ->addColumn('rol', function ($usuarios){
                 $roles = $usuarios->getRoleNames();
@@ -49,10 +50,10 @@ class Controller extends BaseController
             ->addColumn('options', function ($users){
                 $opciones = '';
                 if (Auth::user()->can('read_usuarios')){
-                    $opciones .= '<button type="button" class="btn btn-sm action-icon getInfo icon-dual-blue"><i class="mdi mdi-account-circle"></i></button>';
+                    $opciones .= '<a href="'.route('users.show', $users->id).'" class="btn btn-sm action-icon getInfo icon-dual-blue"><i class="mdi mdi-account-circle"></i></a>';
                 }
-                if (Auth::user()->can('update_usuarios')){
-                    $opciones .= '<button type="button" class="btn btn-sm action-icon btnModalEdit icon-dual-warning"><i class="mdi mdi-account-cog"></i></button>';
+                if (Auth::user()->can('delete_usuarios')){
+                    $opciones .= '<button type="button" onclick="btnDelete('.$users->id.')" class="btn btn-sm action-icon icon-dual-danger"><i class="mdi mdi-trash-can"></i></button>';
                 }
                 return $opciones;
             })
@@ -85,6 +86,10 @@ class Controller extends BaseController
                 if (Auth::user()->can('update_roles')){
                     //$opciones .= '<a href=" '.route('Sympathizers.edit', $tocados->tocado_id).' " class="action-icon icon-dual-warning"><i class="mdi mdi-account-cog"></i></a>';
                     $opciones .= '<a href="" class="btn btn-sm action-icon btnModalEdit icon-dual-warning"><i class="mdi mdi-account-cog"></i></a>';
+                }
+                if (Auth::user()->can('delete_roles')){
+                    //$opciones .= '<a href=" '.route('Sympathizers.edit', $tocados->tocado_id).' " class="action-icon icon-dual-warning"><i class="mdi mdi-account-cog"></i></a>';
+                    $opciones .= '<a href="" class="btn btn-sm action-icon btnModalEdit icon-dual-danger"><i class="mdi mdi-trash-can"></i></a>';
                 }
                 return $opciones;
             })

@@ -15,18 +15,18 @@ class CreateOperatorsTable extends Migration
     {
         Schema::create('operators', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('paterno');
-            $table->string('materno')->nullable();
-            $table->string('phone')->unique();
+            $table->string('name', 50);
+            $table->string('paterno',50)->nullable();
+            $table->string('materno',50)->nullable();
+            $table->string('phone',10)->unique()->nullable();
             $table->string('email')->unique();
             $table->date('birthday_date')->nullable();
             $table->string('address')->nullable();
-            $table->integer('cp')->nullable();
-            $table->string('driver_license');
-            $table->string('operator_photo')->nullable();
-            $table->tinyInteger('status')->default('1');
+            $table->string('cp' )->nullable();
+            $table->string('driver_license')->nullable();
+            $table->string('operator_photo')->default('/assets/images/users/user-12.png')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

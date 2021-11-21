@@ -19,20 +19,15 @@ class TypeServiceController extends Controller
     public function index()
     {
      //$se = TypeService::where('id','type_service_id')->get();
-        $services = TypeService::Active();
+        // $services = TypeService::query()
+        //     ->with('quantity')
+        //     ->paginate(3);
+    $services = TypeService::query()
+                ->with(['quantity'])
+                ->Active();
+
         return view('services.index', compact('services'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -55,18 +50,6 @@ class TypeServiceController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TypeService  $typeService
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TypeService $typeService)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -94,7 +77,7 @@ class TypeServiceController extends Controller
        // $delete = Tocados::findOrFail($id)->delete();
         //return $delete;
         //return back();
-        if ($delete == 1){
+        if ($delete == true){
             $success = true;
             $message = "Servicio eliminado correctamente";
         } else {

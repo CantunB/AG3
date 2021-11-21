@@ -28,7 +28,7 @@
                     @break
                     @default
                         <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="{{ URL::asset('/assets/images/flags/spain.jpg') }}" alt="user-image" height="16">
+                            <img src="{{ URL::asset('assets/images/flags/spain.jpg') }}" alt="user-image" height="16">
                         </a>
                 @endswitch
 
@@ -85,7 +85,7 @@
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item active">
                             <div class="notify-icon">
-                                <img src="../assets/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                <img src="{{ asset('assets/images/users/user-1.jpg')}}" class="img-fluid rounded-circle" alt="" /> </div>
                             <p class="notify-details">Cristina Pride</p>
                             <p class="text-muted mb-0 user-msg">
                                 <small>Hi, How are you? What about our next meeting</small>
@@ -105,7 +105,7 @@
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon">
-                                <img src="../assets/images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                <img src="{{ asset('assets/images/users/user-4.jpg') }}" class="img-fluid rounded-circle" alt="" /> </div>
                             <p class="notify-details">Karen Robinson</p>
                             <p class="text-muted mb-0 user-msg">
                                 <small>Wow ! this admin looks good and awesome design</small>
@@ -155,7 +155,7 @@
 
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="../assets/images/users/user-6.jpg" alt="user-image" class="rounded-circle">
+                    <img src="{{ asset(Auth::user()->photo_user) }}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
                         {{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}  <i class="mdi mdi-chevron-down"></i>
                     </span>
@@ -167,13 +167,13 @@
                     </div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('users.show', Auth::user()->id) }}" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>{{ __('translation.My Account') }}</span>
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('settings.users') }}" class="dropdown-item notify-item">
                         <i class="fe-settings"></i>
                         <span>{{ __('translation.Settings') }}</span>
                     </a>
@@ -212,21 +212,21 @@
         <div class="logo-box">
             <a href="index.html" class="logo logo-dark text-center">
                 <span class="logo-sm">
-                    <img src="../assets/images/logo-sm.png" alt="" height="22">
+                    <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
                 <span class="logo-lg">
-                    <img src="../assets/images/logo-dark.png" alt="" height="20">
+                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="20">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
             </a>
 
             <a href="index.html" class="logo logo-light text-center">
                 <span class="logo-sm">
-                    <img src="../assets/images/logo-sm.png" alt="" height="22">
+                    <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="22">
                 </span>
                 <span class="logo-lg">
-                    <img src="../assets/images/logo-light.png" alt="" height="20">
+                    <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="20">
                 </span>
             </a>
         </div>
@@ -250,7 +250,7 @@
                 <!-- End mobile menu toggle-->
             </li>
 
-            <li class="dropdown d-none d-xl-block">
+            {{-- <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     Create New
                     <i class="mdi mdi-chevron-down"></i>
@@ -393,7 +393,7 @@
                     </div>
 
                 </div>
-            </li>
+            </li> --}}
         </ul>
         <div class="clearfix"></div>
     </div>

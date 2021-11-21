@@ -32,7 +32,7 @@
 
                             <div class="card-body p-4">
 
-                                <div class="text-center w-75 m-auto">
+                                {{-- <div class="text-center w-75 m-auto">
                                     <div class="auth-logo">
                                         <a href="index.html" class="logo logo-dark text-center">
                                             <span class="logo-lg">
@@ -47,7 +47,7 @@
                                         </a>
                                     </div>
                                     <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel. {{ isset($url) ? ucwords($url) : ""}} {{ __('Login') }}</p>
-                                </div>
+                                </div> --}}
                                 @isset($url)
                                 <form method="POST" action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
                                 @else

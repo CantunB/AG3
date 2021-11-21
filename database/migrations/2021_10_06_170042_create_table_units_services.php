@@ -14,16 +14,16 @@ class CreateTableUnitsServices extends Migration
     public function up()
     {
         Schema::create('units_services', function (Blueprint $table) {
-//            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->id();
+            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
             $table->date('date');
-            $table->string('mileage');
+            $table->double('mileage');
             $table->string('service');
             $table->string('workshop');
-            $table->string('cost');
-            $table->string('notes');
-            $table->string('file_invoice');
-           // $table->timestamps();
+            $table->float('cost');
+            $table->string('notes')->nullable();
+            $table->string('file_invoice')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -27,8 +27,6 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('translation.Fullname') }}</th>
-                                    <th>{{ __('translation.Phone') }}</th>
-                                    <th>{{ __('translation.Email') }}</th>
                                     <th>{{ __('translation.Status') }}</th>
                                     <th style="width: 82px;">{{ __('translation.Options') }}</th>
                                 </tr>
@@ -137,10 +135,9 @@
                 ajax: '{!! route('operators.index') !!}',
                 columns: [
                 //    {data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center'},
-                    {data: 'name', name:'name',},
-                    {data: 'phone', name:'phone',className:'text-center'},
+                    {data: 'name', name:'name'},
                 //    {data: 'celular', name:'celular', orderable: false },
-                    {data: 'email', name:'email', className:'text-center', orderable: false },
+                //    {data: 'email', name:'email', className:'text-center', orderable: false },
                     {data: 'status', name: 'status', className: 'text-center'},
                 //    {data: 'rol', name:'rol', orderable: false },
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
@@ -176,6 +173,54 @@
         });
     }
 </script>
+<script>
+    function btnDelete(id) {
+        Swal.fire({
+            title: "Desea eliminar?",
+            text: "Por favor asegúrese y luego confirme!",
+            icon: 'warning',
+            showCancelButton: !0,
+            confirmButtonText: "¡Sí, borrar!",
+            cancelButtonText: "¡No, cancelar!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: "{{url('/operators')}}/" + id,
+                    data: {
+                        id: id,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            Swal.fire({
+                                title: "Hecho!",
+                                text: results.message,
+                                icon: "success",
+                                confirmButtonText: "Hecho!",
+                            });
+                            location.reload();
+                            //$('#table-sympathizers').DataTable().ajax.reload();
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: results.message,
+                                icon: "error",
+                                confirmButtonText: "Cancelar!",
+                            });
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+        }
+    </script>
 
 @endpush
 @endsection
