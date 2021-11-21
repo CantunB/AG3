@@ -21,11 +21,13 @@ class CreateAssigRegisters extends Migration
             $table->float('price')->nullable();
             $table->float('cash')->nullable();
             $table->float('usd')->nullable();
+            $table->float('euros')->nullable();
             $table->string('invoice')->nullable();
+            $table->string('service_order_voucher')->nullable();
+            $table->string('no_show_voucher')->nullable();
+            $table->tinyInteger('trip_status')->nullable();
+            $table->string('method_payment')->nullable();
             $table->string('observations')->nullable();
-            $table->tinyInteger('payment')->default('0');
-            $table->tinyInteger('service')->default('0');
-            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

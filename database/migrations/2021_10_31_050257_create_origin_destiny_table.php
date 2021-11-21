@@ -15,6 +15,7 @@ class CreateOriginDestinyTable extends Migration
     {
         Schema::create('origin_destiny', function (Blueprint $table) {
             $table->id();
+            $table->string('category');
             $table->string('name',120);
         });
     }

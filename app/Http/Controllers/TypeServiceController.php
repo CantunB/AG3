@@ -19,7 +19,13 @@ class TypeServiceController extends Controller
     public function index()
     {
      //$se = TypeService::where('id','type_service_id')->get();
-        $services = TypeService::Active();
+        // $services = TypeService::query()
+        //     ->with('quantity')
+        //     ->paginate(3);
+    $services = TypeService::query()
+                ->with(['quantity'])
+                ->Active();
+
         return view('services.index', compact('services'));
     }
     /**
@@ -71,7 +77,7 @@ class TypeServiceController extends Controller
        // $delete = Tocados::findOrFail($id)->delete();
         //return $delete;
         //return back();
-        if ($delete == 1){
+        if ($delete == true){
             $success = true;
             $message = "Servicio eliminado correctamente";
         } else {

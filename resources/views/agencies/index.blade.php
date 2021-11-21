@@ -91,7 +91,7 @@
             error: function(response){
                 //console.log(response);
                 var errors = response.responseJSON;
-                errorsHtml = '<div class="container"><div class="alert alert-danger" role="alert"> ';
+                errorsHtml = '<div id="errors-alert" class="container"><div class="alert alert-danger" role="alert"> ';
                 $.each(errors.errors,function (k,v) {
                 errorsHtml +='<ul> <li>'+ v + '</li></ul>';
                 });
@@ -101,7 +101,61 @@
         });
 });
 </script>
-
+<script>
+    $('#modal_agencies').on('hidden.bs.modal', function (e) {
+        $('#form_agencies').parsley().reset();
+        $("#errors-alert").hide();
+    })
+</script>
+<script>
+    /** DESTROY UNIT*/
+    function btnDelete(id) {
+        Swal.fire({
+            title: "Desea eliminar?",
+            text: "Por favor asegúrese y luego confirme!",
+            icon: 'warning',
+            showCancelButton: !0,
+            confirmButtonText: "¡Sí, borrar!",
+            cancelButtonText: "¡No, cancelar!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: "/agencies/" + id,
+                    data: {
+                        id: id,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            Swal.fire({
+                                title: "Hecho!",
+                                text: results.message,
+                                icon: "success",
+                                confirmButtonText: "Hecho!",
+                            });
+                            $('#table_agencies').DataTable().ajax.reload();
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: results.message,
+                                icon: "error",
+                                confirmButtonText: "Cancelar!",
+                            });
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+    /** DESTROY UNIT*/
+</script>
 @endpush
 
 @endsection

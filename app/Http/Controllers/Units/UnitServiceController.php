@@ -26,13 +26,13 @@ class UnitServiceController extends Controller
             return DataTables::of($unit)
             ->addIndexColumn()
             ->editColumn('date', function($unit){
-                return $unit->date; 
+                return $unit->date;
             })
             ->editColumn('mileage', function($unit){
-                return $unit->mileage . ' KM'; 
+                return $unit->mileage . ' KM';
             })
             ->editColumn('cost', function($unit){
-                return  '$ '.$unit->cost; 
+                return  '$ '.$unit->cost;
             })
             ->addColumn('options', function ($unit){
                 $opciones = '';
@@ -48,7 +48,7 @@ class UnitServiceController extends Controller
 
 
         $unit =  Unit::with(['bitacora', 'galery'])->findOrFail($id);
-        $color= sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+        $color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 
         return view('units.bitacora.show', compact('unit','color'));
     }
@@ -79,7 +79,7 @@ class UnitServiceController extends Controller
     public function show(Request $request, $id)
     {
 
-        
+
     }
 
     public function edit()

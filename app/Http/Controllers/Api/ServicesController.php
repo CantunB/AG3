@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AssingRegister;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OperatorCollection as OperatorCollection;
 
 class ServicesController extends Controller
 {
@@ -21,7 +21,8 @@ class ServicesController extends Controller
     public function index()
     {
         $services = AssingRegister::with(['register','unit'])->where('id_operator',auth()->guard('driver')->user()->id)->get();
-        return response()->json(['data' => $services],200);
+        return new OperatorCollection($services);
+        //return response()->json([  'data' =>$services ],200);
     }
 
     /**
@@ -44,6 +45,7 @@ class ServicesController extends Controller
     public function show($id)
     {
         $service = AssingRegister::with(['register', 'unit','operator'])->findOrFail($id);
+
         return response()->json(['data' => $service], 200);
     }
 

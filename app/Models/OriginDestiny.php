@@ -8,6 +8,7 @@ class OriginDestiny extends Model
 {
     protected $table = 'origin_destiny';
     protected $fillable = [
+        'category',
         'name',
     ];
 

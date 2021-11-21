@@ -39,7 +39,8 @@
                         <div class="col-xl-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Phone') }}</label>
-                                <input type="number" name="phone" id="phone" class="form-control" required placeholder="{{ __('Phone') }}" data-parsley-type="digits" max="10">
+                                <input type="number" name="phone" id="phone" class="form-control" required placeholder="{{ __('Phone') }}" data-parsley-type="digits"
+                                data-parsley-validation-threshold="1"   data-parsley-trigger="keyup" min="10" value="{{ old('phone') }}">
                             </div>
                         </div>
                         <div class="col-xl-3">
@@ -132,14 +133,7 @@
 </div>
 <!-- end row-->
 @push('scripts')
-<script>
-    document.getElementById("birthday_date").flatpickr({
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-    //  defaultDate: "{!! date('Y-m-d') !!}"
-    });
-</script>
+
 <script>
     $('.dropify').dropify({
     messages: {

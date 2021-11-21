@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Units;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class StoreUnitsServicesRequest extends FormRequest
 {
@@ -23,6 +24,10 @@ class StoreUnitsServicesRequest extends FormRequest
      */
     public function rules()
     {
+// dd($this->route());
+        //dd($this->route('unit_id'));
+        $kilometraje = DB::table('units_services')->latest('created_at')->first();
+        //dd($kilometraje->mileage);
         return [
             'unit_id' => 'required',
             'date' => 'required|date',
@@ -45,6 +50,7 @@ class StoreUnitsServicesRequest extends FormRequest
             'unit_id.required' => 'La :attribute es obligatorio',
             'date.required' => 'La :attribute es obligatoria',
             'mileage.required' => 'El  :attribute es obligatorio',
+            'mileage.different' => 'El  :attribute debe ser diferente al registrado anteriormente',
             'service.required' => 'El :attribute es obligatorio',
             'workshop.required' => 'El :attribute es obligatorio',
             'workshop.required' => 'El :attribute es obligatorio',

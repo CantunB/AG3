@@ -39,11 +39,14 @@ Route::resources([
     'units' => 'Units\UnitController',
     //'bitacora' => '',
     'registers' => 'RegisterController',
-    'assign' => 'AssignRegisterController'
+    'assign' => 'AssignRegisterController',
+    'users' => 'UserController'
 ]);
 
 Route::apiResources([
     'services' => 'TypeServiceController',
+    'origen_destiny' =>'OriginDestinyController',
+
 ]);
 
 Route::group(['prefix' => 'units'], function(){

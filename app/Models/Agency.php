@@ -21,15 +21,15 @@ class Agency extends Model
         'fiscal_situation',
         'current_rate',
         'proof_address',
-        'covenants'
+        'covenants',
     ];
-   /**
+    /**
     * Get all of the comments for the Agency
     *
     * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-   public function services(): HasMany
-   {
-       return $this->hasMany(Register::class, 'agency_id');
-   }
+    public function services(): HasMany
+    {
+        return $this->hasMany(Register::class, 'agency_id');
+    }
 }

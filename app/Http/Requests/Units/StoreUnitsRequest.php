@@ -23,15 +23,19 @@ class StoreUnitsRequest extends FormRequest
     public function rules()
     {
         return [
-            'plate_number' => 'required|unique:units,plate_number',
-            'circulation_card' => 'required|unique:units,circulation_card',
-            'car_insurance' => 'required|unique:units,car_insurance',
-            'file_invoice_unit' => 'required|mimes:pdf|file|max:2048',
-            'file_permission_sct' => 'required|mimes:pdf|max:2048',
+            'type' => 'required',
+            'sct_plate_number' => 'nullable|unique:units,sct_plate_number',
+            'circulation_card_number' => 'nullable|unique:units,circulation_card_number',
+            'insurance_policy' => 'nullable|unique:units,insurance_policy',
             'file_contract' => 'required|mimes:pdf|max:2048',
-            'file_plate_sct' => 'required|max:2048',
+            'file_invoice_unit' => 'required|mimes:pdf|max:2048',
+            'file_invoice_letter' => 'required|mimes:pdf|max:2048',
+            'file_permission_sct' => 'required|mimes:pdf|max:2048',
+            'file_sct_plate_number' => 'required|mimes:pdf|max:2048',
+            'file_insurance_policy' => 'required|mimes:pdf|max:2048',
             'file_circulation_card' => 'required|mimes:pdf|max:2048',
-            'file_car_insurance' => 'required|mimes:pdf|max:2048',
+            'file_tia' => 'required|mimes:pdf|max:2048',
+
         ];
     }
     /**
@@ -42,21 +46,17 @@ class StoreUnitsRequest extends FormRequest
     public function messages()
     {
         return [
-            'plate_number.unique' => 'El :attribute ya ha sido registrado',
-            'circulation_card.unique' => 'El numero de :attribute ya ha sido registrado',
-            'car_insurance.unique' => 'El numero de  :attribute ya ha sido registrado',
-            'file_invoice_unit.required' => 'La :attribute es obligatorio',
-            'file_permission_sct.required' => 'Los :attribute son obligatorio',
-            'file_contract.required' => 'El :attribute es obligatorio',
-            'file_plate_sct.required' => 'El :attribute es obligatorio',
-            'file_circulation_card.required' => "La :attribute es obligatorio",
-            'file_car_insurance.required' => "El :attribute es obligatorio",
-            'file_invoice_unit.max' => ":attribute excede 2MB",
-            'file_permission_sct.max' => " :attribute excede 2MB ",
+            'sct_plate_number.unique' => 'El :attribute ya ha sido registrado',
+            'circulation_card_number.unique' => 'El numero de :attribute ya ha sido registrado',
+            'insurance_policy.unique' => 'El numero de  :attribute ya ha sido registrado',
             'file_contract.max' => ":attribute excede 2MB",
-            'file_plate_sct.max' => ":attribute excede 2MB",
-            'file_circulation_card.max' => ":attribute excede 2MB",
+            'file_invoice_unit.max' => " :attribute excede 2MB ",
+            'file_invoice_letter.max' => ":attribute excede 2MB",
+            'file_permission_sct.max' => ":attribute excede 2MB",
+            'file_sct_plate_number.max' => ":attribute excede 2MB",
             'file_car_insurance.max' => ":attribute excede 2MB",
+            'file_circulation_card.max' => ":attribute excede 2MB",
+            'file_tia.max' => ":attribute excede 2MB",
         ];
     }
     /**
@@ -67,15 +67,18 @@ class StoreUnitsRequest extends FormRequest
     public function attributes()
     {
         return [
-            'plate_number' => 'numero de placa',
-            'circulation_card' => 'tarjeta de circulacion',
-            'car_insurance' => 'seguro de auto',
-            'file_invoice_unit' => 'factura de la unidad',
-            'file_permission_sct' => 'permisos SCT',
+            'type' => 'tipo de unidad',
+            'sct_plate_number' => 'numero de placa',
+            'circulation_card_number' => 'tarjeta de circulacion',
+            'insurance_policy' => 'poliza de seguro',
             'file_contract' => 'contrato',
-            'file_plate_sct' => 'número de placa',
-            'file_circulation_card' => 'tarjeta de circulacion',
-            'file_car_insurance' => 'seguro de auto'
+            'file_invoice_unit' => 'pdf factura de la unidad',
+            'file_invoice_letter' => 'pdf carta factura',
+            'file_permission_sct' => 'pdf permisos sct',
+            'file_sct_plate_number' => 'pdf placas sct',
+            'file_insurance_policy' => 'pdf poliza de seguro',
+            'file_circulation_card' => 'pdf tarjeta de circulacion',
+            'file_tia' => 'pdf TIA'
         ];
     }
 }

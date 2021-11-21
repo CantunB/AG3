@@ -25,15 +25,15 @@ class StoreOperatorsRequest extends FormRequest
         return [
             'name' => 'required',
             'paterno' => 'required',
-            'phone' => 'required|digits:10',
+            'phone' => 'required|digits:10|unique:operators,phone',
             'email' => 'required|email|unique:operators,email',
-            'birth_certificate' => 'required|mimes:pdf|max:2048',
-            'proof_address' => 'required|max:2048',
-            'nss' => 'required|mimes:pdf|max:2048',
-            'curp' => 'required|mimes:pdf|max:2048',
-            'rfc' => 'required|mimes:pdf|max:2048',
-            'ine' => 'required|mimes:pdf|max:2048',
-            'driver_license' => 'required|mimes:pdf|max:2048',
+            'birth_certificate' => 'mimes:pdf|max:2048',
+            'proof_address' => 'max:2048',
+            'nss' => 'mimes:pdf|max:2048',
+            'curp' => 'mimes:pdf|max:2048',
+            'rfc' => 'mimes:pdf|max:2048',
+            'ine' => 'mimes:pdf|max:2048',
+            'driver_license' => 'mimes:pdf|max:2048',
         ];
     }
     /**

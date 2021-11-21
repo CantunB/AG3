@@ -44,7 +44,6 @@ class Operator extends Authenticatable
             'password', 'remember_token',
         ];
 
-
     public function scopeActive($query){
         return $query->where('status',1)->get();
     }
@@ -56,6 +55,11 @@ class Operator extends Authenticatable
     public function isAssigned(): BelongsTo
     {
         return $this->belongsTo(AssingRegister::class, 'id','id_operator');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->name} {$this->paterno} {$this->materno}";
     }
 
 }

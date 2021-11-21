@@ -40,7 +40,7 @@
         <div class="col-lg-4">
             <div class="card-box">
                 <div class="media mb-3">
-                    <div id="getImages"></div>
+                    <div class="row" id="getImages"></div>
                     <div class="media-body">
                         <h4 class="mt-0 mb-1" id="getNombre"></h4>
                         {{-- <p class="text-muted"><i class="mdi mdi-car-arrow-right"></i>Operador</p> --}}
@@ -85,8 +85,8 @@
                 columns: [
                     //{data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center'},
                     {data: 'unit', name:'unit', className: 'text-center'},
-                    {data: 'plate_number', name:'plate_number', className:'text-center'},
-                    {data: 'circulation_card', name: 'circulation_card', className: 'text-center'},
+                    {data: 'sct_plate_number', name:'sct_plate_number', className:'text-center'},
+                    {data: 'circulation_card_number', name: 'circulation_card_number', className: 'text-center'},
                     {data: 'status', name:'status', className: 'text-center'},
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],
@@ -102,11 +102,11 @@
             },
             type: "GET",
             success: function (response){
-                
+
 
                 var files = response.files;
                 var images = response.galery;
-            //console.log(response);
+            console.log(response);
             //files.forEach(function(file, index) {
                  $('#getFiles').html(files);
                  $('#getImages').html(images);

@@ -21,17 +21,11 @@ class StoreUnitsGaleryRequest extends FormRequest
      *
      * @return array
      */
-     public function rules()
-     {
-         return [
-             'unit_id' => 'required',
-             'photo_front_unit' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-             'photo_rear_unit' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-             'photo_right_unit' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-             'photo_left_unit' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-             'photo_inside_unit_1' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-             'photo_inside_unit_2' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-             'photo_inside_unit_3' => 'nullable|mimes:jpeg,bmp,png|max:2048',
-         ];
-     }
+    public function rules()
+    {
+        return [
+            'unit_id' => 'required',
+            'images' => 'nullable|mimes:jpeg,bmp,png|max:2048',
+        ];
+    }
 }

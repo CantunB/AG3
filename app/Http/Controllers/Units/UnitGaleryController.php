@@ -89,7 +89,7 @@ class UnitGaleryController extends Controller
             'unit_id' => $id,
             'photo_front_unit' => $directory . $name_front,
             'photo_rear_unit' =>  $directory . $name_rear,
-            'photo_right_unit' => $directory . $name_right , 
+            'photo_right_unit' => $directory . $name_right ,
             'photo_left_unit' => $directory . $name_left,
             'photo_inside_unit_1' => $directory . $name_inside_one,
             'photo_inside_unit_2' => $directory . $name_inside_two,

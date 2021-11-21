@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class AssingRegister extends Model
 {
     protected $table = 'assign_registers';
+
     protected $fillable = [
         'id_register',
         'id_unit',
@@ -19,9 +20,12 @@ class AssingRegister extends Model
         'invoice',
         'observations',
         'payment',
-        'service'
+        'service',
+        'start_trip',
+        'finish_trip'
     ];
 
+    protected $appends = ['servicio'];
     /**
      * Get the registers that owns the AssingRegister
      *
@@ -41,7 +45,6 @@ class AssingRegister extends Model
     {
         return $this->belongsTo(Unit::class, 'id_unit');
     }
-
     /**
      * Get the Operator that owns the AssingRegister
      *
@@ -50,5 +53,10 @@ class AssingRegister extends Model
     public function Operator(): BelongsTo
     {
         return $this->belongsTo(Operator::class, 'id_operator');
+    }
+
+    public function getServicioAttribute(){
+
+        return $this->register->Type_service->name;
     }
 }

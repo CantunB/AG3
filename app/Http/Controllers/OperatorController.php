@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Operators\StoreOperatorsRequest;
+use App\Http\Requests\Operators\UpdateOperatorsRequest;
 use App\Models\Operator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use File;
 use Yajra\DataTables\DataTables;
-// import the Intervention Image Manager Class
-use Intervention\Image\ImageManagerStatic as Image;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Image;
 
 class OperatorController extends Controller
 {
@@ -28,13 +29,13 @@ class OperatorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()){
-            $operators = Operator::with('isAssigned')->withTrashed();
+            $operators = Operator::with('isAssigned')->orderBy('name','asc')->withTrashed();
 //          $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
             return DataTables::of($operators)
             ->addIndexColumn()
             ->addColumn('name', function ($operators){
-                return ' <img src="'.$operators->operator_photo.'" alt="table-user" class="mr-2 rounded-circle avatar-xs">'.
-                $operators->name .' '. $operators->paterno .' '. $operators->materno;
+                return ' <img src="'. $operators->operator_photo.'" alt="table-user" class="mr-2 rounded-circle avatar-xs">'.
+                $operators->FullName;
             })
             ->addColumn('status', function($operator){
                 $status = '';
@@ -50,16 +51,21 @@ class OperatorController extends Controller
             })
             ->addColumn('options', function ($operators){
                 $opciones = '';
-                if (Auth::user()->can('read_operators')){
-                    $opciones .= '<button type="button"  onclick="btnInfo('.$operators->id.')" class="btn btn-sm action-icon getInfo icon-dual-blue"><i class="mdi mdi-account-circle"></i></button>';
-                    // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
-                }
-                if (Auth::user()->can('update_operators')){
-                    $opciones .= '<button type="button" class="btn btn-sm action-icon btnModalEdit icon-dual-warning"><i class="mdi mdi-account-cog"></i></button>';
-                }
-                if (Auth::user()->can('delete_operators')){
-                    $opciones .= '<button type="button" onclick="btnDelete('.$operators->id.')" class="btn btn-sm action-icon icon-dual-danger"><i class="mdi mdi-delete-empty"></i></button>';
-
+                if ($operators->trashed()) {
+                    if (Auth::user()->can('update_operators')){
+                        $opciones .= '<button type="button" class="btn btn-sm action-icon icon-dual-blue"><i class="mdi mdi-restore"></i></button>';
+                    }
+                }else {
+                    if (Auth::user()->can('read_operators')){
+                        $opciones .= '<button type="button"  onclick="btnInfo('.$operators->id.')" class="btn btn-sm action-icon icon-dual-blue"><i class="mdi mdi-account-circle"></i></button>';
+                        // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
+                    }
+                    if (Auth::user()->can('update_operators')){
+                        $opciones .= '<a href="'.route('operators.edit', $operators->id).'" class="btn btn-sm action-icon icon-dual-warning"><i class="mdi mdi-account-cog"></i></a>';
+                    }
+                    if (Auth::user()->can('delete_operators')){
+                        $opciones .= '<button type="button" onclick="btnDelete('.$operators->id.')" class="btn btn-sm action-icon icon-dual-danger"><i class="mdi mdi-delete-empty"></i></button>';
+                    }
                 }
                 return $opciones;
             })
@@ -88,58 +94,85 @@ class OperatorController extends Controller
      */
     public function store(StoreOperatorsRequest $request)
     {
-        //Operator::create($request->all());
+
         $directory = '/documents/operators/'. $request->email .'/';
+        $acta = null;
+        $comprobante = null;
+        $seguro = null;
+        $curp = null;
+        $rfc = null;
+        $ine = null;
+        $licencia = null;
+        $foto = null;
+
         if ($request->has('birth_certificate')) {
             $bc = $request->file('birth_certificate');
             $birthC = 'ActaNacimiento'. '.' . $bc->getClientOriginalExtension();
 //            $birthC = time()  . '.' . $bc->getClientOriginalExtension();
             $birthCPath = public_path($directory);
             $bc->move($birthCPath, $birthC);
+
+            $acta = $directory . $birthC;
         }
         if ($request->has('proof_address')) {
             $proof = $request->file('proof_address');
             $proof_address = 'ComprobanteDomicilio' . '.' . $proof->getClientOriginalExtension();
             $proofPath = public_path($directory);
             $proof->move($proofPath, $proof_address);
+
+            $comprobante = $directory . $proof_address;
         }
         if ($request->has('nss')) {
             $nss = $request->file('nss');
             $nss_file = 'NSS' . '.' . $nss->getClientOriginalExtension();
             $nssPath = public_path($directory);
             $nss->move($nssPath, $nss_file);
+
+            $seguro = $directory . $nss_file;
         }
         if ($request->has('curp')) {
             $curp = $request->file('curp');
             $curpFile = 'CURP' . '.' . $curp->getClientOriginalExtension();
             $curpPath = public_path($directory);
             $curp->move($curpPath, $curpFile);
+
+            $curp = $directory . $curpFile;
         }
         if ($request->has('rfc')) {
             $rfc = $request->file('rfc');
             $rfcFile = 'RFC'. '.' . $rfc->getClientOriginalExtension();
             $rfcPath = public_path($directory);
             $rfc->move($rfcPath, $rfcFile);
+
+            $rfc = $directory . $rfcFile;
         }
         if ($request->has('ine')) {
             $ine = $request->file('ine');
             $ineFile = 'INE' . '.' . $ine->getClientOriginalExtension();
             $inePath = public_path($directory);
             $ine->move($inePath, $ineFile);
+
+            $ine = $directory . $ineFile;
         }
         if ($request->has('driver_license')) {
             $driver = $request->file('driver_license');
             $driverLicense = 'LicenciaConductor' . '.' . $driver->getClientOriginalExtension();
             $driverPath = public_path($directory);
             $driver->move($driverPath, $driverLicense);
+
+            $licencia = $directory . $driverLicense;
         }
         if ($request->has('operator_photo')) {
             $operator = $request->file('operator_photo');
             $operatorPhoto = $request['name'] . $request['paterno']. '.' . $operator->getClientOriginalExtension();
-            $operatorPath = public_path($directory);
+            $operatorPath = public_path('/assets/images/operators/');
+           // $img = Image::make($operator )->resize(512, 512)->insert( $operatorPath);
+
             // resizing an uploaded file
           //  Image::make($operator)->resize(300, 200)->save('/documents/'.$request->email.'/'. $operatorPhoto);
             $operator->move($operatorPath, $operatorPhoto);
+
+            $foto = '/assets/images/operators/'. $operatorPhoto;
         }
 
         Operator::create([
@@ -148,22 +181,22 @@ class OperatorController extends Controller
             'materno' => $request['materno'],
             'phone' => $request['phone'],
             'email' => $request['email'],
-            'password' => Hash::make('contraseña1234'),
+            'password' => Hash::make('password1234'),
             'birthday_date' => $request['birthday_date'],
             'address' => $request['address'],
             'cp' => $request['cp'],
-            'birth_certificate' =>  $directory . $birthC,
-            'proof_address' => $directory . $proof_address,
-            'nss' =>  $directory . $nss_file,
-            'curp' => $directory . $curpFile,
-            'rfc' => $directory . $rfcFile,
-            'ine' => $directory . $ineFile,
-            'driver_license' => $directory . $driverLicense ,
-            'operator_photo' => $directory . $operatorPhoto,
+            'birth_certificate' => $acta,
+            'proof_address' => $comprobante,
+            'nss' =>  $seguro,
+            'curp' => $curp ,
+            'rfc' => $rfc,
+            'ine' => $ine,
+            'driver_license' => $licencia,
+            'operator_photo' => $foto,
         ]);
 
         //return redirect()->route('operators.index');
-        return response()->json(['data' => 'Operador registrado correctamente'],200);
+        return response()->json(['data' => 'Operador registrado correctamente'],201);
     }
 
     /**
@@ -180,7 +213,6 @@ class OperatorController extends Controller
         }else{
             $status = '<a href="javascript: void(0);" class="btn- btn-xs btn-success"> DISPONIBLE </a>';
         }
-
         $files = [
             'ActaNacimiento' => $operator->birth_certificate,
             'Comprobante' => $operator->proof_address,
@@ -245,7 +277,7 @@ class OperatorController extends Controller
      */
     public function edit(Operator $operator)
     {
-        //
+        return view('operators.edit',compact('operator'));
     }
 
     /**
@@ -255,9 +287,10 @@ class OperatorController extends Controller
      * @param  \App\Models\Operator  $operator
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Operator $operator)
+    public function update(UpdateOperatorsRequest $request, Operator $operator)
     {
-        //
+        $operator->update($request->all());
+        return redirect()->back();
     }
 
     /**

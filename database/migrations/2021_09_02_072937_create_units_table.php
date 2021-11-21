@@ -16,13 +16,31 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('unit');
-            $table->string('type');
-            $table->string('plate_number');
-            $table->string('circulation_card')->nullable();
-            $table->string('car_insurance')->nullable();
-            $table->string('file_plate_number')->nullable();
+            $table->string('type',50);
+            $table->string('brand',100)->nullable();
+            $table->string('model', 100)->nullable();
+            $table->string('frame', 100)->nullable();
+            $table->string('engines', 100)->nullable();
+            $table->float('total_price')->nullable();
+            $table->string('sct_permission')->nullable();
+            $table->string('sct_plate_number')->nullable();
+            $table->date('sct_validity')->nullable();
+            $table->string('insurance_carrier',100)->nullable();
+            $table->string('insurance_policy')->nullable();
+            $table->date('insurance_start_validity')->nullable();
+            $table->date('insurance_end_validity')->nullable();
+            $table->string('circulation_card_number')->nullable();
+            $table->string('tia_number')->nullable();
+
+            $table->string('file_contract')->nullable();
+            $table->string('file_invoice_unit')->nullable();
+            $table->string('file_invoice_letter')->nullable();
+            $table->string('file_permission_sct')->nullable();
+            $table->string('file_sct_plate_number')->nullable();
+            $table->string('file_insurance_policy')->nullable();
             $table->string('file_circulation_card')->nullable();
-            $table->string('file_car_insurance')->nullable();
+            $table->string('file_tia')->nullable();
+
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });

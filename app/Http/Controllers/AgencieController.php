@@ -32,7 +32,7 @@ class AgencieController extends Controller
                 <a href="javascript:void(0);" class="text-body font-weight-semibold">'.$agencies->contact.'</a>';
             })
             ->addColumn('services', function($agencies){
-                return $contador = $agencies->services->count();
+                return $contador = '<span class="badge badge-blue">'.$agencies->services->count().'</span>';
             })
             ->addColumn('created', function($agencies){
                 return $created = $agencies->created_at->toFormattedDateString();
@@ -42,12 +42,12 @@ class AgencieController extends Controller
                 if (Auth::user()->can('read_agencies')) {
                     $opciones .= '<a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>';
                 }
-                if (Auth::user()->can('edit_column')) {
-                    $opciones .= '<button type="button" onclick="btnInfo('.$agencies->id.')" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>';
+                if (Auth::user()->can('delete_agencies')) {
+                    $opciones .= '<button type="button" onclick="btnDelete('.$agencies->id.')" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>';
                 }
                 return $opciones;
             })
-            ->rawColumns(['contact','options'])
+            ->rawColumns(['contact','services','options'])
             ->toJson();
         }
         return view('agencies.index');
@@ -121,8 +121,21 @@ class AgencieController extends Controller
      * @param  \App\Models\Agencie  $agencie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agencie $agencie)
+    public function destroy(Request $request)
     {
-        //
+        $agency = Agency::findOrFail($request->id);
+        $delete = $agency->delete();
+        if ($delete == 1){
+            $success = true;
+            $message = "Agencia eliminada correctamente";
+        } else {
+            $success = true;
+            $message = "No se elimino la agencia";
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
 }

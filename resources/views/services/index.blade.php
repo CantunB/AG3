@@ -1,63 +1,46 @@
 @extends('layouts.app')
 @section('content')
-<!-- Start Content-->
+<style>
+    #chart1 {
+    padding-top: 40px;
+    }
+    .ct-series-a .ct-bar {
+        /* Colour of your bars */
+        stroke: red;
+        /* The width of your bars */
+        stroke-width: 12px;
+        /* Yes! Dashed bars! */
+        stroke-dasharray: 1px;
+        /* Maybe you like round corners on your bars? */
+        stroke-linecap: round;
+      }
+      .ct-series-a .ct-line,
+.ct-series-a .ct-point {
+  stroke: blue;
+}
+
+.ct-series-b .ct-line,
+.ct-series-b .ct-point {
+  stroke: green;
+}
+</style>
 <div class="container-fluid">
 
     <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
         @slot('title') {{ config('app.name', 'Laravel') }} @endslot
         @slot('subtitle') {{ __('Services') }} @endslot
-        @slot('teme') {{ __('List') }} @endslot
+        @slot('teme') Lista de servicios @endslot
     @endcomponent
     <!-- end page title -->
 
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-6">
             <div class="card-box">
                 <div class="row">
-            <!--    <div class="col-lg-8">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <label for="inputPassword2" class="sr-only">Search</label>
-                                <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
-                            </div>
-                            <div class="form-group mx-sm-3">
-                                <label for="status-select" class="mr-2">Sort By</label>
-                                <select class="custom-select" id="status-select">
-                                    <option>Select</option>
-                                    <option>Date</option>
-                                    <option selected>Name</option>
-                                    <option>Revenue</option>
-                                    <option>Employees</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div> -->
                     <div class="row">
-                        <div class="col-lg-8 order-lg-1 order-2">
-                            <div class="card mb-2">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <form class="form-inline">
-                                                <div class="form-group">
-                                                    <label for="inputPassword2" class="sr-only">Search</label>
-                                                    <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <div class="text-sm-right">
-                                                <button type="button" class="btn btn-success waves-effect waves-light mr-1"><i class="mdi mdi-cog"></i></button>
-                                                <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#custom-modal"><i class="mdi mdi-plus-circle mr-1"></i>{{ __('translation.Add New')}}</button>
-
-                                            </div>
-                                        </div><!-- end col-->
-                                    </div>
-                                </div> <!-- end card-body-->
-                            </div> <!-- end card-->
-
+                        <div class="col-lg-12 order-lg-1 order-2">
                             @foreach ($services as  $service)
                             <div class="card-box mb-2">
 
@@ -93,57 +76,31 @@
                                             <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                             <button type="button" onclick="deleteService({{ $service->id }})" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>
                                         </div>
-                                    </div> <!-- end col-->
-                                </div> <!-- end row -->
-                            </div> <!-- end card-box-->
-                            @endforeach
-
-                        </div> <!-- end col -->
-
-                        <div class="col-lg-4 order-lg-2 order-1">
-                            <div class="card-box">
-                                <h4 class="header-title mb-3">Leads Statics</h4>
-
-                                <div class="text-center" dir="ltr">
-                                    <div class="row mt-2">
-                                        <div class="col-6">
-                                            <h3 data-plugin="counterup">1,284</h3>
-                                            <p class="text-muted font-13 mb-0 text-truncate">Leads Won</p>
-                                        </div>
-                                        <div class="col-6">
-                                            <h3 data-plugin="counterup">7,841</h3>
-                                            <p class="text-muted font-13 mb-0 text-truncate">Leads Lost</p>
-                                        </div>
                                     </div>
-
-                                    <div id="leads-statics" style="height: 280px;" class="morris-chart" data-colors="#4a81d4,#e3eaef"></div>
-
-                                    <p class="text-muted font-15 font-family-secondary mb-0 mt-3">
-                                        <span class="mx-2"><i class="mdi mdi-checkbox-blank-circle text-blue"></i> Leads Won</span>
-                                        <span class="mx-2"><i class="mdi mdi-checkbox-blank-circle text-muted"></i> Leads Lost</span>
-                                    </p>
                                 </div>
-
-                            </div> <!-- end card-box-->
-                        </div> <!-- end col -->
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
-                </div> <!-- end row -->
-            </div> <!-- end card-box -->
-        </div><!-- end col-->
+                </div>
+                <ul class="pagination pagination-rounded justify-content-end mb-0">
+                    {{-- {{ $services->links() }} --}}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card-box" dir="ltr">
+                <h4 class="header-title">Grafica de servicios</h4>
+                <div style="height: 800px;" id="chart1" class="ct-chart ct-perfect-fourth"></div>
+            </div>
+        </div>
     </div>
-    <!-- end row -->
-
-
-    <!-- end row -->
-</div> <!-- container -->
+</div>
 @include('services.partials.create_modal')
 @push('scripts')
-<script src="../assets/libs/morris.js06/morris.min.js"></script>
-<script src="../assets/libs/raphael/raphael.min.js"></script>
-<script src="../assets/js/pages/crm-leads.init.js"></script>
 <script>
 function deleteService(id) {
-    console.log('Boton Presionado');
     Swal.fire({
         title: "Desea eliminar el servicio?",
         text: "Por favor asegúrese y luego confirme!",
@@ -180,6 +137,22 @@ function deleteService(id) {
                             confirmButtonText: "Cancelar!",
                         });
                     }
+                },
+                error: function(data) {
+                    //Unblock the spinner
+                    var errors = data.responseJSON;
+                    console.log(errors);
+                    //var errors = '';
+                   // for(datos in data.responseJSON){
+                    //    errors += data.responseJSON[datos] + '\n';
+                   // }
+                    //Display errors using sweet alert js library
+                    /*Swal.fire({
+                        title: "Ooops!",
+                        text: errors.exception,
+                        icon: "warning",
+                        button: "Rectify",
+                    });*/
                 }
             });
         } else {
@@ -190,6 +163,35 @@ function deleteService(id) {
     })
     }
 </script>
+<script>
+    var services = {!! $services !!};
+    const servicesname = services.map(function(service) {
+        return service.name;
+    });
+    const countservices = services.map(function(service) {
+        return  service.quantity.length;
+        //console.log(service.quantity.length);
+    });
 
+    //console.log(servicesname);
+    new Chartist.Bar('.ct-chart', {
+        labels: servicesname,
+        series: [
+            countservices,
+        ]
+    }, {
+        seriesBarDistance: 12,
+        low: 0,
+        high: 10,
+        reverseData: true,
+        horizontalBars: true,
+        axisX:{
+            onlyInteger: true,
+        },
+        axisY: {
+            offset: 70,
+        },
+    });
+</script>
 @endpush
 @endsection

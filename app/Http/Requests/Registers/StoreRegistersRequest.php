@@ -34,6 +34,8 @@ class StoreRegistersRequest extends FormRequest
     {
         return [
             'date' => 'fecha',
+            'origin' => 'origen',
+            'destiny' => 'destion',
             'agency_id' => 'agencia',
             'passenger' => 'pasajero',
             'requested_unit' => 'unidad',

@@ -13,7 +13,7 @@ class OperatorSeeder extends Seeder
      */
     public function run()
     {
-        factory(Operator::class, 20)->create();
+        factory(Operator::class, 5)->create();
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 

@@ -30,7 +30,7 @@ class RegisterController extends Controller
             return DataTables::of($registers)
             ->addIndexColumn()
             ->editColumn('date', function($registers){
-              return Carbon::createFromTimeString($registers->pickup)->toFormattedDateString();
+                return $registers->date;
             })
             ->editColumn('agencia', function($registers){
                 return $registers->Agency->business_name;
@@ -42,12 +42,12 @@ class RegisterController extends Controller
                 $status = '';
                 if(!isset($registers->isAssigned)){
                     $status = '<div class="text-center button-list">
-                                    <a href="'. route('assign.show', $registers->id) .'" class="btn btn-xs btn-secondary waves-effect waves-light">Sin asignar</a>
+                                    <a href="'. route('assign.show', $registers->id) .'" class="btn btn-xs btn-soft-secondary waves-effect waves-light">Asignar</a>
                             </div>';
                 }
                 else{
                     $status = '<div class="text-center button-list">
-                                    <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Verify</a>
+                                    <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Asignada</a>
                                 </div>';
                 }
                 return $status;
@@ -84,17 +84,13 @@ class RegisterController extends Controller
     {
         $agencies = Agency::all();
         $services = TypeService::all();
-        $airlines = DB::table('airlines')->groupBy('airline')->get();
-        $origins_destiny =  OriginDestiny::all();
-        $hotels = Hotel::all();
+        //$airlines = DB::table('airlines')->groupBy('airline')->get();
+        //$hotels = Hotel::all();
         return view('registers.create', compact(
                 'agencies',
             'services',
-            'airlines',
-            'hotels',
-            'origins_destiny')
+            )
         );
-
     }
 
     /**
@@ -105,14 +101,8 @@ class RegisterController extends Controller
      */
     public function store(StoreRegistersRequest $request)
     {
-        $origins_destiny = OriginDestiny::where('name',$request->destiny)->first();
-        if ( true === ( $origins_destiny ?? null ) ) {
-            $origins_destiny = OriginDestiny::create([
-            'name' => $request->destiny,
-            ]);
-        }
-
-        return redirect()->route('registers.index');
+        $registro = Register::create($request->all());
+        return response()->json(['data' => 'Servicio Registrado'], 201);
     }
 
     /**
@@ -121,9 +111,17 @@ class RegisterController extends Controller
      * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function show(Register $register)
+    public function show(Request $request)
     {
-        //
+        $register = Register::with(['Agency','Type_service', 'isAssigned'])
+                    ->findOrFail($request->id);
+        //$f_r = $register->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a');
+        $f_r = $register->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a');
+
+        return response()->json([
+            'data' => $register,
+            'reg' => $f_r
+        ], 201);
     }
 
     /**

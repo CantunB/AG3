@@ -20,7 +20,7 @@
                 </div>
                 {{-- <h4 class="mb-0">{{ $unit->unit }}</h4> --}}
                 {{-- <p class="text-muted text-uppercase" style="font-size:25px">{{ $unit->type }}</p> --}}
-{{--    
+{{--
                 <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>--}}
                 {{-- <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button>  --}}
                <p></p>
@@ -32,15 +32,14 @@
                         Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
                         1500s, when an unknown printer took a galley of type.
                     </p> --}}
-                    <p class="text-muted mb-2 font-13"><strong>NUMERO DE PLACA :</strong> <span class="ml-2">{{ $unit->plate_number }}</span></p>
+                    <p class="text-muted mb-2 font-13"><strong>NUMERO DE PLACA :</strong> <span class="ml-2">{{ $unit->sct_plate_number }}</span></p>
 
-                    <p class="text-muted mb-2 font-13"><strong>TARJETA DE CIRCULACION :</strong><span class="ml-2">{{ $unit->circulation_card }}</span></p>
+                    <p class="text-muted mb-2 font-13"><strong>TARJETA DE CIRCULACION :</strong><span class="ml-2">{{ $unit->circulation_card_number }}</span></p>
 
-                    <p class="text-muted mb-2 font-13"><strong>NUMERO DE SEGURO :</strong> <span class="ml-2 ">{{ $unit->car_insurance }}</span></p>
+                    <p class="text-muted mb-2 font-13"><strong>NUMERO DE SEGURO :</strong> <span class="ml-2 ">{{ $unit->insurance_policy }}</span></p>
 
-                    <p class="text-muted mb-1 font-13"><strong>FECHA DE REGISTRO :</strong> <span class="ml-2">{{ $unit->created_at }}</span></p>
+                    <p class="text-muted mb-1 font-13"><strong>FECHA DE REGISTRO :</strong> <span class="ml-2">{{ \Carbon\Carbon::parse($unit->created_at)->format('d/m/Y')}}</span></p>
 
-                   {{ $unit->galery[0]->photo_front_unit}}
                 </div>
 
                 {{-- <ul class="social-list list-inline mt-3 mb-0">
@@ -145,13 +144,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Comprobante factura</label>
-                                        <input type="file" class="dropify" id="file_invoice" name="file_circulation_card" data-default-file="{{ asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="file_invoice" name="file_circulation_card" data-default-file="{{ asset('assets/images/attached-files/factura.jpg') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> {{ __('translation.Create') }}</button>
                             </div>
                         </form>
                     </div>
@@ -163,60 +162,60 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Frontal</label>
-                                        <input type="file" class="dropify" id="photo_front_unit" name="photo_front_unit" data-default-file="{{ asset($unit->galery[0]->photo_front_unit) ?? asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
                                         <input type="hidden" class="form-control select " id="unit_id" name="unit_id" value="{{ $unit->id }}" >
-                                        
+
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Trasera</label>
-                                        <input type="file" class="dropify" id="photo_rear_unit" name="photo_rear_unit" data-default-file="{{ asset($unit->galery[0]->photo_rear_unit) ?? asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Lateral derecho</label>
-                                        <input type="file" class="dropify" id="photo_right_unit" name="photo_right_unit" data-default-file="{{ asset($unit->galery[0]->photo_right_unit) ?? asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{  asset('assets/images/attached-files/car_van.png') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Lateral izquierdo</label>
-                                        <input type="file" class="dropify" id="photo_left_unit" name="photo_left_unit" data-default-file="{{ asset( asset($unit->galery[0]->photo_left_unit) ?? 'assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Interior 1</label>
-                                        <input type="file" class="dropify" id="photo_inside_unit_1" name="photo_inside_unit_1" data-default-file="{{ asset($unit->galery[0]->photo_inside_unit_1) ?? asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{  asset('assets/images/attached-files/car_van.png') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Interior 2</label>
-                                        <input type="file" class="dropify" id="photo_inside_unit_2" name="photo_inside_unit_2" data-default-file="{{ asset($unit->galery[0]->photo_inside_unit_2) ?? asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="userpassword">Interior 3</label>
-                                        <input type="file" class="dropify" id="photo_inside_unit_3" name="photo_inside_unit_3" data-default-file="{{ asset($unit->galery[0]->photo_inside_unit_3) ?? asset('assets/images/attached-files/ejemplo_tarjeta.jpg') }}" />
+                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
                                         {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
                                     </div>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i>{{ __('translation.Create') }}</button>
                             </div>
                         </form>
-                        </div> 
+                        </div>
                 </div>
             </div>
         </div>

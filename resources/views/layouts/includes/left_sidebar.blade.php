@@ -5,7 +5,7 @@
         <!-- User box -->
         <div class="user-box text-center">
 
-            <img src="{{ asset('assets/images/users/user-6.jpg') }}" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
+            <img src="{{ asset(Auth::user()->photo_user) }}" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
                 class="rounded-circle avatar-md">
             <div class="dropdown">
 
@@ -14,13 +14,13 @@
                 <div class="dropdown-menu user-pro-dropdown">
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('users.show', Auth::user()->id) }}" class="dropdown-item notify-item">
                         <i class="fe-user mr-1"></i>
                         <span>{{ __('translation.My Account') }}</span>
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('settings.users') }}" class="dropdown-item notify-item">
                         <i class="fe-settings mr-1"></i>
                         <span>{{ __('translation.Settings') }}</span>
                     </a>
@@ -73,10 +73,23 @@
 
                 @can('read_registers')
                     <li>
-                        <a href="{{ route('registers.index') }}">
+                        <a href="#sidebarDashboards" data-toggle="collapse">
                             <i data-feather="book-open" class="icon-dual-info"></i>
-                            <span>@lang('translation.Registers')</span>
+                            {{-- <span class="badge badge-success badge-pill float-right">4</span> --}}
+                            <span class="menu-arrow"></span>
+                            <span> @lang('translation.Registers') </span>
                         </a>
+                        <div class="collapse" id="sidebarDashboards">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ route('registers.index') }}">Servicios</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('assign.index') }}">Asignaciones</a>
+                                </li>
+
+                            </ul>
+                        </div>
                     </li>
                 @endcan
 
@@ -100,7 +113,7 @@
                 <li>
                     <a href="{{ route('services.index') }}">
                         <i data-feather="layers" class="icon-dual-warning"></i>
-                        <span> {{ __('translation.Services') }} </span>
+                        <span> Tipo de servicios </span>
                     </a>
                 </li>
                 @endcan

@@ -155,7 +155,7 @@
 
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('assets/images/users/user-6.jpg') }}" alt="user-image" class="rounded-circle">
+                    <img src="{{ asset(Auth::user()->photo_user) }}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
                         {{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}  <i class="mdi mdi-chevron-down"></i>
                     </span>
@@ -167,13 +167,13 @@
                     </div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('users.show', Auth::user()->id) }}" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>{{ __('translation.My Account') }}</span>
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('settings.users') }}" class="dropdown-item notify-item">
                         <i class="fe-settings"></i>
                         <span>{{ __('translation.Settings') }}</span>
                     </a>

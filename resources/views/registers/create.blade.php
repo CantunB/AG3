@@ -4,18 +4,17 @@
     .select2-container--default .select2-results__option--highlighted[aria-selected] {
         background-color:#bfc8f1;
     }
+    .divOculto {
+        display: none;
+    }
 </style>
 <div class="container-fluid">
-
-    <!-- start page title -->
     @component('layouts.includes.components.breadcrumb')
         @slot('title') {{ config('app.name', 'Laravel') }} @endslot
         @slot('subtitle') {{ __('translation.Services') }} @endslot
         @slot('teme') {{ __('translation.List') }} @endslot
     @endcomponent
-    <!-- end page title -->
- <!-- end page title -->
- <form id="form_register" method="POST" action="{{ route('registers.store') }}" data-parsley-validate>
+<form id="form_register" method="POST" action="{{ route('registers.store') }}" data-parsley-validate>
     @csrf
     <div class="row">
         <div class="col-12">
@@ -50,48 +49,61 @@
                                 </select>
                             </div>
                         </div>
-                        <div id="div_airline" class="col-xl-4">
+                        {{-- <div id="div_airline" class="col-xl-4 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Airlines') }}</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="origin" id="origin" list="my_airline">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-blue waves-effect waves-light" type="button"><i class="mdi mdi-plus"></i></button>
+                                    <input type='text'
+                                    placeholder="Selecciona un destino"
+                                    class='form-control flexdatalist'
+                                    data-min-length='1'
+                                    data-data='{!! route('origen_destiny.index') !!}'
+                                    data-search-in='name'
+                                    data-visible-properties='["name","category"]'
+                                    data-selection-required='true' >
+                                        <div class="input-group-append">
+                                            <button class="btn btn-blue waves-effect waves-light" type="button"><i class="mdi mdi-plus"></i></button>
+                                        </div>
                                     </div>
-                                    <datalist id="my_airline">
-                                        <option value="" disabled selected>Selecciona una aerolinea</option>
-                                        @foreach ($airlines as $airline)
-                                            <option value="{{ $airline->airline }}">{{ $airline->airline }}</option>
-                                        @endforeach
-                                    </datalist>
-                                </div>
                             </div>
-
-                        </div>
-                        <div id="div_hotel" class="col-xl-4">
+                        </div> --}}
+                        {{-- <div id="div_hotel" class="col-xl-4 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">HOTEL</label>
-                                <input id="origin" name="origin" class="form-control" list="my_hotel">
-                                    <datalist id="my_hotel">
-                                        <option value="" disabled selected>Selecciona una aerolinea</option>
-                                        @foreach ($hotels as $hotel)
-                                            <option value="{{ $hotel->hotel }}">{{ $hotel->hotel }}</option>
-                                        @endforeach
-                                    </datalist>
+                                <div class="input-group">
+                                    <input type='text'
+                                    placeholder="Selecciona un destino"
+                                    class='form-control flexdatalist'
+                                    data-min-length='1'
+                                    data-data='{!! route('origen_destiny.index') !!}'
+                                    data-search-in='name'
+                                    data-visible-properties='["name","category"]'
+                                    data-selection-required='true' id="origin">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-blue waves-effect waves-light" type="button"><i class="mdi mdi-plus"></i></button>
+                                        </div>
+                                    </div>
                             </div>
-                        </div>
-                        <div id="div_lugar" class="col-xl-4">
+                        </div> --}}
+                        <div id="div_origin" class="col-xl-4 divOculto">
                             <div class="form-group">
-                                <label for="project-priority">LUGAR</label>
-                                <select id="origin" name="origin" class="form-control">
-                                    <option value="" disabled selected>Selecciona un hotel</option>
-                                    @foreach ($airlines as $airline)
-                                        <option value="{{ $airline->airline }}">{{ $airline->airline }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="project-priority">Origen</label>
+                                <div class="input-group">
+                                    <input type='text'
+                                    placeholder="Selecciona un destino"
+                                    class='form-control flexdatalist'
+                                    data-min-length='1'
+                                    data-data='{!! route('origen_destiny.index') !!}'
+                                    data-search-in='name'
+                                    data-visible-properties='["name","category"]'
+                                    data-selection-required='true' id="origin" name="origin">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-blue waves-effect waves-light" type="button"><i class="mdi mdi-plus"></i></button>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
-                        <div id="div_terminal" class="col-xl-2">
+                        <div id="div_terminal" class="col-xl-2 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Terminal') }}</label>
                                 <select id="terminal" name="terminal" class="form-control" data-toggle="select2">
@@ -104,27 +116,27 @@
                             </div>
                         </div>
 
-                        <div id="div_fn" class="col-xl-2">
+                        <div id="div_fn" class="col-xl-2 divOculto">
                             <div class="form-group">
                                 <label for="projectname">{{ __('translation.Flight number') }}</label>
                                 <input id="flight_number"name="flight_number" type="text" class="form-control" placeholder="{{ __('Enter flight number') }}">
                             </div>
                         </div>
-                        <div id="div_ft" class="col-xl-2">
+                        <div id="div_ft" class="col-xl-2 divOculto">
                             <div class="form-group">
                                 <label>Hora de vuelo</label>
                                 <input id="flight_time" name="flight_time" type="text" class="form-control select" placeholder="{{ date('H:i') }}" >
                             </div>
                         </div>
-                        <div id="div_t" class="col-xl-2">
+                        <div id="div_t" class="col-xl-2 divOculto">
                             <div class="form-group">
-                                <label>Tiempo</label>
+                                <label>Tiempo <em>(Horas)</em></label>
                                 <input id="time" name="time" type="text" class="form-control select" placeholder="Horas" data-parsley-type="digits">
                             </div>
                         </div>
-                        <div id="div_d" class="col-xl-2">
+                        <div id="div_d" class="col-xl-2 divOculto">
                             <div class="form-group">
-                                <label>Duracion</label>
+                                <label>Duracion <em>(Dias)</em></label>
                                 <input id="days" name="days" type="text" class="form-control select" placeholder="Dias" data-parsley-type="digits">
                             </div>
                         </div>
@@ -140,51 +152,54 @@
                                     </datalist>
                             </div>
                         </div> --}}
-                        <div id="div_destiny" class="col-xl-4">
+                        <div id="div_destiny" class="col-xl-4 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Destiny') }}</label>
                                 <div class="input-group">
-                                <input id="destiny" name="destiny" class="form-control" list="my_desori">
-                                <div class="input-group-append">
-                                    <button class="btn btn-blue waves-effect waves-light" type="button"><i class="mdi mdi-plus"></i></button>
-                                </div>
-                                    <datalist id="my_desori">
-                                        @foreach ($origins_destiny as $or_des)
-                                            <option value="{{ $or_des->name }}">{{ $or_des->or_des }}</option>
-                                        @endforeach
-                                    </datalist>
+                                <input type='text'
+                                placeholder="Selecciona un destino"
+                                class='form-control flexdatalist'
+                                data-min-length='1'
+                                data-data='{!! route('origen_destiny.index') !!}'
+                                data-search-in='name'
+                                data-visible-properties='["name","category"]'
+                                data-selection-required='true' id="destiny" name='destiny'>
+
+                                    <div class="input-group-append">
+                                        <button class="btn btn-blue waves-effect waves-light" type="button"><i class="mdi mdi-plus"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="div_pa" class="col-xl-6">
+                        <div id="div_pa" class="col-xl-6 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Passenger') }}</label>
                                 <input class="form-control" name="passenger" id="passenger">
                             </div>
                         </div>
-                        <div id="div_pa_n" class="col-xl-2">
+                        <div id="div_pa_n" class="col-xl-2 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Passenger number') }}</label>
                                 <input type="number" class="form-control" name="passenger_number" id="passenger_number">
                             </div>
                         </div>
-                        <div id="div_pickup" class="col-xl-4">
+                        <div id="div_pickup" class="col-xl-4 divOculto">
                             <div class="form-group">
                                 <label>{{ __('translation.Pick Up') }}</label>
                                 <input type="text" class="form-control select" id="pickup" name="pickup" placeholder="{{ date('H:i') }}" required>
                             </div>
                         </div>
-                        <div id="div_unit" class="col-xl-6">
+                        <div id="div_unit" class="col-xl-6 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Requested unit') }}</label>
                                 <select id="requested_unit" name="requested_unit" class="form-control" data-toggle="select2" required>
                                     <option value="" selected disabled>Selecciona una unidad</option>
-                                    <option value="1">Suburbam</option>
-                                    <option value="2">Van VW</option>
+                                    <option data-icon="mdi mdi-car-estate" value="1">Camioneta tipo Suburban</option>
+                                    <option data-icon="mdi mdi-van-utility" value="2">Camioneta tipo VAN</option>
                                 </select>
                             </div>
                         </div>
-                        <div id="div_place" class="col-xl-4">
+                        <div id="div_place" class="col-xl-4 divOculto">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Place of service') }}</label>
                                 <select id="place_serve" name="place_service" class="form-control" data-toggle="select2" >
@@ -194,7 +209,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div id="div_obs" class="col-xl-12">
+                        <div id="div_obs" class="col-xl-12 divOculto">
                             <div class="form-group">
                                 <label>{{ __('translation.Observations') }}</label>
                                 <input type="text" class="form-control" id="observations" name="observations" >
@@ -225,110 +240,208 @@
         dateFormat: "Y-m-d",
         defaultDate: "{!! date('Y-m-d') !!}"
     });
-</script>
-<script>
     document.getElementById("flight_time").flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         //defaultDate: "{!!  date('H:i') !!}"
     });
-</script>
-<script>
     document.getElementById("pickup").flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
     });
 </script>
-{{--  <script>
+<script>
     $(document).ready(function() {
         $("#agency").select2({
         });
     });
+    $(document).ready(function() {
+        function formatText (icon) {
+            return $('<span><i class="fas ' + $(icon.element).data('icon') + '"></i> ' + icon.text + '</span>');
+        };
+        $("#requested_unit").select2({
+            width: "50%",
+            templateSelection: formatText,
+            templateResult: formatText
+        });
+    });
 </script>
 <script>
-    $(document).ready(function() {
-        $(".origin").select2({
-        });
-    });
-    $(document).ready(function() {
-        $(".airline").select2({
-        });
-    });
-</script>  --}}
-<script>
-    $(document).ready(function() {
-        $('#div_airline').hide();
-        $('#div_hotel').hide();
-        $('#div_lugar').hide();
-        $('#div_terminal').hide();
-        $('#div_fn').hide();
-        $('#div_ft').hide();
-        $('#div_destiny').hide();
-        $('#div_t').hide();
-        $('#div_d').hide();
-        $('#div_pa').hide();
-        $('#div_pa_n').hide();
-        $('#div_pickup').hide();
-        $('#div_unit').hide();
-        $('#div_place').hide();
-        $('#div_obs').hide();
+    $('.flexdatalist').flexdatalist({
+        selectionRequired: true,
+        minLength: 1,
+        visibleProperties: ["name","category"],
+        searchIn: 'name',
+        data: "{!! route('origen_destiny.index') !!}"
     });
 </script>
 <script>
     $('#type_service').select2({
         }).on("change", function (e) {
             var selected = $(this).val();
-           // alert (selected);
-            if (selected == '1') { //SALIDA
-                $('#div_hotel').show();
-                $('#div_terminal').show();
-                $('#div_fn').show();
-                $('#div_ft').show();
-                $('#div_destiny').show();
-                $('#div_pa').show();
-                $('#div_pa_n').show();
-                $('#div_pickup').show();
-                $('#div_unit').show();
-                $('#div_place').show();
-                $('#div_obs').show();
-            }else{
-                $('#div_hotel').hide();
+            var opcion = $(this).children("option:selected").html();
+            //console.log(opcion);
+            //console.log(selected);
+        /*
+            if (selected == '1' || opcion == 'Salidas') { //SALIDA
+                console.log('seleccionaste el servicio salida');
+            }else if( selected == '2' || opcion == 'LLegadas' ){ //LLEGADA
+                console.log('seleccionaste el servicio de llegada');
+            }else if( selected == '3' || opcion == 'Servicio Abierto'){ //SERVICIO ABIERTO
+                console.log('seleccionaste el servicio abierto');
+            }else if( selected == '4' || opcion == 'Circuito' ){ //CIRCUITO
+                console.log('seleccionaste el servicio de circuito');
+            }else if( selected == '5' || opcion == 'Transfer' ){ //TRANSFER
+                console.log('seleccionaste el servicio de transfer');
+            }else if( selected == '6' || opcion == 'Tour'){ //TOUR
+                console.log('seleccionaste el servicio de tour');
+            }else if( selected == '7' || opcion == 'Eventos' ){ //EVENTOS
+                console.log('seleccionaste el servicio de eventos');
+            }else if( selected == '8' || opcion == 'Cortesias' ){ //CORTESIAS
+                console.log('seleccionaste el servicio de cortesias');
+            }else if( selected == '9' || opcion == 'Balance' ){ //BALANCE
+                console.log('seleccionaste el servicio de balance');
             }
-            if( selected == '2' ){ //LLEGADA
-                $('#div_airline').show();
-                $('#div_terminal').show();
-                $('#div_fn').show();
-                $('#div_ft').show();
-                $('#div_destiny').show();
-                $('#div_pa').show();
-                $('#div_pa_n').show();
-                $('#div_pickup').show();
-                $('#div_unit').show();
-                $('#div_place').show();
-                $('#div_obs').show();
-            }else{
-                $('#div_airline').hide();
-            }
-            if( selected == '3' ){ //LLEGADA
-                $('#div_lugar').show();
-                $('#div_t').show();
-                $('#div_pickup').show();
-                $('#div_pa').show();
-                $('#div_pa_n').show();
-                $('#div_unit').show();
-                $('#div_obs').show();
-            }
-            if( selected == '4' ){ //LLEGADA
-                $('#div_lugar').show();
-                $('#div_d').show();
-                $('#div_pickup').show();
-                $('#div_pa').show();
-                $('#div_pa_n').show();
-                $('#div_unit').show();
-                $('#div_obs').show();
-            }
+           */
+        switch(opcion) {
+            case('Salidas'):
+            $('#div_origin').show();
+            $('#div_terminal').show();
+            $('#div_fn').show();
+            $('#div_ft').show();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').show();
+            $('#div_pa').show();
+            $('#div_pa_n').show();
+            $('#div_pickup').show();
+            $('#div_unit').show();
+            $('#div_place').show();
+            $('#div_obs').show();
+            break;
+            case('Llegadas'):
+            $('#div_origin').show();
+            $('#div_terminal').show();
+            $('#div_fn').show();
+            $('#div_ft').show();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').show();
+            $('#div_pa').show();
+            $('#div_pa_n').show();
+            $('#div_pickup').show();
+            $('#div_unit').show();
+            $('#div_place').show();
+            $('#div_obs').show();
+            break;
+            case('Servicio Abierto'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').show();
+            $('#div_d').hide();
+            $('#div_destiny').hide();
+            $('#div_pa').show();
+            $('#div_pa_n').show();
+            $('#div_pickup').show();
+            $('#div_unit').show();
+            $('#div_place').hide();
+            $('#div_obs').show();
+            break;
+            case('Circuito'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').hide();
+            $('#div_d').show();
+            $('#div_destiny').hide();
+            $('#div_pa').show();
+            $('#div_pa_n').show();
+            $('#div_pickup').show();
+            $('#div_unit').show();
+            $('#div_place').hide();
+            $('#div_obs').show();
+            break;
+            case('Transfer'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').hide();
+            $('#div_pa').hide();
+            $('#div_pa_n').hide();
+            $('#div_pickup').hide();
+            $('#div_unit').hide();
+            $('#div_place').hide();
+            $('#div_obs').hide();
+            break;
+            case('Tour'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').hide();
+            $('#div_pa').hide();
+            $('#div_pa_n').hide();
+            $('#div_pickup').hide();
+            $('#div_unit').hide();
+            $('#div_place').hide();
+            $('#div_obs').hide();
+            break;
+            case('Eventos'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').hide();
+            $('#div_pa').hide();
+            $('#div_pa_n').hide();
+            $('#div_pickup').hide();
+            $('#div_unit').hide();
+            $('#div_place').hide();
+            $('#div_obs').hide();
+            break;
+            case('Cortesias'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').hide();
+            $('#div_pa').hide();
+            $('#div_pa_n').hide();
+            $('#div_pickup').hide();
+            $('#div_unit').hide();
+            $('#div_place').hide();
+            $('#div_obs').hide();
+            break;case('Balance'):
+            $('#div_origin').show();
+            $('#div_terminal').hide();
+            $('#div_fn').hide();
+            $('#div_ft').hide();
+            $('#div_t').hide();
+            $('#div_d').hide();
+            $('#div_destiny').hide();
+            $('#div_pa').hide();
+            $('#div_pa_n').hide();
+            $('#div_pickup').hide();
+            $('#div_unit').hide();
+            $('#div_place').hide();
+            $('#div_obs').hide();
+            break;
+        }
+
         });
 </script>
 <script>

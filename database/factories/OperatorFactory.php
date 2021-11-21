@@ -20,6 +20,6 @@ $factory->define(Operator::class, function (Faker $faker) {
         'birthday_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'address' => $faker->address(),
         'cp' => $faker->postcode(),
-        'status' => $faker->randomElement([Operator::operador_activo, Operator::operador_no_activo]),
+        //'status' => $faker->randomElement([Operator::operador_activo, Operator::operador_no_activo]),
     ];
 });

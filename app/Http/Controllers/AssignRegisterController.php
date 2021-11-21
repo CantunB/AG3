@@ -7,6 +7,8 @@ use App\Models\Operator;
 use App\Models\Register;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class AssignRegisterController extends Controller
 {
@@ -15,9 +17,26 @@ class AssignRegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()){
+            $seguimientos = AssingRegister::with(['Operator','register','unit']);
+            return DataTables::of($seguimientos)
+            ->addColumn('agency', function($seguimientos){
+                return $seguimientos->register->Agency->business_name ;
+            })
+            ->addColumn('services', function($seguimientos){
+                return $seguimientos->register->Type_service->name;
+            })
+            ->addColumn('operator', function($seguimientos){
+                return $seguimientos->Operator->FullName;
+            })
+            ->editColumn('price', function($seguimientos){
+                return '$'.$seguimientos->price;
+            })
+            ->toJson();
+        }
+        return view('assignments.index');
     }
 
     /**

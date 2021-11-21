@@ -7,10 +7,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use function PHPSTORM_META\map;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasRoles, Notifiable;
+    use HasApiTokens, HasRoles, Notifiable, SoftDeletes;
 
     const usuario_activo = '1';
     const usuario_no_activo = '0';
@@ -20,7 +23,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'paterno',
+        'materno',
+        'phone',
+        'email',
+        'password',
+        'birthday_date',
+        'address',
+        'cp',
+        'photo_user'
     ];
 
     /**
@@ -38,16 +50,19 @@ class User extends Authenticatable
      * @var array
      */
 
-    protected $appends = ['avatar'];
+    //protected $appends = ['avatar'];
 
 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAvatarAttribute(){
+    // public function getAvatarAttribute(){
+    //     return  "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) );
+    // }
 
-        return  "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) );
+    public function getFullNameAttribute()
+    {
+        return "{$this->name} {$this->paterno} {$this->materno}";
     }
-
 }
