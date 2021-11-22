@@ -20,13 +20,15 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
+
         return [
             'name' => 'required',
             'paterno' => 'required',
-            'phone' => 'required|unique:users,phone,'.$this->route('users'),
-            'email' => 'required|unique:users,email,'.$this->route('users'),
+            'phone' => 'required|phone|unique:users,phone,'.$this->route('users'),
+            'email' => 'required|email|unique:users,email,'.$this->route('users'),
             'photo_user' => 'required|mimes:jpg,jpeg,bmp,png|max:2048',
         ];
     }

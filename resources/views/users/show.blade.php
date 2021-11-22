@@ -72,5 +72,45 @@
     }
 });
 </script>
+<script>
+    $("#form_edit").submit(function(e) {
+        e.preventDefault();
+        var id = $("#user_id").val();
+        var formData = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: id,
+            data: formData,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(response){
+                console.log(response.data);
+                Swal.fire({
+                    title: "Registro creado!",
+                    text: response.data,
+                    icon: "success",
+                    timer: 3500
+                });
+                window.location = '{!! route('users.show', ":id") !!}';
+            },
+            error: function(response){
+                console.log(response);
+                var errors = response.responseJSON;
+                errorsHtml = '<ul>';
+                $.each(errors.errors,function (k,v) {
+                errorsHtml += '<li>'+ v + '</li>';
+                });
+                errorsHtml += '</ul>';
+                Swal.fire({
+                    title: "Ooops!",
+                    html: errorsHtml,
+                    icon: "error",
+                    confirmButtonText: "Volver!",
+                });
+            }
+        });
+});
+</script>
 @endpush
 @endsection
