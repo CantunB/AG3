@@ -1,5 +1,5 @@
 <div class="tab-pane show active" id="settings">
-    <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data" >
+    <form id="form_edit" method="POST" enctype="multipart/form-data" >
         @csrf
         @method('PUT')
         <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Informacion personal</h5>
@@ -8,6 +8,8 @@
                 <div class="form-group">
                     <label for="name">Nombre</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                    <input type="hidden" class="form-control" id="user_id"  value="{{ $user->id }}">
+
                 </div>
             </div>
             <div class="col-md-4">
@@ -48,7 +50,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="cp">C.P.</label>
-                    <input type="text" class="form-control" id="cp" name="cp" placeholder="{{ $user->cp }}">
+                    <input type="text" class="form-control" id="cp" name="cp" value="{{ $user->cp }}">
                 </div>
             </div>
         </div>
