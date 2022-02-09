@@ -13,7 +13,6 @@ class OperatorSeeder extends Seeder
      */
     public function run()
     {
-        factory(Operator::class, 5)->create();
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -29,5 +28,16 @@ class OperatorSeeder extends Seeder
             'update_operators',
             'delete_operators'
             ]);
+
+        factory(Operator::class, 5)->create();
+
+        $operador = Operator::create([
+            'name' => 'Marcos Guillermo',
+            'paterno' => 'Cantún',
+            'materno' => 'Domínguez',
+            'email' => 'marcos@gmail.com',
+            'password' =>  bcrypt('password1234'),
+            'phone' => '9381726488',
+        ]);
     }
 }

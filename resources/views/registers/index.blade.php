@@ -193,7 +193,7 @@
 
                 //$( "#registro").addClass("completed");
             }
-            else if(response.data['is_assigned'] !== null && response.data.is_assigned['status'] === 1){
+            else if(response.data['is_assigned'] !== null && response.data.is_assigned['trip_status'] === null){
                 li_reg.addClass("completed");
                 reg.removeClass("active-dot dot");
                 li_asi;

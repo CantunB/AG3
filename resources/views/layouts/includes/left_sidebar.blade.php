@@ -5,7 +5,7 @@
         <!-- User box -->
         <div class="user-box text-center">
 
-            <img src="{{ asset(Auth::user()->photo_user) }}" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
+            <img src="{{ asset(Auth::user()->photo_user ?? Auth::guard('operator')->user()->operator_photo)  }}" alt="user-img" title="{{ Auth::user()->name ?? Auth::guard('operator')->user()->name }}"
                 class="rounded-circle avatar-md">
             <div class="dropdown">
 
@@ -14,7 +14,7 @@
                 <div class="dropdown-menu user-pro-dropdown">
 
                     <!-- item-->
-                    <a href="{{ route('users.show', Auth::user()->id) }}" class="dropdown-item notify-item">
+                    <a href="{{ route('users.show', Auth::user()->id ??  Auth::guard('operator')->user()->id) }}" class="dropdown-item notify-item">
                         <i class="fe-user mr-1"></i>
                         <span>{{ __('translation.My Account') }}</span>
                     </a>
@@ -92,7 +92,14 @@
                         </div>
                     </li>
                 @endcan
-
+                @can('read_bookings')
+                    <li>
+                        <a href="{{ route('bookings.index') }}">
+                            <i data-feather="calendar" class="icon-dual-success"></i>
+                            <span> {{ __('translation.Bookings') }} </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('read_agencies')
                     <li>
                         <a href="{{ route('agencies.index') }}">
@@ -100,14 +107,6 @@
                             <span> {{ __('translation.Agencies') }} </span>
                         </a>
                     </li>
-                @endcan
-                @can('read_airlines')
-                <li>
-                    <a href="{{ route('airlines.index') }}">
-                        <i data-feather="figma" class="icon-dual-pink"></i>
-                        <span> {{ __('translation.Airlines') }} </span>
-                    </a>
-                </li>
                 @endcan
                 @can('read_services')
                 <li>

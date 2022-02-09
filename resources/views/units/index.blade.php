@@ -72,7 +72,7 @@
 @push('scripts')
 <script>
     $('#form_register').parsley();
-  </script>
+</script>
 <script>
     $(document).ready(function(){
         $('#table_units').DataTable({
@@ -98,19 +98,16 @@
         $.ajax({
             url: 'units/'+ id,
             data: {
-                 id : id
+                id : id
             },
             type: "GET",
             success: function (response){
-
-
                 var files = response.files;
                 var images = response.galery;
             console.log(response);
             //files.forEach(function(file, index) {
-                 $('#getFiles').html(files);
-                 $('#getImages').html(images);
-
+                $('#getFiles').html(files);
+                $('#getImages').html(images);
                 //$('#getFiles').remove();
                 //$('#getImages').remove();
                 //console.log("Persona " + index + " | Nombre: " + persona.nombre + " Edad: " + persona.Edad)

@@ -12,30 +12,38 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('bookings', 'bookings.index');
+
+Auth::routes(['register' => false]);
 
 Route::get('/', function () {
-    //return view('welcome');
     if(auth()->check()){
         return view('home');
     }else{
-        return view('auth.login');
+        return redirect()->route('login');
     }
 });
 
 //Language Translation
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
-Auth::routes(['register' => false]);
-Route::get('/login/operator', 'Auth\LoginController@showOperatorLoginForm');
-Route::post('/login/operator', 'Auth\LoginController@operatorLogin');
 Route::view('/operator', 'operator');
+Route::prefix('login')->group(function () {
+    Route::get('operator', 'Auth\LoginController@showOperatorLoginForm');
+    Route::post('operator', 'Auth\LoginController@operatorLogin');
+    Route::get('agency', 'Auth\LoginController@showAgencyLoginForm');
+    Route::post('agency', 'Auth\LoginController@agencyLogin');
+});
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
     'agencies' => 'AgencieController',
     'operators' => 'OperatorController',
-    'airlines' => 'AirlineController',
+    'bookings' => 'BookingController',
+    // 'airlines' => 'AirlineController',
     'units' => 'Units\UnitController',
     //'bitacora' => '',
     'registers' => 'RegisterController',
@@ -51,16 +59,16 @@ Route::apiResources([
 
 Route::group(['prefix' => 'units'], function(){
     Route::group(['prefix' => '{unit_id}'], function($unit_id){
-      Route::resource('bitacora', 'Units\UnitServiceController');
-      Route::resource('galery', 'Units\UnitGaleryController');
+    Route::resource('bitacora', 'Units\UnitServiceController');
+    Route::resource('galery', 'Units\UnitGaleryController');
     });
-  });
-
-Route::group(['web', 'settings'], function(){
-    Route::get('users','Controller@users')->name('settings.users');
-    Route::get('roles', 'Controller@roles')->name('settings.roles');
-    Route::get('permissions', 'Controller@permissions')->name('settings.permissions');
-    Route::get('{locale}', 'Controller@lang');
 });
 
+Route::group(['web', 'settings'], function(){
+    Route::get('users','Settings\SettingsController@users')->name('settings.users');
+    Route::get('roles', 'Settings\SettingsController@roles')->name('settings.roles');
+    Route::get('permissions', 'Settings\SettingsController@permissions')->name('settings.permissions');
+    Route::get('{locale}', 'Settings\SettingsController@lang');
+});
 
+Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');

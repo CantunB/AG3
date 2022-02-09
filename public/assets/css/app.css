@@ -2098,7 +2098,7 @@ body[data-layout-mode="two-column"][data-layout-width="boxed"]:not([data-sidebar
   background-size: cover; }
 
 body.authentication-bg {
-  background-color: #6658dd;
+  background-color: #161313be;
   background-size: cover;
   background-position: center; }
 
@@ -2942,10 +2942,10 @@ body.authentication-bg-pattern {
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 .waves-effect {
   position: relative;

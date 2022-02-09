@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Register;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 class Agency extends Model
 {
     protected $table = 'agencies';
@@ -15,6 +18,7 @@ class Agency extends Model
         'address',
         'telephone',
         'email',
+        'password',
         'agency_logo',
         'contact',
         'telephone_contact',
@@ -23,6 +27,11 @@ class Agency extends Model
         'proof_address',
         'covenants',
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value ?? Str::substr($this->attributes['rfc'], 0, 5) . Carbon::now()->format('Y'));
+    }
     /**
     * Get all of the comments for the Agency
     *

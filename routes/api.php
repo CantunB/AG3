@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
@@ -65,3 +64,7 @@ Route::apiResources([
     '/services' => 'Api\ServicesController',
 ]);
 
+Route::prefix('/getdata')->group( function(){
+    Route::get('/airlines', 'Api\AirlineController@getData');
+    Route::get('/hotels', 'Api\HotelController@getData');
+});
