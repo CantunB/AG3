@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
 class AgencieController extends Controller
 {
     public function __construct()
@@ -28,8 +30,7 @@ class AgencieController extends Controller
             return DataTables::of($agencies)
             ->addIndexColumn()
             ->editColumn('contact', function($agencies){
-                 return $contact = '<img src="'.$agencies->agency_logo.'" alt="table-user" class="mr-2 rounded-circle avatar-xs">
-                <a href="javascript:void(0);" class="text-body font-weight-semibold">'.$agencies->contact.'</a>';
+                 return $agencies->contact ?? 'Sin contacto';
             })
             ->addColumn('services', function($agencies){
                 return $contador = '<span class="badge badge-blue">'.$agencies->services->count().'</span>';
@@ -40,10 +41,10 @@ class AgencieController extends Controller
             ->addColumn('options', function ($agencies){
                 $opciones = '';
                 if (Auth::user()->can('read_agencies')) {
-                    $opciones .= '<a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>';
+                    $opciones .= '<button type="button" onclick="btnInfo('.$agencies->id.')" class="btn action-icon icon-dual-primary"> <i class="mdi mdi-chevron-right"></i></button>';
                 }
                 if (Auth::user()->can('delete_agencies')) {
-                    $opciones .= '<button type="button" onclick="btnDelete('.$agencies->id.')" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>';
+                    // $opciones .= '<button type="button" onclick="btnDelete('.$agencies->id.')" class="btn action-icon icon-dual-danger"> <i class="mdi mdi-delete"></i></button>';
                 }
                 return $opciones;
             })
@@ -72,7 +73,40 @@ class AgencieController extends Controller
     public function store(StoreAgenciesRequest $request)
     {
         //return $request->all();
-        Agency::create($request->all());
+        $agency = Agency::create($request->all());
+        if ($request->has('fiscal_situation')) {
+            $sf = $request->file('fiscal_situation');
+            $file = 'SituacionFiscal'. '.' . $sf->getClientOriginalExtension();
+            $path = public_path('/documents/agencies/'. $request->rfc .'/');
+            $sf->move($path, $file);
+            $agency->fiscal_situation = '/documents/agencies/'. $request->rfc .'/' . $file;
+            $agency->save();
+        }
+        if ($request->has('current_rate')) {
+            $cr = $request->file('current_rate');
+            $file = 'TarifaVigente'. '.' . $cr->getClientOriginalExtension();
+            $path = public_path('/documents/agencies/'. $request->rfc .'/');
+            $cr->move($path, $file);
+            $agency->current_rate = '/documents/agencies/'. $request->rfc .'/' . $file;
+            $agency->save();
+        }
+        if ($request->has('proof_address')) {
+            $pf = $request->file('proof_address');
+            $file = 'ComprobanteDomicilio'. '.' . $pf->getClientOriginalExtension();
+            $path = public_path('/documents/agencies/'. $request->rfc .'/');
+            $pf->move($path, $file);
+            $agency->proof_address = '/documents/agencies/'. $request->rfc .'/' . $file;
+            $agency->save();
+        }
+        if ($request->has('covenants')) {
+            $cv = $request->file('covenants');
+            $file = 'Convenios'. '.' . $cv->getClientOriginalExtension();
+            $path = public_path('/documents/agencies/'. $request->rfc .'/');
+            $cv->move($path, $file);
+            $agency->covenants = '/documents/agencies/'. $request->rfc .'/' . $file;
+            $agency->save();
+        }
+
         return response()->json(['data' => 'Agencia registrada correctamente'], 201);
         //return redirect()->route('agencies.index');
 
@@ -87,9 +121,12 @@ class AgencieController extends Controller
      * @param  \App\Models\Agencie  $agencie
      * @return \Illuminate\Http\Response
      */
-    public function show(Agencie $agencie)
+    public function show(Request $request)
     {
-        //
+        $agencie = Agency::findOrFail($request->id);
+        return response()->json([
+            'data' => $agencie,
+        ], 201);
     }
 
     /**
@@ -124,6 +161,9 @@ class AgencieController extends Controller
     public function destroy(Request $request)
     {
         $agency = Agency::findOrFail($request->id);
+        $directory = '/documents/agencies/'. $agency->rfc;
+        File::deleteDirectory(public_path($directory));
+
         $delete = $agency->delete();
         if ($delete == 1){
             $success = true;
@@ -132,7 +172,6 @@ class AgencieController extends Controller
             $success = true;
             $message = "No se elimino la agencia";
         }
-
         return response()->json([
             'success' => $success,
             'message' => $message

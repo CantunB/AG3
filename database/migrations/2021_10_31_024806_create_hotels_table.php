@@ -15,7 +15,7 @@ class CreateHotelsTable extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             //$table->id();
-            $table->string('zona',10)->nullable();
+            $table->unsignedBigInteger('zona');
             $table->string('state',50)->nullable();
             $table->string('municipio',100)->nullable();
             $table->string('head',100)->nullable();

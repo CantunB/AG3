@@ -9,6 +9,7 @@ return [
     */
     'Administrator'   => 'Administrator',
     'Registers'   => 'Registers',
+    'Bookings' => 'Bookings',
     'Agencies'   => 'Agencies',
     'Airlines'   => 'Airlines',
     'Services'   => 'Services',
@@ -32,5 +33,6 @@ return [
     'Attachments' => 'Attachments',
     'Date of Birth' => 'Date of Birth',
     'Personal Information' => 'Personal Information',
+    'Welcome' => 'Welcome, :name',
 
 ];

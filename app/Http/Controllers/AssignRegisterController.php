@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AssignRegisterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +65,7 @@ class AssignRegisterController extends Controller
     {
         $register = Register::findOrFail($id);
         $units = Unit::Active();
-        $operators = Operator::Active();
+        $operators = Operator::all();
 
         return view('assignments.show', compact(['register','units', 'operators']));
 

@@ -25,7 +25,7 @@ class AssingRegister extends Model
         'finish_trip'
     ];
 
-    protected $appends = ['servicio'];
+    protected $appends = ['servicio', 'agencia'];
     /**
      * Get the registers that owns the AssingRegister
      *
@@ -58,5 +58,9 @@ class AssingRegister extends Model
     public function getServicioAttribute(){
 
         return $this->register->Type_service->name;
+    }
+    public function getAgenciaAttribute(){
+
+        return $this->register->Agency->business_name;
     }
 }

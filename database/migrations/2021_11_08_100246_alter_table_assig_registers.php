@@ -14,7 +14,7 @@ class AlterTableAssigRegisters extends Migration
     public function up()
     {
         Schema::table('assign_registers', function (Blueprint $table) {
-            $table->timestamp('start_trip', )->nullable()->after('status');
+            $table->timestamp('start_trip', )->nullable()->after('trip_status');
             $table->timestamp('finish_trip', )->nullable()->after('start_trip');
 
         });

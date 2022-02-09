@@ -27,7 +27,11 @@ class StoreAgenciesRequest extends FormRequest
             'business_name' => 'required',
             'rfc' => 'required|min:10|unique:agencies,rfc',
             'email' => 'email|unique:agencies,email|nullable',
-            'telephone' => 'digits:10|nullable'
+            'telephone' => 'digits:10|nullable',
+            'fiscal_situation' => 'nullable|mimes:pdf|max:2048',
+            'current_rate' => 'nullable|mimes:pdf|max:2048',
+            'proof_address' => 'nullable|mimes:pdf|max:2048',
+            'covenants' => 'nullable|mimes:pdf|max:2048',
         ];
     }
     public function attributes()
@@ -36,7 +40,11 @@ class StoreAgenciesRequest extends FormRequest
             'business_name' => 'razón social',
             'rfc' => 'RFC',
             'telephone' => 'telefono',
-            'email' => 'correo electronico'
+            'email' => 'correo electronico',
+            'fiscal_situation' => 'Situacion fiscal',
+            'current_rate' => 'Tarifa vigente',
+            'proof_address' => 'Comprobante de domicilio',
+            'covenants' => 'Convenios'
         ];
     }
 

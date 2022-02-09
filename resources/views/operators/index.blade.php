@@ -134,12 +134,8 @@
                 },
                 ajax: '{!! route('operators.index') !!}',
                 columns: [
-                //    {data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center'},
                     {data: 'name', name:'name'},
-                //    {data: 'celular', name:'celular', orderable: false },
-                //    {data: 'email', name:'email', className:'text-center', orderable: false },
                     {data: 'status', name: 'status', className: 'text-center'},
-                //    {data: 'rol', name:'rol', orderable: false },
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],
         });
@@ -157,17 +153,17 @@
             },
             type: "GET",
             success: function (response){
-            console.log(response);
-            $('#getFoto').attr('src', response.data['operator_photo'] );
-            $("#getNombre").html(response.fullname);
-            $('#getEmail').html(response.data['email']);
-            $('#getPhone').html(response.data['phone']);
-            $('#getDate').html(response.data['birthday_date']);
-            $('#getStatus').html(response.status);
-            $.each( response, function( key, value ) {
-                //console.log( key + ": " + value );
-                $('#getFiles').html(value) ;
-              });
+                console.log(response);
+                $('#getFoto').attr('src', response.data['operator_photo'] );
+                $("#getNombre").html(response.fullname);
+                $('#getEmail').html(response.data['email']);
+                $('#getPhone').html(response.data['phone']);
+                $('#getDate').html(response.data['birthday_date']);
+                $('#getStatus').html(response.status);
+                $.each( response, function( key, value ) {
+                    //console.log( key + ": " + value );
+                    $('#getFiles').html(value) ;
+                });
             }
 
         });

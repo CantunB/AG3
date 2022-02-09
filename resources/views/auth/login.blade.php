@@ -8,11 +8,12 @@
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="../assets/images/favicon.ico">
+
+        <link rel="shortcut icon" href="{{ asset('assets/images/icons/logo.ico') }}" />
 
 		<!-- App css -->
-		<link href="{{ asset('assets/css/bootstrap-modern.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="{{ asset('assets/css/app-modern.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+		<link href="{{ asset('assets/css/bootstrap-modern.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="{{ asset('assets/css/app-modern.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
 		<link href="{{ asset('assets/css/bootstrap-modern-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
 		<link href="{{ asset('assets/css/app-modern-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
@@ -22,32 +23,32 @@
 
     </head>
 
-    <body class="loading authentication-bg authentication-bg-pattern">
+    <body  class="loading authentication-bg authentication-bg-pattern">
 
         <div class="account-pages mt-5 mb-5">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
-                        <div class="card bg-pattern">
+                        <div style="background-color:black" class="card">
 
                             <div class="card-body p-4">
 
-                                {{-- <div class="text-center w-75 m-auto">
+                                <div class="text-center w-75 m-auto">
                                     <div class="auth-logo">
-                                        <a href="index.html" class="logo logo-dark text-center">
+                                        <a href="#" class="logo logo-dark text-center">
                                             <span class="logo-lg">
-                                                <img src="../assets/images/logo-dark.png" alt="" height="22">
+                                                <img src="{{ asset('assets/images/logo.png') }}" alt="" height="100">
                                             </span>
                                         </a>
 
-                                        <a href="index.html" class="logo logo-light text-center">
+                                        <a href="#" class="logo logo-light text-center">
                                             <span class="logo-lg">
-                                                <img src="../assets/images/logo-light.png" alt="" height="22">
+                                                <img src="{{ asset('assets/images/logo.png') }}" alt="" height="100">
                                             </span>
                                         </a>
                                     </div>
                                     <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel. {{ isset($url) ? ucwords($url) : ""}} {{ __('Login') }}</p>
-                                </div> --}}
+                                </div>
                                 @isset($url)
                                 <form method="POST" action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
                                 @else
@@ -83,14 +84,14 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
+                                        <div class="custom-control custom-checkbox checkbox-warning">
+                                            <input type="checkbox" class="custom-control-input " id="checkbox-signin" checked>
                                             <label class="custom-control-label" for="checkbox-signin">{{ __('Remember me') }}</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-primary btn-block" type="submit"> {{ __('Log In') }} </button>
+                                        <button class="btn btn-warning btn-block" type="submit"> {{ __('Log In') }} </button>
                                     </div>
 
                                 </form>
@@ -136,7 +137,7 @@
 
 
         <footer class="footer footer-alt text-white-50">
-            <script>document.write(new Date().getFullYear())</script>  <a href="" class="text-white-50">InnovaIdeal &copy;</a>
+            <script>document.write(new Date().getFullYear())</script>  <a href="https://www.stigmacode.com/" class="text-white-50">StigmaCode &copy;</a>
         </footer>
 
         <!-- Vendor js -->

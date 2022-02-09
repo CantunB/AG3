@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Hotel;
+use App\Models\TypeTrip;
 use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AirlineSeeder::class);
         $this->call(RegisterSeeder::class);
         $this->call(UnitSeeder::class);
+        $this->call(TypeUnitsSeeder::class);
+        $this->call(TypeTripSeeder::class);
+        $this->call(TariffHotelSeeder::class);
     }
 }

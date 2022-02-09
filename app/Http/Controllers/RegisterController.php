@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -84,11 +88,14 @@ class RegisterController extends Controller
     {
         $agencies = Agency::all();
         $services = TypeService::all();
-        //$airlines = DB::table('airlines')->groupBy('airline')->get();
-        //$hotels = Hotel::all();
+        $airlines = Airline::groupBy('airline')->get();
+
+        $hotels = Hotel::all();
         return view('registers.create', compact(
                 'agencies',
             'services',
+            'airlines',
+            'hotels'
             )
         );
     }

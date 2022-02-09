@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Agency;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Schema;
 
 class CreateAgenciesTable extends Migration
@@ -21,6 +23,9 @@ class CreateAgenciesTable extends Migration
             $table->string('address',120)->nullable();
             $table->string('telephone',10)->unique()->nullable();
             $table->string('email')->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password')->default();
+            $table->rememberToken();
             $table->string('agency_logo')->nullable();
             $table->string('contact', 100)->nullable();
             $table->string('telephone_contact',10)->unique()->nullable();
@@ -30,6 +35,7 @@ class CreateAgenciesTable extends Migration
             $table->string('covenants')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

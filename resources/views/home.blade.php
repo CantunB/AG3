@@ -31,7 +31,6 @@
             </div>
         </div>
     </div>
-    <!-- end page title -->
 
     <div class="row">
         @can('read_sales')
@@ -40,13 +39,15 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="avatar-lg rounded-circle bg-soft-pink border-pink border">
-                            <i class="fe-heart font-22 avatar-title text-pink"></i>
+                            <i class="mdi mdi-airplane  mdi-36px font-22 avatar-title text-pink"></i>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="text-right">
-                            <h3 class="mt-1 text-dark">$<span data-plugin="counterup">58,947</span></h3>
-                            <p class="text-muted mb-1 text-truncate">Total {{ __('translation.Revenue') }}</p>
+                            <h3 class="mt-1 text-dark">
+                                {{-- $ --}}
+                                 <span data-plugin="counterup"> {{$airlines}} </span></h3>
+                            <p class="text-muted mb-1 text-truncate">{{ __('translation.Airlines') }}</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -80,12 +81,12 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                <i class="fe-truck font-22 avatar-title text-success"></i>
+                                <i class="mdi mdi-account-convert mdi-36px font-22 avatar-title text-success"></i>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$operators}}  </span></h3>
                                 <p class="text-muted mb-1 text-truncate">{{ __('translation.Operators') }}</p>
                             </div>
                         </div>
@@ -100,12 +101,12 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
-                                <i class="fe-star-on font-22 avatar-title text-warning"></i>
+                                <i class="mdi mdi-card-account-phone  mdi-36px  font-22 avatar-title text-warning"></i>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">78.41</span>k</h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup"> {{$agencies}} </span></h3>
                                 <p class="text-muted mb-1 text-truncate">{{ __('translation.Agencies') }}</p>
                             </div>
                         </div>
@@ -533,23 +534,6 @@
 
 </div> <!-- container -->
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
+
