@@ -124,4 +124,9 @@
         </div> <!-- end col-->
     </div>
 </div>
+@push('scripts')
+    <script>
+
+    </script>
+@endpush
 @endsection

@@ -4,7 +4,6 @@
     .select2-container--default .select2-results__option--highlighted[aria-selected] {
         background-color:#bfc8f1;
     }
-
     .Blanco {
         color: white;
     }.Plateado {
@@ -47,10 +46,10 @@
                         <div class="col-md-3">
                             <div class="form-group ">
                                 <label for="type">{{ __('translation.Type') }}</label>
-                                <select id="type" name="type" class="form-control"  required >
+                                <select id="type" name="type" class="form-control select2"  required >
                                     <option value="" disabled selected>Selecciona un tipo de unidad</option>
-                                    <option data-icon="mdi mdi-car-estate" value="suburban">Camioneta tipo SUBURBAN</option>
-                                    <option data-icon="mdi mdi-van-utility" value="van">Camioneta tipo VAN</option>
+                                    <option data-icon="mdi mdi-car-estate" value="suburban">SUBURBAN</option>
+                                    <option data-icon="mdi mdi-van-utility" value="van">VAN</option>
                                 </select>
                             </div>
                         </div>
@@ -69,7 +68,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="color">Color</label>
-                                <select id="color" name="color" class="form-control">
+                                <select id="color" name="color" class="form-control select2">
                                     <option value="" disabled selected>Selecciona un color</option>
                                     <option value="Blanco">Blanco</option>
                                     <option value="Plateado">Plateado</option>
@@ -101,7 +100,7 @@
                                 <div class="input-group">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fe-dollar-sign"></i></span>
-                                        <input id="total_price" name="total_price" class="form-control" step="0.01">
+                                        <input id="total_price" name="total_price" class="form-control cleave" step="0.01">
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +149,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="sct_validity">Vigencia</label>
-                                <input type="date" id="sct_validity" name="sct_validity" class="form-control">
+                                <input type="date" id="sct_validity" name="sct_validity" class="form-control flatpickr">
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -194,13 +193,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="insurance_start_validity">Inicio de vigencia</label>
-                                <input type="date" id="insurance_start_validity" name="insurance_start_validity" class="form-control">
+                                <input type="date" id="insurance_start_validity" name="insurance_start_validity" class="form-control flatpickr">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="insurance_end_validity">Final de vigencia</label>
-                                <input type="date" id="insurance_end_validity" name="insurance_end_validity" class="form-control">
+                                <input type="date" id="insurance_end_validity" name="insurance_end_validity" class="form-control flatpickr">
                             </div>
                         </div>
                     </div>
@@ -281,19 +280,19 @@
             templateSelection: formatText,
             templateResult: formatText
         });
-    });
+        });
 
-    function formatState (color) {
-        //var baseUrl = "/user/pages/images/flags";
-        var $state = $(
-            '<span><i class="mdi mdi-checkbox-blank-circle mr-1 '+color.text+' "></i>' + color.text  + '</span>'
-          //'<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
-        );
-        return $state;
-    };
+        function formatState (color) {
+            //var baseUrl = "/user/pages/images/flags";
+            var $state = $(
+                '<span><i class="mdi mdi-checkbox-blank-circle mr-1 '+color.text+' "></i>' + color.text  + '</span>'
+            );
+            return $state;
+        };
 
-    $("#color").select2({
-        templateResult: formatState
+        $("#color").select2({
+            templateResult: formatState,
+            templateSelection: formatState
     });
 
 </script>

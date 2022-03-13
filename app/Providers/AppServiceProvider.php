@@ -11,6 +11,8 @@ use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use PhpParser\Node\Expr\Assign;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -42,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
             $airlines = Airline::count();
             $type_services = TypeService::count();
             $agencies = Agency::count();
+            // $sales = Assign
             $view->with([
                 'units' => $units,
                 'operators' => $operators,

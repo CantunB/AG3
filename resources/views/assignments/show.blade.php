@@ -25,7 +25,7 @@
                         <div class="col-xl-4">
                             <div class="form-group ">
                                 <label>{{ __('translation.Date') }}</label>
-                                <input type="text" class="form-control" readonly id="date" name="date" placeholder="{{ date('Y-m-d') }}"  required>
+                                <input type="text" class="form-control flatpickr" readonly id="date" name="date" placeholder="{{ date('Y-m-d') }}"  required>
                             </div>
                         </div>
                         <input type="hidden" value="{{ $register->id }}" name="id_register" id="id_register">
@@ -34,7 +34,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Units') }}</label>
-                                <select id="id_unit" name="id_unit" class="form-control" data-toggle="select2">
+                                <select id="id_unit" name="id_unit" class="form-control select2" data-toggle="select2">
                                     <option value="" disabled selected>Selecciona una unidad</option>
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"> {{ $unit->unit }}</option>
@@ -46,7 +46,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Operators') }}</label>
-                                <select id="id_operator" name="id_operator" class="form-control" data-toggle="select2">
+                                <select id="id_operator" name="id_operator" class="form-control select2" data-toggle="select2">
                                     <option value="" disabled selected>Selecciona un operdor</option>
                                     @foreach ($operators as $operator)
                                         <option value="{{ $operator->id }}"> {{ $operator->name }} {{ $operator->paterno }} {{ $operator->materno }}</option>
@@ -60,7 +60,7 @@
                                 <label for="project-priority">Precio del servicio</label>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"  id="inputGroupPrepend">$</span>
-                                    <input id="price" name="price" class="form-control">
+                                    <input type="text" id="price" name="price" class="form-control ">
                                 </div>
                             </div>
                         </div>
@@ -82,22 +82,20 @@
 <!-- end row-->
 @push('scripts')
 <script>
-    document.getElementById("date").flatpickr({
+    {{-- document.getElementById("date").flatpickr({
         altInput: true,
         noCalendar: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
         defaultDate: "{!! date('Y-m-d') !!}"
+    }); --}}
+    document.getElementById("date").flatpickr({
+        locale: 'es',
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        defaultDate: "{!! date('Y-m-d') !!}"
     });
 </script>
-<script>
-    $(document).ready(function() {
-        $('#id_unit').select2();
-    });
-    $(document).ready(function() {
-        $('#id_operator').select2();
-    });
-</script>
-
 @endpush
 @endsection

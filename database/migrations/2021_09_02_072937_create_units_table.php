@@ -19,6 +19,8 @@ class CreateUnitsTable extends Migration
             $table->string('type',50);
             $table->string('brand',100)->nullable();
             $table->string('model', 100)->nullable();
+            $table->year('year');
+            $table->string('color')->nullable();
             $table->string('frame', 100)->nullable();
             $table->string('engines', 100)->nullable();
             $table->float('total_price')->nullable();
@@ -31,7 +33,6 @@ class CreateUnitsTable extends Migration
             $table->date('insurance_end_validity')->nullable();
             $table->string('circulation_card_number')->nullable();
             $table->string('tia_number')->nullable();
-
             $table->string('file_contract')->nullable();
             $table->string('file_invoice_unit')->nullable();
             $table->string('file_invoice_letter')->nullable();
@@ -40,7 +41,6 @@ class CreateUnitsTable extends Migration
             $table->string('file_insurance_policy')->nullable();
             $table->string('file_circulation_card')->nullable();
             $table->string('file_tia')->nullable();
-
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });

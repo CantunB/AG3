@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'paterno' => 'required',
             'phone' => 'required|unique:users,phone',
             'email' => 'required|unique:users,email',
-            'photo_user' => 'required|mimes:jpg,jpeg,bmp,png|max:2048',
+            'photo_user' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
         ];
     }
     /**

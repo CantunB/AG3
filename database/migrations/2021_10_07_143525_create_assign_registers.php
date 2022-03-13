@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssigRegisters extends Migration
+class CreateAssignRegisters extends Migration
 {
     /**
      * Run the migrations.
@@ -29,6 +29,7 @@ class CreateAssigRegisters extends Migration
             $table->string('method_payment')->nullable();
             $table->string('observations')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

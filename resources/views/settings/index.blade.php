@@ -123,18 +123,19 @@
     </div> <!-- container -->
 @include('settings.components.mcu')
 @push('scripts')
-<script>
-    $.clearInput = function () {
-        $('form').find(
-            'input[type=text],
-            input[type=password],
-            input[type=number],
-            input[type=date],
-            input[type=email],
-            input[type=file],
-            textarea').val('');
-    };
-</script>
+    <script>
+        $('#crearUsuario').on('hidden.bs.modal', function (e) {
+            $(this)
+            .find("input,textarea,select")
+                .val('')
+                .end()
+            .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end();
+            $('#form_mcu').parsley().reset();
+            $("#errors-alert").hide();
+        })
+    </script>
 <script>
     $('.dropify').dropify({
     messages: {

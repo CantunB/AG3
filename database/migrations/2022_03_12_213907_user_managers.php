@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperatorsTable extends Migration
+class UserManagers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateOperatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('operators', function (Blueprint $table) {
+        Schema::create('user_managers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
+            $table->string('name',50);
             $table->string('paterno',50)->nullable();
             $table->string('materno',50)->nullable();
             $table->string('phone',10)->unique()->nullable();
@@ -23,8 +23,11 @@ class CreateOperatorsTable extends Migration
             $table->date('birthday_date')->nullable();
             $table->string('address')->nullable();
             $table->integer('cp',5)->autoIncrement(false)->unsigned()->nullable();
-            $table->string('driver_license')->nullable();
-            $table->string('operator_photo')->default('/assets/images/users/user-12.png')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->tinyInteger('status')->default('1');
+            $table->string('photo_user')->default('/assets/images/users/user-profile.png');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,6 +40,7 @@ class CreateOperatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operators');
+        Schema::dropIfExists('user_managers');
+
     }
 }

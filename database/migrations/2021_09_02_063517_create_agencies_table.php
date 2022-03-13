@@ -27,12 +27,14 @@ class CreateAgenciesTable extends Migration
             $table->string('password')->default();
             $table->rememberToken();
             $table->string('agency_logo')->nullable();
-            $table->string('contact', 100)->nullable();
-            $table->string('telephone_contact',10)->unique()->nullable();
+            // $table->string('contact', 100)->nullable();
+            // $table->string('telephone_contact',10)->unique()->nullable();
             $table->string('fiscal_situation')->nullable();
             $table->string('current_rate')->nullable();
             $table->string('proof_address')->nullable();
             $table->string('covenants')->nullable();
+            $table->double('tariff');
+            $table->string('place_service')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();

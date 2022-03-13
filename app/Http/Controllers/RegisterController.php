@@ -9,6 +9,7 @@ use App\Models\Hotel;
 use App\Models\OriginDestiny;
 use App\Models\Register;
 use App\Models\TypeService;
+use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -28,6 +29,7 @@ class RegisterController extends Controller
      */
     public function index(Request $request)
     {
+
         if ($request->ajax()){
             $registers = Register::with(['Agency','Type_service', 'isAssigned']);
 //          $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
@@ -35,6 +37,9 @@ class RegisterController extends Controller
             ->addIndexColumn()
             ->editColumn('date', function($registers){
                 return $registers->date;
+            })
+            ->editColumn('hora', function($registers){
+                return $registers->pickup;
             })
             ->editColumn('agencia', function($registers){
                 return $registers->Agency->business_name;
@@ -66,9 +71,20 @@ class RegisterController extends Controller
             })
             ->addColumn('options', function ($registers){
                 $opciones = '';
-                if (Auth::user()->can('read_operators')){
-                    $opciones .= '<button type="button"  onclick="btnInfo('.$registers->id.')" class="btn btn-sm action-icon getInfo icon-dual-blue"><i class="mdi mdi-menu-right-outline"></i></button>';
+                if (Auth::user()->can('read_registers')){
+                    $opciones .= '<button type="button" onclick="btnInfo('.$registers->id.')"  data-toggle="modal" data-target="#myModal" class="btn btn-sm action-icon icon-dual-info"><i class="mdi mdi-alert-rhombus-outline"></i></button>';
                     // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
+                }
+                if (Auth::user()->can('update_registers')) {
+                    if(!isset($registers->isAssigned)){
+                        $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning"> <i class="mdi mdi-pencil-outline"></i></button>';
+                        // $opciones .= '<a href="'. route('assign.show', $registers->id) .'"  class="btn btn-sm action-icon getInfo icon-dual-primary"><i class="mdi mdi-book-account-outline"></i></a>';
+                    }
+                }
+                if (Auth::user()->can('delete_registers')) {
+                    if(!isset($registers->isAssigned)){
+                        $opciones .= '<button type="button" onclick="btnDelete('.$registers->id.')" class="btn action-icon icon-dual-danger "> <i class="mdi mdi-trash-can-outline"></i></button>';
+                    }
                 }
                 return $opciones;
             })
@@ -108,6 +124,7 @@ class RegisterController extends Controller
      */
     public function store(StoreRegistersRequest $request)
     {
+        // return $request->all();
         $registro = Register::create($request->all());
         return response()->json(['data' => 'Servicio Registrado'], 201);
     }
@@ -123,7 +140,7 @@ class RegisterController extends Controller
         $register = Register::with(['Agency','Type_service', 'isAssigned'])
                     ->findOrFail($request->id);
         //$f_r = $register->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a');
-        $f_r = $register->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a');
+        $f_r = $register->created_at->toFormattedDateString();
 
         return response()->json([
             'data' => $register,
@@ -160,8 +177,21 @@ class RegisterController extends Controller
      * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Register $register)
+    public function destroy(Request $request)
     {
-        //
+        $register = Register::findOrFail($request->id);
+
+        $delete = $register->delete();
+        if ($delete == 1){
+            $success = true;
+            $message = "Registro eliminado correctamente";
+        } else {
+            $success = true;
+            $message = "No se pudo eliminar el registro";
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
 }

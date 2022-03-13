@@ -1,6 +1,22 @@
 @extends('layouts.app')
 @section('content')
 <style>
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color:#FFD038;
+    }
+    table.dataTable tbody tr.selected {
+        color: rgb(252, 252, 252);
+        background-color: #F0CA63;  /* Not working */
+    }
+    .text-wrap{
+        white-space:normal;
+    }
+    width-100{
+        width:100px;
+    }
+    .width-200{
+        width:200px;
+    }
 </style>
 <div class="container-fluid">
     <!-- start page title -->
@@ -10,141 +26,649 @@
         @slot('teme') {{ __('translation.List') }} @endslot
     @endcomponent
     <!-- end page title -->
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-                <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <div class="text-md-right">
-                                <a href="{{ route('registers.create') }}" class="btn btn-danger waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i>{{ __('translation.Add New')}}</a>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card-box">
+        <!--        <h4 class="header-title mb-4">{{ __('Administrator') }}</h4>  -->
+
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="#all" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                            TODOS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#roles" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="subsDataTables()">
+                            SUBURBAN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#permissions" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="vansDataTables()">
+                            VAN
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="all">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                        <div class="card-body">
+                                            {{-- <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <div class="text-md-right">
+                                                        <a href="{{ route('registers.create') }}" class="btn btn-danger waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i>{{ __('translation.Add New')}}</a>
+                                                    </div>
+                                                </div>
+                                            </div> --}}
+                                            <div class="table-responsive">
+                                                <table id="table_reg"  class="table table-sm table-centered border dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Hora</th>
+                                                            <th>Servicio</th>
+                                                            <th>Origen</th>
+                                                            <th>Destino</th>
+                                                            <th>Comentarios</th>
+                                                            <th>Unidad Solicitada</th>
+                                                            <th>Unidad</th>
+                                                            <th>Operador</th>
+                                                            <th>Opciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                    </div>
+
+                    <div class="tab-pane" id="roles">
+                    <!-- end page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table id="table_subs"  class="table table-sm table-centered border dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hora</th>
+                                                    <th>Servicio</th>
+                                                    <th>Origen</th>
+                                                    <th>Destino</th>
+                                                    <th>Comentarios</th>
+                                                    <th>Unidad Solicitada</th>
+                                                    <th>Unidad</th>
+                                                    <th>Operador</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table id="table_reg" class="table table-centered border table-striped dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
-                            <thead>
-                                <tr>
-                                    <th>Agencias</th>
-                                    <th>{{ __('translation.Service') }}</th>
-                                    <th>Operador</th>
-                                    <th>Costo/Precio</th>
-                                    <th>Status</th>
-                                    <th style="width: 82px;">{{ __('translation.Options') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+
+                    <div class="tab-pane" id="permissions">
+                        <!-- end page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table id="table_vans"  class="table table-sm table-centered border dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hora</th>
+                                                    <th>Servicio</th>
+                                                    <th>Origen</th>
+                                                    <th>Destino</th>
+                                                    <th>Comentarios</th>
+                                                    <th>Unidad Solicitada</th>
+                                                    <th>Unidad</th>
+                                                    <th>Operador</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
-        {{-- <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mb-3">Seguimiento del servicio</h4>
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Agencia:</h5>
-                                <p style="font-size:small" id="agency"></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Origen:</h5>
-                                <p id="origin"></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Destino:</h5>
-                                <p id="destiny"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Pasajero:</h5>
-                                <p id="pas"></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Numero pasajero:</h5>
-                                <p id="pas_n"></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Pick Up:</h5>
-                                <p id="pck"></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="mb-4">
-                                <h5 class="mt-0">Observaciones:</h5>
-                                <p id="obs"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="track-order-list">
-                        <ul class="list-unstyled">
-                            <li id="registro">
-                                <span id="reg"></span>
-                                <h5 class="mt-0 mb-1">Registro</h5>
-                                <p style="text-transform:capitalize" id="date_reg" class="text-muted"></p>
-                            </li>
-                            <li id="asignado">
-                                <span id="asi"></span>
-                                <h5 class="mt-0 mb-1">Asignado</h5>
-                                <p style="text-transform:capitalize" id="date_asi" class="text-muted"></p>
-                            </li>
-                            <li id="en_curso">
-                                <span id="cur"></span>
-                                <h5 class="mt-0 mb-1">En curso</h5>
-                                <p class="text-muted">April 22 2019 <small class="text-muted">05:16 PM</small></p>
-                            </li>
-                            <li id="finalizado">
-                                <span id="fin"></span>
-                                <h5 class="mt-0 mb-1"> Finalizado</h5>
-                                <p class="text-muted">Estimated delivery within 3 days</p>
-                            </li>
-                        </ul>
-
-                        <div class="text-center mt-4" id="action">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div> --}}
+            </div> <!-- end card-box-->
+        </div> <!-- end col -->
     </div>
+
 </div>
 
 @push('scripts')
 <script>
     $(document).ready(function(){
-        $('#table_reg').DataTable({
+
+        var table = $('#table_reg').DataTable({
                 processing: true,
                 serverSide: true,
+                paging: false,
+                {{--  select: true,  --}}
+                drawCallback: function() {
+                    $('.select2').select2();
+                },
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
                 },
                 ajax: '{!! route('assign.index') !!}',
                 columns: [
-                    {data: 'agency', name: 'agency'},
-                    {data: 'services', name: 'services'},
-                    {data: 'operator', name: 'operator'},
-                    {data: 'price', name: 'price'},
-
+                    {data:'hora', name: 'hora', orderable:false},
+                    {data: 'service', name: 'service', className: 'text-wrap width-100', orderable: false},
+                    {data: 'origin', name: 'origin', className: 'text-wrap width-100', orderable: false},
+                    {data: 'destiny', name: 'destiny', className: 'text-wrap width-100', orderable: false},
+                    {data: 'observations', name: 'observations', className: 'text-wrap width-100', orderable: false},
+                    {data: 'requested_unit', name: 'requested_unit', className: 'text-wrap width-100', orderable: false},
+                    {data: 'unit', name: 'unit', className:  'text-wrap width-100', orderable: false},
+                    {data: 'operators', name: 'operators', className:'text-wrap width-100', orderable: false},
+                    {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false},
             ],
+        });
+        var data = table.row( $(this).parents('tr') ).data();
+
+        $('#table_reg tbody').on( 'click', '.btnassign', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            $('#id_operator'+data.id).prop("disabled", false);
+                $('#id_unit'+data.id).prop("disabled", false);
+                $('#btnsuccess'+data.id).show();
+                $('#btncancel'+data.id).show();
+            {{--  console.log(data);  --}}
+            {{-- if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+                $('#id_operator'+data.id).prop("disabled", false);
+                $('#id_unit'+data.id).prop("disabled", false);
+                $('#btnsuccess'+data.id).show();
+                $('#btncancel'+data.id).show();
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                $('#id_operator'+data.id).prop("disabled", true);
+                $('#id_unit'+data.id).prop("disabled", true);
+                $('#btnsuccess'+data.id).hide();
+                $('#btncancel'+data.id).hide();
+            } --}}
+        });
+        $('#table_reg tbody').on( 'click', '.btncancel', function (){
+            var data = table.row( $(this).parents('tr') ).data();
+            $('#id_operator'+data.id).prop("disabled", true);
+            $('#id_unit'+data.id).prop("disabled", true);
+            $('#btnsuccess'+data.id).hide();
+            $('#btncancel'+data.id).hide();
+        });
+        {{-- $('#table_reg tbody').on( 'click', '.btncancel_update', function (){
+            var data = table.row( $(this).parents('tr') ).data();
+            $('#id_operator'+data.id).prop("disabled", true);
+            $('#id_unit'+data.id).prop("disabled", true);
+            $('#btnsuccess_up'+data.id).hide();
+            $('#btncancel_up'+data.id).hide();
+        }); --}}
+        $('#table_reg tbody').on( 'click', '.btnsuccess', function (){
+            var data = table.row( $(this).parents('tr') ).data();
+            console.log('Se enviara la asignacion...');
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('assign.store') }}',
+                data:
+                $.param({
+                    id_register : data.id,
+                    id_unit:  $('#id_unit'+data.id).val(),
+                    id_operator: $('#id_operator'+data.id).val(),
+                }),
+                dataType: "json",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response){
+                    console.log(response);
+                    toastr.success("Servicio asignado correctamente!");
+                    $('#table_reg').DataTable().ajax.reload();
+
+                    {{--  Swal.fire({
+                        title: "Registro creado!",
+                        text: response.data,
+                        icon: "success",
+                        timer: 3500,
+                        didDestroy: () => {
+                            window.location = '{!! route('registers.index') !!}';
+                        }
+                    });  --}}
+                },
+                error: function(response){
+                    var errors = response.responseJSON;
+                    errorsHtml = '<ul>';
+                    $.each(errors.errors,function (k,v) {
+                    errorsHtml += '<li>'+ v + '</li>';
+                    });
+                    errorsHtml += '</ul>';
+                    Swal.fire({
+                        title: "Ooops!",
+                        html: errorsHtml,
+                        icon: "error",
+                        confirmButtonText: "Volver!",
+                    });
+                }
+            });
+        });
+        $('#table_reg tbody').on( 'click', '.btnassign_update', function (){
+            var data = table.row( $(this).parents('tr') ).data();
+            $('#id_operator'+data.id).prop("disabled", false);
+            $('#id_unit'+data.id).prop("disabled", false);
+            $('#btnsuccess_up'+data.id).show();
+            $('#btncancel_up'+data.id).show();
+        });
+        $('#table_reg tbody').on( 'click', '.btnsuccess_update', function (){
+            var data = table.row( $(this).parents('tr') ).data();
+            console.log('Se actualizara la asignacion...');
+            $.ajax({
+                type: 'PUT',
+                url: "assign/"+data.id,
+                data:
+                $.param({
+                    id_register : data.id,
+                    id_unit:  $('#id_unit'+data.id).val(),
+                    id_operator: $('#id_operator'+data.id).val(),
+                }),
+                dataType: "json",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response){
+                    console.log(response);
+                    toastr.success("Servicio actualizado correctamente!");
+                    $('#table_reg').DataTable().ajax.reload();
+                },
+                error: function(response){
+                    var errors = response.responseJSON;
+                    errorsHtml = '<ul>';
+                    $.each(errors.errors,function (k,v) {
+                    errorsHtml += '<li>'+ v + '</li>';
+                    });
+                    errorsHtml += '</ul>';
+                    Swal.fire({
+                        title: "Ooops!",
+                        html: errorsHtml,
+                        icon: "error",
+                        confirmButtonText: "Volver!",
+                    });
+                }
+            });
         });
     });
 </script>
+<script>
+    function subsDataTables() {
+        if(!$.fn.dataTable.isDataTable('#table_subs')){
+        var table = $('#table_subs').DataTable({
+            processing: true,
+            serverSide: true,
+            paging: false,
+            {{--  select: true,  --}}
+            drawCallback: function() {
+                $('.select2').select2();
+            },
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            },
+            ajax: '{!! route('assign.subs') !!}',
+            columns: [
+                {data:'hora', name: 'hora', orderable:false},
+                {data: 'service', name: 'service', className: 'text-wrap width-100', orderable: false},
+                {data: 'origin', name: 'origin', className: 'text-wrap width-100', orderable: false},
+                {data: 'destiny', name: 'destiny', className: 'text-wrap width-100', orderable: false},
+                {data: 'observations', name: 'observations', className: 'text-wrap width-100', orderable: false},
+                {data: 'requested_unit', name: 'requested_unit', className: 'text-wrap width-100', orderable: false},
+                {data: 'unit', name: 'unit', className:  'text-wrap width-100', orderable: false},
+                {data: 'operators', name: 'operators', className:'text-wrap width-100', orderable: false},
+                {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false},
+        ],
+            });
+
+            var data = table.row( $(this).parents('tr') ).data();
+
+            $('#table_subs tbody').on( 'click', '.btnassign', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", false);
+                    $('#id_unit'+data.id).prop("disabled", false);
+                    $('#btnsuccess'+data.id).show();
+                    $('#btncancel'+data.id).show();
+                {{--  console.log(data);  --}}
+                {{-- if ( $(this).hasClass('selected') ) {
+                    $(this).removeClass('selected');
+                    $('#id_operator'+data.id).prop("disabled", false);
+                    $('#id_unit'+data.id).prop("disabled", false);
+                    $('#btnsuccess'+data.id).show();
+                    $('#btncancel'+data.id).show();
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#id_operator'+data.id).prop("disabled", true);
+                    $('#id_unit'+data.id).prop("disabled", true);
+                    $('#btnsuccess'+data.id).hide();
+                    $('#btncancel'+data.id).hide();
+                } --}}
+            });
+            $('#table_subs tbody').on( 'click', '.btncancel', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", true);
+                $('#id_unit'+data.id).prop("disabled", true);
+                $('#btnsuccess'+data.id).hide();
+                $('#btncancel'+data.id).hide();
+            });
+            $('#table_subs tbody').on( 'click', '.btncancel_update', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", true);
+                $('#id_unit'+data.id).prop("disabled", true);
+                $('#btnsuccess_up'+data.id).hide();
+                $('#btncancel_up'+data.id).hide();
+            });
+            $('#table_subs tbody').on( 'click', '.btnsuccess', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                console.log('Se enviara la asignacion...');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('assign.store') }}',
+                    data:
+                    $.param({
+                        id_register : data.id,
+                        id_unit:  $('#id_unit'+data.id).val(),
+                        id_operator: $('#id_operator'+data.id).val(),
+                    }),
+                    dataType: "json",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response){
+                        console.log(response);
+                        toastr.success("Servicio asignado correctamente!");
+                        $('#table_subs').DataTable().ajax.reload();
+
+                        {{--  Swal.fire({
+                            title: "Registro creado!",
+                            text: response.data,
+                            icon: "success",
+                            timer: 3500,
+                            didDestroy: () => {
+                                window.location = '{!! route('registers.index') !!}';
+                            }
+                        });  --}}
+                    },
+                    error: function(response){
+                        var errors = response.responseJSON;
+                        errorsHtml = '<ul>';
+                        $.each(errors.errors,function (k,v) {
+                        errorsHtml += '<li>'+ v + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        Swal.fire({
+                            title: "Ooops!",
+                            html: errorsHtml,
+                            icon: "error",
+                            confirmButtonText: "Volver!",
+                        });
+                    }
+                });
+            });
+            $('#table_subs tbody').on( 'click', '.btnassign_update', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", false);
+                $('#id_unit'+data.id).prop("disabled", false);
+                $('#btnsuccess_up'+data.id).show();
+                $('#btncancel_up'+data.id).show();
+            });
+            $('#table_subs tbody').on( 'click', '.btnsuccess_update', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                console.log('Se actualizara la asignacion...');
+                $.ajax({
+                    type: 'PUT',
+                    url: "assign/"+data.id,
+                    data:
+                    $.param({
+                        id_register : data.id,
+                        id_unit:  $('#id_unit'+data.id).val(),
+                        id_operator: $('#id_operator'+data.id).val(),
+                    }),
+                    dataType: "json",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response){
+                        console.log(response);
+                        toastr.success("Servicio actualizado correctamente!");
+                        $('#table_subs').DataTable().ajax.reload();
+                    },
+                    error: function(response){
+                        var errors = response.responseJSON;
+                        errorsHtml = '<ul>';
+                        $.each(errors.errors,function (k,v) {
+                        errorsHtml += '<li>'+ v + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        Swal.fire({
+                            title: "Ooops!",
+                            html: errorsHtml,
+                            icon: "error",
+                            confirmButtonText: "Volver!",
+                        });
+                    }
+                });
+            });
+
+        }
+    }
+</script>
+<script>
+    function vansDataTables() {
+        if(!$.fn.dataTable.isDataTable('#table_vans')){
+        var table = $('#table_vans').DataTable({
+            processing: true,
+                serverSide: true,
+                paging: false,
+                {{--  select: true,  --}}
+                drawCallback: function() {
+                    $('.select2').select2();
+                },
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+                },
+                ajax: '{!! route('assign.vans') !!}',
+                columns: [
+                    {data:'hora', name: 'hora', orderable:false},
+                    {data: 'service', name: 'service', className: 'text-wrap width-100', orderable: false},
+                    {data: 'origin', name: 'origin', className: 'text-wrap width-100', orderable: false},
+                    {data: 'destiny', name: 'destiny', className: 'text-wrap width-100', orderable: false},
+                    {data: 'observations', name: 'observations', className: 'text-wrap width-100', orderable: false},
+                    {data: 'requested_unit', name: 'requested_unit', className: 'text-wrap width-100', orderable: false},
+                    {data: 'unit', name: 'unit', className:  'text-wrap width-100', orderable: false},
+                    {data: 'operators', name: 'operators', className:'text-wrap width-100', orderable: false},
+                    {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false},
+            ],
+            });
+
+            var data = table.row( $(this).parents('tr') ).data();
+
+            $('#table_vans tbody').on( 'click', '.btnassign', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", false);
+                    $('#id_unit'+data.id).prop("disabled", false);
+                    $('#btnsuccess'+data.id).show();
+                    $('#btncancel'+data.id).show();
+                {{--  console.log(data);  --}}
+                {{-- if ( $(this).hasClass('selected') ) {
+                    $(this).removeClass('selected');
+                    $('#id_operator'+data.id).prop("disabled", false);
+                    $('#id_unit'+data.id).prop("disabled", false);
+                    $('#btnsuccess'+data.id).show();
+                    $('#btncancel'+data.id).show();
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#id_operator'+data.id).prop("disabled", true);
+                    $('#id_unit'+data.id).prop("disabled", true);
+                    $('#btnsuccess'+data.id).hide();
+                    $('#btncancel'+data.id).hide();
+                } --}}
+            });
+            $('#table_vans tbody').on( 'click', '.btncancel', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", true);
+                $('#id_unit'+data.id).prop("disabled", true);
+                $('#btnsuccess'+data.id).hide();
+                $('#btncancel'+data.id).hide();
+            });
+            $('#table_vans tbody').on( 'click', '.btncancel_update', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", true);
+                $('#id_unit'+data.id).prop("disabled", true);
+                $('#btnsuccess_up'+data.id).hide();
+                $('#btncancel_up'+data.id).hide();
+            });
+            $('#table_vans tbody').on( 'click', '.btnsuccess', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                console.log('Se enviara la asignacion...');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('assign.store') }}',
+                    data:
+                    $.param({
+                        id_register : data.id,
+                        id_unit:  $('#id_unit'+data.id).val(),
+                        id_operator: $('#id_operator'+data.id).val(),
+                    }),
+                    dataType: "json",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response){
+                        console.log(response);
+                        toastr.success("Servicio asignado correctamente!");
+                        $('#table_vans').DataTable().ajax.reload();
+
+                        {{--  Swal.fire({
+                            title: "Registro creado!",
+                            text: response.data,
+                            icon: "success",
+                            timer: 3500,
+                            didDestroy: () => {
+                                window.location = '{!! route('registers.index') !!}';
+                            }
+                        });  --}}
+                    },
+                    error: function(response){
+                        var errors = response.responseJSON;
+                        errorsHtml = '<ul>';
+                        $.each(errors.errors,function (k,v) {
+                        errorsHtml += '<li>'+ v + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        Swal.fire({
+                            title: "Ooops!",
+                            html: errorsHtml,
+                            icon: "error",
+                            confirmButtonText: "Volver!",
+                        });
+                    }
+                });
+            });
+            $('#table_vans tbody').on( 'click', '.btnassign_update', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#id_operator'+data.id).prop("disabled", false);
+                $('#id_unit'+data.id).prop("disabled", false);
+                $('#btnsuccess_up'+data.id).show();
+                $('#btncancel_up'+data.id).show();
+            });
+            $('#table_vans tbody').on( 'click', '.btnsuccess_update', function (){
+                var data = table.row( $(this).parents('tr') ).data();
+                console.log('Se actualizara la asignacion...');
+                $.ajax({
+                    type: 'PUT',
+                    url: "assign/"+data.id,
+                    data:
+                    $.param({
+                        id_register : data.id,
+                        id_unit:  $('#id_unit'+data.id).val(),
+                        id_operator: $('#id_operator'+data.id).val(),
+                    }),
+                    dataType: "json",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response){
+                        console.log(response);
+                        toastr.success("Servicio actualizado correctamente!");
+                        $('#table_vans').DataTable().ajax.reload();
+                    },
+                    error: function(response){
+                        var errors = response.responseJSON;
+                        errorsHtml = '<ul>';
+                        $.each(errors.errors,function (k,v) {
+                        errorsHtml += '<li>'+ v + '</li>';
+                        });
+                        errorsHtml += '</ul>';
+                        Swal.fire({
+                            title: "Ooops!",
+                            html: errorsHtml,
+                            icon: "error",
+                            confirmButtonText: "Volver!",
+                        });
+                    }
+                });
+            });
+
+        }
+    }
+</script>
+    <script>
+        /** DESTROY ASSIGNMENT*/
+        function btncancel_up(id) {
+            Swal.fire({
+                title: "Desea eliminar el servicio y la asignacion?",
+                text: "Por favor asegúrese y luego confirme!",
+                icon: 'warning',
+                showCancelButton: !0,
+                confirmButtonText: "¡Sí, borrar!",
+                cancelButtonText: "¡No, cancelar!",
+                reverseButtons: !0
+            }).then(function (e) {
+                if (e.value === true) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "/registers/" + id,
+                        data: {
+                            id: id,
+                            _token: '{!! csrf_token() !!}'
+                        },
+                        dataType: 'JSON',
+                        success: function (results) {
+                            if (results.success === true) {
+                                Swal.fire({
+                                    title: "Hecho!",
+                                    text: results.message,
+                                    icon: "success",
+                                    confirmButtonText: "Hecho!",
+                                });
+                                $('#table_registers').DataTable().ajax.reload();
+                            } else {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: results.message,
+                                    icon: "error",
+                                    confirmButtonText: "Cancelar!",
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    e.dismiss;
+                }
+            }, function (dismiss) {
+                return false;
+            })
+        }
+        /** DESTROY ASSIGNMENT*/
+    </script>
 <script>
     function btnInfo(id) {
         $.ajax({

@@ -13,5 +13,11 @@
 <link href="{{ asset('assets/css/app-modern-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 <link href="{{ asset('assets/libs/flexdatalist/jquery.flexdatalist.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
 @toastr_css
 @livewireStyles
+<style>
+    .divOculto {
+        display: none;
+    }
+</style>

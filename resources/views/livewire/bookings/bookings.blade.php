@@ -3,15 +3,13 @@
         <div class="card">
             <div class="card-body">
                     <div class="row mb-2">
-
                             @include('commons.search')
                             @include('commons.alerts')
-
                     </div>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive-sm">
                         <div>
-                            <table id="table_bookings" class="table table-sm table-bordered table-centered  mb-0 table-responsive">
+                            <table id="table_bookings" class="table table-sm table-bordered">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>
@@ -77,7 +75,6 @@
         </div> <!-- end col -->
     </div>
 </div> <!-- container -->
-
 
 <div class="modal {{$showModal}} " tabindex="-1">
     <div class="modal-dialog">

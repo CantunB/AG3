@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\AssignRegisterController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('bookings', 'bookings.index');
+
+Route::get('subs', 'AssignRegisterController@getSubs')->name('assign.subs');
+Route::get('vans', 'AssignRegisterController@getVans')->name('assign.vans');
 
 Auth::routes(['register' => false]);
 
@@ -70,5 +72,8 @@ Route::group(['web', 'settings'], function(){
     Route::get('permissions', 'Settings\SettingsController@permissions')->name('settings.permissions');
     Route::get('{locale}', 'Settings\SettingsController@lang');
 });
+
+//     Route::get('assign_','Settings\SettingsController@users')->name('settings.users');
+    //  Route::get('users','Settings\SettingsController@users')->name('settings.users');
 
 Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');

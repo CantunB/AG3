@@ -73,7 +73,7 @@
 
                                     <div class="col-sm-2">
                                         <div class="text-sm-right text-center mt-2 mt-sm-0">
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                            {{-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a> --}}
                                             <button type="button" onclick="deleteService({{ $service->id }})" class="btn action-icon"> <i class="mdi mdi-delete"></i></button>
                                         </div>
                                     </div>
