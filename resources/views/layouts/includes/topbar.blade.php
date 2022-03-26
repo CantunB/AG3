@@ -32,7 +32,7 @@
                         </a>
                 @endswitch
 
-                <div class="dropdown-menu dropdown-menu-right">
+                {{-- <div class="dropdown-menu dropdown-menu-right">
 
                     <!--
                     <a href="javascript:void(0);" class="dropdown-item">
@@ -59,10 +59,10 @@
                         <img src="../assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Russian</span>
                     </a> -->
 
-                </div>
+                </div> --}}
             </li>
 
-            <li class="dropdown notification-list topbar-dropdown">
+            {{-- <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-bell noti-icon"></i>
                     <span class="badge badge-danger rounded-circle noti-icon-badge">9</span>
@@ -151,13 +151,13 @@
                     </a>
 
                 </div>
-            </li>
+            </li> --}}
 
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="{{ asset(Auth::user()->photo_user ?? Auth::guard('operator')->user()->operator_photo) }}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
-                        {{ Auth::user()->name ?? Auth::guard('operator')->user()->name  }}  <i class="mdi mdi-chevron-down"></i>
+                        {{ Auth::user()->name   }}  <i class="mdi mdi-chevron-down"></i>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -173,27 +173,27 @@
                     </a>
 
                     <!-- item-->
-                    <a href="{{ route('settings.users') }}" class="dropdown-item notify-item">
+                    <a href="{{ route('users.index') }}" class="dropdown-item notify-item">
                         <i class="fe-settings"></i>
                         <span>{{ __('translation.Settings') }}</span>
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="fe-lock"></i>
                         <span>{{ __('translation.Lock Screen') }}</span>
-                    </a>
+                    </a> --}}
 
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();" class="dropdown-item notify-item">
+                    document.getElementById('logout-form-top').submit();" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>{{ __('translation.Logout') }}</span>
                     </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    <form id="logout-form-top" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
 

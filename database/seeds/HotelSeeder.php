@@ -15,11 +15,12 @@ class HotelSeeder extends Seeder
      */
     public function run()
     {
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::create(['name' => 'create_hotels']);
-        Permission::create(['name' => 'read_hotels']);
-        Permission::create(['name' => 'update_hotels']);
-        Permission::create(['name' => 'delete_hotels']);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        Permission::create(['category' => 'Hoteles','name' => 'create_hotels']);
+        Permission::create(['category' => 'Hoteles','name' => 'read_hotels']);
+        Permission::create(['category' => 'Hoteles','name' => 'update_hotels']);
+        Permission::create(['category' => 'Hoteles','name' => 'delete_hotels']);
 
         $super_admin = Role::findByName('Super-Admin');
         $super_admin->givePermissionTo([

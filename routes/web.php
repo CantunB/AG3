@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\AssignRegisterController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('bookings', 'bookings.index');
+
+Route::get('subs', 'AssignRegisterController@getSubs')->name('assign.subs');
+Route::get('vans', 'AssignRegisterController@getVans')->name('assign.vans');
 
 Auth::routes(['register' => false]);
 
@@ -48,7 +50,6 @@ Route::resources([
     //'bitacora' => '',
     'registers' => 'RegisterController',
     'assign' => 'AssignRegisterController',
-    'users' => 'UserController'
 ]);
 
 Route::apiResources([
@@ -65,10 +66,12 @@ Route::group(['prefix' => 'units'], function(){
 });
 
 Route::group(['web', 'settings'], function(){
-    Route::get('users','Settings\SettingsController@users')->name('settings.users');
-    Route::get('roles', 'Settings\SettingsController@roles')->name('settings.roles');
+    Route::resource('users', 'Settings\UsersController');
+    Route::resource('roles', 'Settings\RolesController');
     Route::get('permissions', 'Settings\SettingsController@permissions')->name('settings.permissions');
     Route::get('{locale}', 'Settings\SettingsController@lang');
+
 });
 
 Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');
+Route::post('getTariffAgency', 'Controller@getTariffAgency')->name('fetchTariff');

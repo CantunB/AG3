@@ -59,7 +59,9 @@ class Operator extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return "{$this->name} {$this->paterno} {$this->materno}";
+
+        // return "{$this->name} {$this->paterno} " . substr ($this->materno,0,1) . ".";
+        return "{$this->name} {$this->paterno} {$this->materno} ";
     }
 
 }

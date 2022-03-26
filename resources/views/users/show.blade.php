@@ -39,11 +39,11 @@
         <div class="col-lg-8 col-xl-8">
             <div class="card-box">
                 <ul class="nav nav-pills navtab-bg nav-justified">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#aboutme" data-toggle="tab" aria-expanded="false" class="nav-link">
                             Actividad
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
@@ -62,6 +62,9 @@
 
 </div>
 @push('scripts')
+    <script>
+        $('#form_edit').parsley();
+    </script>
 <script>
     $('.dropify').dropify({
     messages: {
@@ -92,7 +95,7 @@
                     icon: "success",
                     timer: 3500
                 });
-                window.location = '{!! route('users.show', ":id") !!}';
+                window.location = '/users' + id;
             },
             error: function(response){
                 console.log(response);

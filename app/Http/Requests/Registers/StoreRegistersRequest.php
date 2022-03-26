@@ -33,13 +33,23 @@ class StoreRegistersRequest extends FormRequest
     public function attributes()
     {
         return [
-            'date' => 'fecha',
+            'date' => 'fecha de servicio',
             'origin' => 'origen',
-            'destiny' => 'destion',
+            'destiny' => 'destino',
             'agency_id' => 'agencia',
             'passenger' => 'pasajero',
             'requested_unit' => 'unidad',
 
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'date.required' => 'Selecciona una :attribute',
+            'agency_id.required' => 'No se ha seleccionado ninguna :attribute',
+            'passenger.required' => 'Ingresar el nombre completo del :attribute',
+            'requested_unit.required' => 'No se ha seleccionado ninguna :attribute'
         ];
     }
 }

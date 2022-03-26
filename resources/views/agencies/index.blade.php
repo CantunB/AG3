@@ -28,6 +28,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>#</th>
+                                    <th>Nombre</th>
                                     <th>Razon Social</th>
                                     <th style="width: 82px;">Opciones</th>
                                 </tr>
@@ -109,6 +110,7 @@
                 ajax: '{!! route('agencies.index') !!}',
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'name', name:'name'},
                     {data: 'business_name', name:'business_name'},
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],

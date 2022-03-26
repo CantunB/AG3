@@ -88,7 +88,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="firstname">Fecha de servicio</label>
-                                            <input type="text" class="form-control select" id="date" name="date" placeholder="{{ date('Y-m-d') }}" required>
+                                            <input type="text" class="form-control flatpickr" id="date" name="date" placeholder="{{ date('Y-m-d') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -130,7 +130,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class=" fas fa-money-bill-wave"></i></span>
                                             </div>
-                                            <input type="number" step="0.01" class="form-control" id="cost" name="cost" required>
+                                            <input type="text" step="0.01" class="form-control cleave" id="cost" name="cost" required>
                                         </div>
                                     </div>
                                 </div>
@@ -292,6 +292,7 @@
 @push('scripts')
 <script>
     document.getElementById("date").flatpickr({
+        locale: "es",
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",

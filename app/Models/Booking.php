@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Country;
+use App\Models\State;
+
 class Booking extends Model
 {
     protected $table = 'bookings';

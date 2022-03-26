@@ -19,12 +19,12 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="table_units" class="table table-sm table-nowrap table-borderless table-hover mb-0">
+                        <table id="table_units" class="table table-sm table-bordered">
                             <thead class="thead-light">
                                 <tr>
                                     <th>{{ __('translation.Units') }}</th>
                                     <th>{{ __('translation.License plate') }}</th>
-                                    <th>{{ __('translation.Circulation card') }}</th>
+                                    <th>Poliza de seguro</th>
                                     <th>{{ __('translation.Status') }}</th>
                                     <th style="width: 82px;">{{ __('translation.Options') }}</th>
                                 </tr>
@@ -86,7 +86,7 @@
                     //{data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center'},
                     {data: 'unit', name:'unit', className: 'text-center'},
                     {data: 'sct_plate_number', name:'sct_plate_number', className:'text-center'},
-                    {data: 'circulation_card_number', name: 'circulation_card_number', className: 'text-center'},
+                    {data: 'insurance_policy', name: 'insurance_policy', className: 'text-center'},
                     {data: 'status', name:'status', className: 'text-center'},
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],
