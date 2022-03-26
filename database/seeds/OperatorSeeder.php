@@ -16,10 +16,10 @@ class OperatorSeeder extends Seeder
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'create_operators']);
-        Permission::create(['name' => 'read_operators']);
-        Permission::create(['name' => 'update_operators']);
-        Permission::create(['name' => 'delete_operators']);
+        Permission::create(['category' => 'Operadores', 'name' => 'create_operators']);
+        Permission::create(['category' => 'Operadores', 'name' => 'read_operators']);
+        Permission::create(['category' => 'Operadores', 'name' => 'update_operators']);
+        Permission::create(['category' => 'Operadores', 'name' => 'delete_operators']);
 
         $super_admin = Role::findByName('Super-Admin');
         $super_admin->givePermissionTo([

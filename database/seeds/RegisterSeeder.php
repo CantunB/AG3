@@ -15,10 +15,10 @@ class RegisterSeeder extends Seeder
     public function run()
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::create(['name' => 'create_registers']);
-        Permission::create(['name' => 'read_registers']);
-        Permission::create(['name' => 'update_registers']);
-        Permission::create(['name' => 'delete_registers']);
+        Permission::create(['category' => 'Registros', 'name' => 'create_registers']);
+        Permission::create(['category' => 'Registros', 'name' => 'read_registers']);
+        Permission::create(['category' => 'Registros', 'name' => 'update_registers']);
+        Permission::create(['category' => 'Registros', 'name' => 'delete_registers']);
 
         $super_admin = Role::findByName('Super-Admin');
         $super_admin->givePermissionTo([

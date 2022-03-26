@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-     <!-- Start Content-->
-     <div class="container-fluid">
 
+    <!-- Start Content-->
+    <div class="container-fluid">
         @component('layouts.includes.components.breadcrumb')
             @slot('title') {{ config('app.name', 'Laravel') }} @endslot
             @slot('subtitle') {{ __('translation.Settings') }} @endslot
@@ -15,21 +15,29 @@
             <!--        <h4 class="header-title mb-4">{{ __('Administrator') }}</h4>  -->
 
                     <ul class="nav nav-pills navtab-bg nav-justified">
+                        @if (Auth::user()->can('read_users'))
                         <li class="nav-item">
                             <a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link active">
                                 {{ __('translation.Users') }}
                             </a>
                         </li>
+                        @endif
+                        @if (Auth::user()->can('read_roles'))
+
                         <li class="nav-item">
                             <a href="#roles" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="rolesDataTables()">
                                 {{ __('translation.Roles') }}
                             </a>
                         </li>
+                        @endif
+                        @if (Auth::user()->can('create_permissions'))
+
                         <li class="nav-item">
                             <a href="#permissions" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="permisosDataTables()">
                                 {{ __('translation.Permissions') }}
                             </a>
                         </li>
+                        @endif
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="users">
@@ -47,9 +55,11 @@
                                         </p>
                                     -->
                                     <p>
-                                        <button type="button" class="btn btn-rounded btn-blue" data-toggle="modal" data-target="#crearUsuario">Nuevo <i class="fas fa-user-alt"></i></button>
+                                        @if (Auth::user()->can('create_users'))
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#crearUsuario">Nuevo <i class="fas fa-user-alt"></i></button>
+                                        @endif
                                     </p>
-                                        <table id="table_users" class="table dt-responsive nowrap w-100">
+                                        <table id="table_users" class="table table-sm dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
                                                     <th>{{ __('#') }}</th>
@@ -75,7 +85,12 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <table id="table_roles" class="table dt-responsive nowrap w-100">
+                                            @if (Auth::user()->can('create_roles'))
+                                            <p>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#crearRol">Nuevo <i class="mdi mdi-shield-lock"></i></button>
+                                            </p>
+                                            @endif
+                                            <table id="table_roles" class="table table-sm dt-responsive nowrap w-100">
                                                 <thead>
                                                     <tr>
                                                         <th>{{ __('#') }}</th>
@@ -98,10 +113,11 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <table id="table_permissions" class="table dt-responsive nowrap w-100">
+                                            <table id="table_permissions" class="table table-sm dt-responsive nowrap w-100">
                                                 <thead>
                                                     <tr>
                                                         <th>{{ __('#') }}</th>
+                                                        <th>Categoria</th>
                                                         <th>{{ __('translation.Name') }}</th>
                                                     </tr>
                                                 </thead>
@@ -121,8 +137,13 @@
         <!-- end row -->
 
     </div> <!-- container -->
-@include('settings.components.mcu')
+    @include('settings.components.mcu')
+    @include('settings.components.mcr')
+    @include('settings.roles.modal_show')
 @push('scripts')
+    <script>
+        $('#form_mcu').parsley();
+    </script>
     <script>
         $('#crearUsuario').on('hidden.bs.modal', function (e) {
             $(this)
@@ -161,7 +182,7 @@
                         buttons: ['excel', 'pdf',  ],
                     }, */
                 select: true,
-                ajax: '{!! route('settings.users') !!}',
+                ajax: '{!! route('users.index') !!}',
                 columns: [
                     {data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center ', orderable:'false', searchable: 'false'},
                     {data: 'name', name:'name' },
@@ -175,13 +196,13 @@
 <script>
     function rolesDataTables() {
         if(!$.fn.dataTable.isDataTable('#table_roles')){
-        $('#table_roles').DataTable({
+        table = $('#table_roles').DataTable({
             processing: true,
             serverSide: true,
             language: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
                 },
-            ajax: "{!! route('settings.roles') !!}",
+            ajax: "{!! route('roles.index') !!}",
             columns: [
                 {data: 'DT_RowIndex', width: '10px', orderable:'false', searchable: 'false'},
                 {data: 'name', name: 'name', width: '110px'},
@@ -191,6 +212,32 @@
                 ],
             });
         }
+    }
+</script>
+<script>
+    function btnRolInfo(id){
+        $('#modal_roles_permissions').on('show.bs.modal', function (e) {
+            $.ajax({
+                type: "GET",
+                url: "roles/"+id,
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    "id" :id
+                },
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    console.log(response);
+                    var category = response.category;
+                    var permisos = response.permisos;
+                    $.each(category, function(i, cat) {
+                        var tr_cat ="<tr><td>"+ category[i].category +" </td></tr>";
+                            $(tr_cat).appendTo('#table_rolesinfo');
+                    });
+                },
+            });
+        });
     }
 </script>
 <script>
@@ -205,6 +252,7 @@
                 ajax: "{!! route('settings.permissions') !!}",
                 columns: [
                     {data: 'DT_RowIndex', name:'DT_RowIndex' , width: '10px'},
+                    {data: 'category', name: 'category', width: '110px'},
                     {data: 'name', name: 'name', width: '110px'},
 
                     //{data: 'rol', name: 'rol', className: 'text-center', width: '110px',searchable: false, orderable: false},
@@ -213,6 +261,47 @@
             });
         }
     }
+</script>
+<script>
+        $('#form_mcr').on('submit', function(e){
+            e.preventDefault();
+            var form = new FormData($('#form_mcr')[0]);
+            $.ajax({
+                type: "POST",
+                //url: "Empresas/",
+                url: '{{ route('roles.store') }}',
+                //data: $('#form_mcu').serialize(),
+                data: form,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    Swal.fire({
+                        title: "Hecho!",
+                        html: response.message,
+                        icon: "success",
+                        timer: 5000
+                    });
+                    $('#table_roles').DataTable().ajax.reload();
+                    $('#form_mcr')[0].reset();
+                    $('#crearRol').modal('toggle');
+
+                },
+                error: function(data){
+                var errors = data.responseJSON;
+                    errorsHtml = '<ul>';
+                $.each(errors.errors,function (k,v) {
+                        errorsHtml += '<li>'+ v + '</li>';
+                });
+                errorsHtml += '</ul>';
+                    Swal.fire({
+                        title: "Ooops!",
+                        html: errorsHtml,
+                        icon: "error"
+                    });
+                }
+            });
+        });
 </script>
 <script>
         $('#form_mcu').on('submit', function(e){
@@ -270,8 +359,8 @@
             if (e.value === true) {
                 $.ajax({
                     type: 'DELETE',
-                    //url: "{{url('/units')}}/" + id,
-                    url: '{!! route("users.destroy", ":id") !!}',
+                    url: "{{url('/users')}}/" + id,
+                    {{-- url: '{!! route("users.destroy", 'id' ) !!}', --}}
                     data: {
                         id: id,
                         _token: '{!! csrf_token() !!}'
@@ -286,6 +375,55 @@
                                 confirmButtonText: "Hecho!",
                             });
                             $('#table_users').DataTable().ajax.reload();
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: results.message,
+                                icon: "error",
+                                confirmButtonText: "Cancelar!",
+                            });
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+    /** DESTROY UNIT*/
+</script>
+<script>
+    /** DESTROY UNIT*/
+    function btnDelete(id) {
+        Swal.fire({
+            title: "Desea eliminar?",
+            text: "Por favor asegúrese y luego confirme!",
+            icon: 'warning',
+            showCancelButton: !0,
+            confirmButtonText: "¡Sí, borrar!",
+            cancelButtonText: "¡No, cancelar!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: "{{url('/roles')}}/" + id,
+                    data: {
+                        id: id,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            Swal.fire({
+                                title: "Hecho!",
+                                text: results.message,
+                                icon: "success",
+                                confirmButtonText: "Hecho!",
+                            });
+                            $('#table_roles').DataTable().ajax.reload();
                         } else {
                             Swal.fire({
                                 title: "Error!",

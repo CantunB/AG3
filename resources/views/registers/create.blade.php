@@ -37,16 +37,16 @@
                     <div class="card border">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6 col-xl-6">
+                                <div class="col-md-4 col-xl-4">
                                     <div class="form-group ">
                                         <label>{{ __('translation.Date') }}</label>
                                         <input type="text" class="form-control " id="date" name="date" placeholder="{{ date('Y-m-d') }}" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-xl-6">
+                                <div class="col-md-4 col-xl-4">
                                     <div class="form-group">
                                         <label for="project-priority">{{ __('translation.Type of service') }}</label>
-                                        <select id="type_service" name="type_service_id" class="form-control select2" required>
+                                        <select id="type_service" name="type_service_id" class="form-control select2 sel_sl sel_ll" required>
                                             <option value="" disabled selected>Selecciona un servicio</option>
 
                                             @foreach ($services as $service)
@@ -55,31 +55,17 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-xl-6">
+                                <div class="col-md-4 col-xl-4">
                                     <div class="form-group">
                                         <label for="project-priority">{{ __('translation.Agency') }}</label>
-                                        <select id="agency" name="agency_id" class="form-control select2" required>
+                                        <select id="agency" name="agency_id" class="form-control select2 sel_sl sel_ll" required>
                                             <option value="" disabled selected>Selecciona una agencia</option>
                                             @foreach ($agencies as $agency)
                                                 <option  value="{{ $agency->id }}">{{ $agency->name }} ( <p style="color:blue">{{ $agency->business_name}}</p> )</option>
                                             @endforeach
                                         </select>
-                                    </div>
                                 </div>
-                                <div class="col-md-6 col-xl-6">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="tariff">Tarifa</label>
-                                            <input type="text" id="tariff" name="tariff" class="form-control cleave" list="my_tariff">
-                                                <datalist id="my_tariff">
-                                                    <option value="1500.00">
-                                                    <option value="3200.00">
-                                                </datalist>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -87,7 +73,7 @@
             {{---------------------------------------------------------------------------- */
             /* INICIO --- CARD SEERVICIO DE SALIDAS                                       */
             /* ----------------------------------------------------------------------------}}
-            <form id="form_services_salidas" method="POST">
+            <form id="form_services_salidas" method="POST" autocomplete="none">
                 @csrf
                 <div id="services_salidas" class="card border divOculto">
                     <div class="card-box mb-2">
@@ -100,18 +86,21 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="project-priority">Origen</label>
-                                                <select id="origin" name="origin" name="origin" class="form-control select2 services_salidas" required>
+                                                <select id="origin" name="origin" name="origin" class="form-control select2 services_salidas sel_sl" required>
                                                     <option value="" disabled selected>Selecciona un hotel</option>
                                                     @foreach ($hotels as $hotel)
                                                         <option value="{{ $hotel->hotel }}">{{ $hotel->hotel }}</option>
                                                     @endforeach
                                                 </select>
+                                                <input type="hidden" id="zo" name="zo" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="destiny">Destino</label>
                                                 <input  type="text" class="form-control services_salidas" name="destiny" readonly="readonly" value="Aeropuerto Internacional de Cancun" required>
+                                                <input type="hidden" id="zd" name="zd" value="Z0">
+
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +122,7 @@
                                             <span class="input-group-text" id="icon-hashtag"><i
                                                     class="fas fa-hashtag input__icon"></i></span>
                                             <span class="input-group-text iata" id="iata_departure"></span>
-                                            <input oninput="iata_code_departure()" required type="text" class="form-control services_salidas" id="flight_number_departure" aria-describedby="icon-hashtag">
+                                            <input oninput="iata_code_departure()" required type="text" class="form-control services_salidas" id="flight_number_departure" aria-describedby="icon-hashtag" autocomplete="off">
                                             <input  type="hidden" id="iata_airline_departure" name="flight_number">
                                         </div>
                                     </div>
@@ -182,17 +171,20 @@
                                         <div class="form-group">
                                             <label for="project-priority">Origen</label>
                                                 <input  type="text" class="form-control services_llegadas" name="origin" readonly="readonly" value="Aeropuerto Internacional de Cancun" required>
+                                                <input type="hidden" id="zo" name="zo" value="Z0">
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="project-priority">Destino</label>
-                                                <select id="destiny" name="destiny" class="form-control select2 services_llegadas" required>
+                                                <select id="destiny" name="destiny" class="form-control select2 services_llegadas sel_ll" required>
                                                     <option value="" disabled selected>Selecciona un hotel</option>
                                                     @foreach ($hotels as $hotel)
                                                         <option value="{{ $hotel->hotel }}">{{ $hotel->hotel }}</option>
                                                     @endforeach
                                                 </select>
+                                            <input type="hidden" id="zd_llegadas" name="zd" value="">
                                         </div>
                                     </div>
 
@@ -215,7 +207,7 @@
                                             <span class="input-group-text" id="icon-hashtag"><i
                                                     class="fas fa-hashtag input__icon"></i></span>
                                             <span class="input-group-text iata" id="iata_arrival"></span>
-                                            <input oninput="iata_code_arrival()" required type="text" class="form-control services_llegadas" id="flight_number_arrival" aria-describedby="icon-hashtag">
+                                            <input oninput="iata_code_arrival()" required type="text" class="form-control services_llegadas" id="flight_number_arrival" aria-describedby="icon-hashtag" autocomplete="off">
                                             <input  type="hidden" id="iata_airline_arrival" name="flight_number">
                                         </div>
                                     </div>
@@ -352,7 +344,7 @@
             {{---------------------------------------------------------------------------- */
             /* INICIO --- CARD PASAJEROS                                       */
             /* ----------------------------------------------------------------------------}}
-            <form id="form_pasajeros" method="POST" data-parsley-validate autocomplete="none" autocomplete="none">
+            <form id="form_pasajeros" method="POST" data-parsley-validate autocomplete="none">
                 @csrf
                     <div id="card_passenger" class="card border" >
                         <div class="card-box mb-2">
@@ -390,7 +382,7 @@
                                         <div id="div_unit" class="col-md-4 col-xl-4">
                                             <div class="form-group">
                                                 <label for="project-priority">{{ __('translation.Requested unit') }}</label>
-                                                <select id="requested_unit" name="requested_unit" class="form-control select2" required>
+                                                <select id="requested_unit" name="requested_unit" class="form-control select2 sel_sl sel_ll" required>
                                                     <option value="" selected disabled>Selecciona una unidad</option>
                                                     <option data-icon="mdi mdi-car-estate" value="1">SUBURBAN</option>
                                                     <option data-icon="mdi mdi-van-utility" value="2">VAN (TP)</option>
@@ -400,11 +392,21 @@
                                         <div id="div_place" class="col-md-4 col-xl-4">
                                             <div class="form-group">
                                                 <label for="project-priority">{{ __('translation.Place of service') }}</label>
-                                                <select id="place_serve" name="place_service" class="form-control select2" required>
-                                                    <option value="" selected disabled>Selecciona un servicio</option>
+                                                <input id="place_service" name="place_service" class="form-control" required>
+                                                    {{-- <option value="" selected disabled>Selecciona un servicio</option>
                                                     <option value="Local">Local</option>
                                                     <option value="Corredor">Corredor</option>
-                                                </select>
+                                                </input> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="tariff">Tarifa</label>
+                                                    <input type="text" id="tariff" name="tariff" class="form-control cleave" list="my_tariff" autocomplete="off">
+                                                        <datalist id="my_tariff">
+                                                        </datalist>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -413,6 +415,11 @@
                                             <div class="form-group">
                                                 <label>{{ __('translation.Observations') }}</label>
                                                 <input type="text" class="form-control" id="observations" name="observations" >
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" name="user_id" value="{{Auth::user()->id}}">
                                             </div>
                                         </div>
                                     </div>
@@ -446,6 +453,7 @@
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
+        minDate: "today",
         defaultDate: "{!! date('Y-m-d') !!}"
     });
     document.getElementById("flight_time").flatpickr({
@@ -494,6 +502,35 @@ $(document).ready(function() {
             $(".services_circuito").removeAttr('name', false);
             {{-- ****** TERMINO Ocultos ***** --}}
             {{-- SE INICIA EL ENVIO DE DATOS POR AJAX --}}
+            $('.sel_sl').on('change',function(){
+                $('#my_tariff').empty();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{!! route('fetchTariff') !!}",
+                    data: {
+                        'service' : $("#type_service").val(),
+                        'agency' : $("#agency").val(),
+                        'origen' : $("#origin").val(),
+                        'request_unit' : $("#requested_unit").val(),
+                    },
+                    dataType: "json",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response){
+                        console.log(response);
+                        $.each(response, function(k, data) {
+                            console.log(data.place_service);
+                            $("#zo").val("Z"+data.zona);
+                            $("#place_service").val(data.place_service);
+                            $('#my_tariff').append("<option value='" + data.tariff + "'>");
+
+                            {{-- $.each(this, function(k, v) {
+                                console.log(v);
+                            }); --}}
+                        });
+                    },
+                });
+            });
                 $("#btn_create").click(function(e) {
                     e.preventDefault();
                     var principal = $('#form_principal').parsley().validate();
@@ -554,6 +591,35 @@ $(document).ready(function() {
             {{-- ****** TERMINO Ocultos ***** --}}
 
             {{-- SE INICIA EL ENVIO DE DATOS POR AJAX --}}
+            $('.sel_ll').on('change',function(){
+                $('#my_tariff').empty();
+                $.ajax({
+                    type: "POST",
+                    url: "{!! route('fetchTariff') !!}",
+                    data: {
+                        'service' : $("#type_service").val(),
+                        'agency' : $("#agency").val(),
+                        'destiny' : $("#destiny").val(),
+                        'request_unit' : $("#requested_unit").val(),
+                    },
+                    dataType: "json",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response){
+                        $('#my_tariff').val("");
+
+                        console.log(response);
+                        $.each(response, function(k, data) {
+                            $("#zd_llegadas").val("Z"+data.zona);
+                            $("#place_service").val(data.place_service);
+                            $('#my_tariff').append("<option value='" + data.tariff + "'>");
+
+                            {{-- $.each(this, function(k, v) {
+                                console.log(v);
+                            }); --}}
+                        });
+                    },
+                });
+            });
             $("#btn_create").click(function(e) {
                 e.preventDefault();
                 var principal = $('#form_principal').parsley().validate();

@@ -1,7 +1,7 @@
 <div class="tab-pane show active" id="settings">
     <form method="POST" action="{{ route('operators.update', $operator->id) }}" data-parsley-validate>
         @csrf
-        @method('PUT')
+        @method('PATCH')
         <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i>Informacion Personal</h5>
         <div class="row">
             <div class="col-md-4">

@@ -181,6 +181,7 @@
             $('#table_registers').DataTable({
                     processing: true,
                     serverSide: true,
+                    paging: false,
                     {{-- select: true, --}}
                     language: {
                         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
@@ -188,10 +189,10 @@
                     ajax: '{!! route('registers.index') !!}',
                     columns: [
                         {data: 'date', name:'date' ,className: 'text-center' },
-                        {data: 'hora', name:'hora' ,className: 'text-center' },
+                        {data: 'pickup', name:'pickup' ,className: 'text-center' },
                         {data: 'service', name: 'service', className: 'text-center'},
-                        {data: 'origin', name:'origin', className: 'text-wrap width-100'},
-                        {data: 'destiny', name:'destiny',  className: 'text-wrap width-100'},
+                        {data: 'origin', name:'origin', className: 'text-center text-wrap width-100'},
+                        {data: 'destiny', name:'destiny',  className: 'text-center text-wrap width-100'},
                         {data: 'passenger', name:'passenger', className: 'text-wrap width-100', orderable : false},
                         {data: 'passenger_number', name:'passenger_number', orderable: false},
                         {{-- {data: 'observations', name:'observations', orderable: false}, --}}
@@ -314,12 +315,13 @@
                     fin
 
                     $("#date_reg").html(response.reg);
-                    $("#date_asi").html(response.data.is_assigned['created_at']);
+                    $("#date_asi").html(response.asi);
 
                 }
                 }
             });
         }
     </script>
+
 @endpush
 @endsection

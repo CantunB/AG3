@@ -50,7 +50,6 @@ Route::resources([
     //'bitacora' => '',
     'registers' => 'RegisterController',
     'assign' => 'AssignRegisterController',
-    'users' => 'UserController'
 ]);
 
 Route::apiResources([
@@ -67,13 +66,12 @@ Route::group(['prefix' => 'units'], function(){
 });
 
 Route::group(['web', 'settings'], function(){
-    Route::get('users','Settings\SettingsController@users')->name('settings.users');
-    Route::get('roles', 'Settings\SettingsController@roles')->name('settings.roles');
+    Route::resource('users', 'Settings\UsersController');
+    Route::resource('roles', 'Settings\RolesController');
     Route::get('permissions', 'Settings\SettingsController@permissions')->name('settings.permissions');
     Route::get('{locale}', 'Settings\SettingsController@lang');
+
 });
 
-//     Route::get('assign_','Settings\SettingsController@users')->name('settings.users');
-    //  Route::get('users','Settings\SettingsController@users')->name('settings.users');
-
 Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');
+Route::post('getTariffAgency', 'Controller@getTariffAgency')->name('fetchTariff');

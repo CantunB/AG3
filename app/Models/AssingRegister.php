@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AssingRegister extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'assign_registers';
 
     protected $fillable = [
         'id_register',
         'id_unit',
         'id_operator',
-        'price',
+        'tariff',
         'cash',
         'usd',
         'invoice',

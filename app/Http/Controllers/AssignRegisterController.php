@@ -16,6 +16,10 @@ class AssignRegisterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role_or_permission:create_registers')->only(['create','store']);
+        $this->middleware('role_or_permission:read_registers')->only(['index','show']);
+        $this->middleware('role_or_permission:update_registers')->only(['edit','update']);
+        $this->middleware('role_or_permission:delete_registers')->only(['destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -30,10 +34,30 @@ class AssignRegisterController extends Controller
             return DataTables::of($registers)
             ->addIndexColumn()
             ->addColumn('hora', function($registers){
-                return Carbon::createFromFormat('H:i:s',$registers->pickup)->format('h:i');
+                return Carbon::createFromFormat('H:i:s',$registers->pickup)->format('H:i');
             })
             ->addColumn('service', function($registers){
                 return $registers->Type_service->name;
+            })
+            ->editColumn('origin', function($registers){
+                $origin = '';
+
+                if($registers->origin === "Aeropuerto Internacional de Cancun"){
+                    $origin .= '<span class="text-center"> AEROPUERTO  <br> '.$registers->zo.'  <br>  '.$registers->flight_number.' </span> ';
+                }else{
+                    $origin .='<span class="text-center"> '.$registers->origin.'  <br>  '.$registers->zo.' </span> ';
+                }
+                return $origin;
+            })
+            ->editColumn('destiny', function($registers){
+                $destiny = '';
+
+                if($registers->destiny === "Aeropuerto Internacional de Cancun"){
+                    $destiny .= '<span class="text-center"> AEROPUERTO  <br> '.$registers->zd.'  <br>  '.$registers->flight_number.' </span> ';
+                }else{
+                    $destiny .= '<span class="text-center"> '.$registers->destiny.'  <br>  '.$registers->zd.' </span> ';
+                }
+                return $destiny;
             })
             ->editColumn('requested_unit', function($registers){
                 if ($registers->requested_unit == 1) {
@@ -71,13 +95,13 @@ class AssignRegisterController extends Controller
                 if(!isset($registers->isAssigned)){
                     $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2">  <option selected disabled>Operador</option>';
                         foreach ($operators as $operator) {
-                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->fullname . '</option>';
+                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->name . '</option>';
                         }
                     $select_operator .= '</select>';
                 }else{
-                    $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2"> <option value="' . $registers->isAssigned->id_operator . '">' . $registers->isAssigned->Operator->fullname . '</option>';
+                    $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2"> <option value="' . $registers->isAssigned->id_operator . '">' . $registers->isAssigned->Operator->name . '</option>';
                         foreach ($operators as $operator) {
-                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->fullname . '</option>';
+                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->name . '</option>';
                         }
                     $select_operator .= '</select>';
                 }
@@ -89,23 +113,51 @@ class AssignRegisterController extends Controller
                     if(isset($registers->isAssigned)){
                         $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning btnassign_update"> <i class="mdi mdi-account-cog"></i></button>';
                         $opciones .= '<button  id="btnsuccess_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-success btnsuccess_update divOculto"> <i class="mdi mdi-check-bold"></i></button>';
-                        $opciones .= '<button  id="btncancel_up'.$registers->id.'" onclick="btncancel_up('.$registers->id.')" type="button" class="btn action-icon icon-dual-danger btncancel_update divOculto"> <i class="mdi mdi-cancel"></i></button>';
+                        $opciones .= '<button  id="btncancel_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-danger btncancel_update divOculto"> <i class="mdi mdi-close"></i></button>';
+                        $opciones .= '<button   onclick="btndelete('.$registers->isAssigned->id.')" id="btndelete'.$registers->id.'" type="button" class="btn action-icon icon-dual-secondary "> <i class="mdi mdi-trash-can"></i></button>';
                     }else{
                         $opciones .= '<button  type="button" class="btn btn-sm action-icon icon-dual-primary btnassign"> <i class="mdi mdi-account-arrow-right"></i></button>';
                         $opciones .= '<button id="btnsuccess'.$registers->id.'" type="button" class="btn btn-sm action-icon icon-dual-success btnsuccess divOculto"> <i class="mdi mdi-check-bold"></i></button>';
-                        $opciones .= '<button id="btncancel'.$registers->id.'"  type="button" class="btn btn-sm action-icon icon-dual-danger btncancel divOculto"> <i class="mdi mdi-cancel"></i></button>';
+                        $opciones .= '<button   id="btncancel'.$registers->id.'"  type="button" class="btn btn-sm action-icon icon-dual-danger btncancel divOculto"> <i class="mdi mdi-close"></i></button>';
+
                     }
                 }
                 // if (Auth::user()->can('delete_registers')) {
                 //     if(!isset($registers->isAssigned)){
                 //         $opciones .= '<button type="button" onclick="btnDelete('.$registers->id.')" class="btn action-icon icon-dual-danger "> <i class="mdi mdi-trash-can-outline"></i></button>';
                 //     }else{
-                //         $opciones .= '<button type="button" onclick="btnDelete('.$registers->id.')" class="btn action-icon icon-dual-danger "> <i class="mdi mdi-trash-can-outline"></i></button>';
+                //         $opciones .= '<button type="button" onclick="btndelete('.$registers->id.')" class="btn action-icon icon-dual-danger "> <i class="mdi mdi-trash-can-outline"></i></button>';
                 //     }
                 // }
                 return $opciones;
             })
-            ->rawColumns(['status','options','unit','operators'])
+            // ->setRowClass(function ($registers) {
+            //     $colors = '';
+            //     if($registers->isAssigned->id_unit == 1){
+            //         $colors .= 'bg-primary text-white';
+            //     }elseif($registers->isAssigned->id_unit == 2){
+            //         $colors .= 'bg-success text-white';
+            //     }elseif($registers->isAssigned->id_unit == 3){
+            //         $colors .= 'bg-info text-white';
+            //     }elseif($registers->isAssigned->id_unit == 4){
+            //         $colors .= 'bg-warning text-white';
+            //     }elseif($registers->isAssigned->id_unit == 5){
+            //         $colors .= 'bg-danger text-white';
+            //     }elseif($registers->isAssigned->id_unit == 6){
+            //         $colors .= 'bg-dark text-white';
+            //     }elseif($registers->isAssigned->id_unit == 7){
+            //         $colors .= 'bg-blue text-white';
+            //     }elseif($registers->isAssigned->id_unit == 8){
+            //         $colors .= 'bg-pink text-white';
+            //     }elseif($registers->isAssigned->id_unit == 9){
+            //         $colors .= 'bg-secondary text-white';
+            //     }elseif($registers->isAssigned->id_unit == 10){
+            //         $colors .= 'bg-white text-white';
+            //     }
+            //     return $colors;
+
+            // })
+            ->rawColumns(['origin','destiny','status','options','unit','operators'])
             ->toJson();
         }
         // if ($request->ajax()){
@@ -210,13 +262,13 @@ class AssignRegisterController extends Controller
                 if(!isset($registers->isAssigned)){
                     $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2">  <option selected disabled>Operador</option>';
                         foreach ($operators as $operator) {
-                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->fullname . '</option>';
+                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->name . '</option>';
                         }
                     $select_operator .= '</select>';
                 }else{
-                    $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2"> <option value="' . $registers->isAssigned->id_operator . '">' . $registers->isAssigned->Operator->fullname . '</option>';
+                    $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2"> <option value="' . $registers->isAssigned->id_operator . '">' . $registers->isAssigned->Operator->name . '</option>';
                         foreach ($operators as $operator) {
-                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->fullname . '</option>';
+                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->name . '</option>';
                         }
                     $select_operator .= '</select>';
                 }
@@ -226,13 +278,13 @@ class AssignRegisterController extends Controller
                 $opciones = '';
                 if (Auth::user()->can('update_registers')) {
                     if(isset($registers->isAssigned)){
-                        $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning btnassign_update"> <i class="mdi mdi-account-cog"></i></button>';
-                        $opciones .= '<button  id="btnsuccess_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-success btnsuccess_update divOculto"> <i class="mdi mdi-check-bold"></i></button>';
-                        $opciones .= '<button  id="btncancel_up'.$registers->id.'"  onclick="btncancel_up('.$registers->id.')" type="button" class="btn action-icon icon-dual-danger  divOculto"> <i class="mdi mdi-cancel"></i></button>';
+                        $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning btnassign_update_sub"> <i class="mdi mdi-account-cog"></i></button>';
+                        $opciones .= '<button  id="btnsuccess_up_sub'.$registers->id.'" type="button" class="btn action-icon icon-dual-success btnsuccess_update_sub divOculto"> <i class="mdi mdi-check-bold"></i></button>';
+                        $opciones .= '<button  id="btncancel_up_sub'.$registers->id.'"  onclick="btncancel_up('.$registers->id.')" type="button" class="btn action-icon icon-dual-danger  divOculto"> <i class="mdi mdi-cancel"></i></button>';
                     }else{
-                        $opciones .= '<button  type="button" class="btn btn-sm action-icon icon-dual-primary btnassign"> <i class="mdi mdi-account-arrow-right"></i></button>';
-                        $opciones .= '<button id="btnsuccess'.$registers->id.'" type="button" class="btn btn-sm action-icon icon-dual-success btnsuccess divOculto"> <i class="mdi mdi-check-bold"></i></button>';
-                        $opciones .= '<button id="btncancel'.$registers->id.'"  type="button" class="btn btn-sm action-icon icon-dual-danger btncancel divOculto"> <i class="mdi mdi-cancel"></i></button>';
+                        $opciones .= '<button  type="button" class="btn btn-sm action-icon icon-dual-primary btnassign_sub"> <i class="mdi mdi-account-arrow-right"></i></button>';
+                        $opciones .= '<button id="btnsuccess_sub'.$registers->id.'" type="button" class="btn btn-sm action-icon icon-dual-success btnsuccess_sub divOculto"> <i class="mdi mdi-check-bold"></i></button>';
+                        $opciones .= '<button id="btncancel_sub'.$registers->id.'"  type="button" class="btn btn-sm action-icon icon-dual-danger btncancel_sub divOculto"> <i class="mdi mdi-cancel"></i></button>';
                     }
                 }
                 // if (Auth::user()->can('delete_registers')) {
@@ -297,13 +349,13 @@ class AssignRegisterController extends Controller
                 if(!isset($registers->isAssigned)){
                     $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2">  <option selected disabled>Operador</option>';
                         foreach ($operators as $operator) {
-                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->fullname . '</option>';
+                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->name . '</option>';
                         }
                     $select_operator .= '</select>';
                 }else{
-                    $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2"> <option value="' . $registers->isAssigned->id_operator . '">' . $registers->isAssigned->Operator->fullname . '</option>';
+                    $select_operator .='<select name="id_operator" id="id_operator'.$registers->id.'" disabled class="form-control select2"> <option value="' . $registers->isAssigned->id_operator . '">' . $registers->isAssigned->Operator->name . '</option>';
                         foreach ($operators as $operator) {
-                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->fullname . '</option>';
+                            $select_operator .= '<option value="' . $operator->id . '">' . $operator->name . '</option>';
                         }
                     $select_operator .= '</select>';
                 }
@@ -390,6 +442,21 @@ class AssignRegisterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $assign = AssingRegister::findOrFail($id);
+        $register = Register::findOrFail($assign->id_register);
+
+        $assign->delete();
+        $delete = $register->delete();
+        if ($delete == 1){
+            $success = true;
+            $message = "Registro y asignacion eliminado correctamente";
+        } else {
+            $success = true;
+            $message = "No se pudo eliminar el registro";
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
 }

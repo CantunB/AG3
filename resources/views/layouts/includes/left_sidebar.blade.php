@@ -20,7 +20,7 @@
                     </a>
 
                     <!-- item-->
-                    <a href="{{ route('settings.users') }}" class="dropdown-item notify-item">
+                    <a href="{{ route('users.index') }}" class="dropdown-item notify-item">
                         <i class="fe-settings mr-1"></i>
                         <span>{{ __('translation.Settings') }}</span>
                     </a>
@@ -64,7 +64,7 @@
 
                 @can('read_administrators')
                     <li>
-                        <a href="{{ route('settings.users') }}">
+                        <a href="{{ route('users.index') }}">
                             <i data-feather="settings" class="icon-dual-dark"></i>
                             <span> {{ __('translation.Administrator') }} </span>
                         </a>
@@ -87,7 +87,12 @@
                                 <li>
                                     <a href="{{ route('assign.index') }}">Asignaciones</a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ route('assign.index') }}">Estados</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('assign.index') }}">Cancelados</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

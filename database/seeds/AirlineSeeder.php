@@ -14,10 +14,11 @@ class AirlineSeeder extends Seeder
     public function run()
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::create(['name' => 'create_airlines']);
-        Permission::create(['name' => 'read_airlines']);
-        Permission::create(['name' => 'update_airlines']);
-        Permission::create(['name' => 'delete_airlines']);
+
+        Permission::create(['category' => 'Aerolineas','name' => 'create_airlines']);
+        Permission::create(['category' => 'Aerolineas','name' => 'read_airlines']);
+        Permission::create(['category' => 'Aerolineas','name' => 'update_airlines']);
+        Permission::create(['category' => 'Aerolineas','name' => 'delete_airlines']);
 
         $super_admin = Role::findByName('Super-Admin');
         $super_admin->givePermissionTo([

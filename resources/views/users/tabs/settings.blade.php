@@ -26,19 +26,55 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="birthday_date">F. Nacimiento</label>
-                    <input type="date" class="form-control" id="birthday_date" name="birthday_date" value="{{ $user->birthday_date }}">
+                    <input class="form-control birthday" id="birthday_date" name="birthday_date" value="{{ $user->birthday_date }}">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="email">Correo electronico</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="phone" class="col-form-label">Telefono:</label>
+                    <input class="form-control input-phone" id="phone" name="phone" autocomplete="off" required  value="{{ $user->phone }}" >
+                </div>
+            </div>
         </div>
+        @if(Auth::user()->hasRole('Super-Admin'))
+            <div class="row  justify-content-md-center">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="rol" class="col-form-label">Rol</label>
+                        <select class="form-control select2" id="roles" name="rol">
+                            <option value="" disabled selected>Selecciona un rol</option>
+                            @foreach ($roles as $key => $rol)
+                                <option value="{{ $rol->name}}"
+                                    @if($user->roles[0]->name == $rol->name)
+                                        selected
+                                    @endif
+                                    >{{ $rol->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="row  justify-content-md-center">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="rol" class="col-form-label">Rol</label>
+                        <input class="form-control select2" id="roles" name="rol" value="{{$user->roles[0]->name}}" readonly>
+                        </input>
+                    </div>
+                </div>
+            </div>
+        @endif
         <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i>Direccion</h5>
         <div class="row">
             <div class="col-md-8">

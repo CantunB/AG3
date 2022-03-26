@@ -15,7 +15,7 @@ class UserAgency extends Migration
     {
         Schema::create('user_agency', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_manager')->constrained('user_managers');
+            $table->foreignId('id_manager')->constrained('users');
             $table->foreignId('id_agency')->constrained('agencies');
             $table->timestamps();
             $table->softDeletes();

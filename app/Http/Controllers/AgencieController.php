@@ -17,6 +17,10 @@ class AgencieController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role_or_permission:create_agencies')->only(['create','store']);
+        $this->middleware('role_or_permission:read_agencies')->only(['index','show']);
+        $this->middleware('role_or_permission:update_agencies')->only(['edit','update']);
+        $this->middleware('role_or_permission:delete_agencies')->only(['destroy']);
     }
     /**
      * Display a listing of the resource.

@@ -16,10 +16,10 @@ class UnitSeeder extends Seeder
     {
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::create(['name' => 'create_unit']);
-        Permission::create(['name' => 'read_unit']);
-        Permission::create(['name' => 'update_unit']);
-        Permission::create(['name' => 'delete_unit']);
+        Permission::create(['category' => 'Unidades', 'name' => 'create_unit']);
+        Permission::create(['category' => 'Unidades', 'name' => 'read_unit']);
+        Permission::create(['category' => 'Unidades', 'name' => 'update_unit']);
+        Permission::create(['category' => 'Unidades', 'name' => 'delete_unit']);
 
         $super_admin = Role::findByName('Super-Admin');
         $super_admin->givePermissionTo([
@@ -30,15 +30,15 @@ class UnitSeeder extends Seeder
             ]);
 
         $unidad = Unit::create([
-                'unit' => 'SUB01',
-                'brand' => 'CHEVROLET',
-                'type' => 'SUBURBAN',
-                'year' => '2018',
-                'insurance_carrier' =>  'AXXA',
-                'sct_plate_number' =>  '47RB8F',
-                'color' => 'BLANCO',
-                'insurance_policy' => '130261890601',
-                'insurance_start_validity' => '03/07/22',
+            'unit' => 'SUB01',
+            'brand' => 'CHEVROLET',
+            'type' => 'SUBURBAN',
+            'year' => '2018',
+            'insurance_carrier' =>  'AXXA',
+            'sct_plate_number' =>  '47RB8F',
+            'color' => 'BLANCO',
+            'insurance_policy' => '130261890601',
+            'insurance_start_validity' => '03/07/22',
         ]);
         $unidad = Unit::create([
             'unit' => 'SUB02',
@@ -85,9 +85,9 @@ class UnitSeeder extends Seeder
             'insurance_start_validity' => '26/11/21',
         ]);
         $unidad = Unit::create([
-            'unit' => 'TP01',
+            'unit' => 'VAN01',
             'brand' => 'VW',
-            'type' => 'TRANSPORTER',
+            'type' => 'VAN',
             'year' => '2019',
             'insurance_carrier' =>  'ZURICH',
             'sct_plate_number' =>  '16RC4G',
@@ -96,7 +96,7 @@ class UnitSeeder extends Seeder
             'insurance_start_validity' => '26/03/22',
         ]);
         $unidad = Unit::create([
-            'unit' => 'TP02',
+            'unit' => 'VAN02',
             'brand' => 'VW',
             'type' => 'TRANSPORTER',
             'year' => '2021',
@@ -107,9 +107,9 @@ class UnitSeeder extends Seeder
             'insurance_start_validity' => '29/07/22',
         ]);
         $unidad = Unit::create([
-            'unit' => 'TP03',
+            'unit' => 'VAN03',
             'brand' => 'VW',
-            'type' => 'TRANSPORTER',
+            'type' => 'VAN',
             'year' => '2021',
             'insurance_carrier' =>  'ZURICH',
             'sct_plate_number' =>  '77RC4S',
@@ -118,9 +118,9 @@ class UnitSeeder extends Seeder
             'insurance_start_validity' => '29/07/22',
         ]);
         $unidad = Unit::create([
-            'unit' => 'TP04',
+            'unit' => 'VAN04',
             'brand' => 'VW',
-            'type' => 'TRANSPORTER',
+            'type' => 'VAN',
             'year' => '2021',
             'insurance_carrier' =>  'ZURICH',
             'sct_plate_number' =>  '91RB5D',
@@ -129,9 +129,9 @@ class UnitSeeder extends Seeder
             'insurance_start_validity' => '02/08/22',
         ]);
         $unidad = Unit::create([
-            'unit' => 'TP05',
+            'unit' => 'VAN05',
             'brand' => 'VW',
-            'type' => 'TRANSPORTER',
+            'type' => 'VAN',
             'year' => '2021',
             'insurance_carrier' =>  'ZURICH',
             'sct_plate_number' =>  '94RC5Y',

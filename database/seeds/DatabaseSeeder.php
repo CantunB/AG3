@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolesAndPermissions::class);
+        $this->call(BookingSeeder::class);
         $this->call(AgencieSeeder::class);
         $this->call(TypeServiceSeeder::class);
         $this->call(OperatorSeeder::class);

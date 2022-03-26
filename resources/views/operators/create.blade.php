@@ -36,23 +36,29 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-3">
+                        <div class="col-xl-4">
                             <div class="form-group">
-                                <label for="project-priority">{{ __('translation.Phone') }}</label>
-                                <input type="number" name="phone" id="phone" class="form-control" required placeholder="{{ __('Phone') }}" data-parsley-type="digits"
-                                data-parsley-validation-threshold="1"   data-parsley-trigger="keyup" min="10" value="{{ old('phone') }}">
+                                    <label for="phone" class="col-form-label">{{ __('translation.Phone') }}:</label>
+                                    <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <select class="form-control select2 select-country"></select>
+                                            </div>
+                                            <input class="form-control phones input-phone" id="phone" name="phone" autocomplete="off" required placeholder="XXX-XXX-XXXX" value="{{ old('phone') }}" data-parsley-type="digits"
+                                            data-parsley-validation-threshold="1"   data-parsley-trigger="keyup" min="10">
+                                    </div>
                             </div>
                         </div>
-                        <div class="col-xl-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Email') }}</label>
+
                                 <input id="email" name="email" type="email" class="form-control" required placeholder="{{ __('Email') }}">
                             </div>
                         </div>
-                        <div class="col-xl-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Birthday Date') }}</label>
-                                <input id="birthday_date" name="birthday_date" type="date" class="form-control" >
+                                <input class="form-control birthday" id="birthday_date" name="birthday_date" placeholder="XXXX-XX-XX">
                             </div>
                         </div>
                         <div class="col-xl-6">

@@ -153,12 +153,42 @@
     $(document).ready(function(){
 
         var table = $('#table_reg').DataTable({
+                rowCallback : function( row, data, dataIndex){
+                    if(data.is_assigned){
+                        if( data.is_assigned.id_unit == 1)
+                            $(row).find('td:eq(6)').addClass('assign_1 text-white');
+                        else if(data.is_assigned.id_unit == 2)
+                            $(row).find('td:eq(6)').addClass('assign_2 text-white');
+                        else if(data.is_assigned.id_unit == 3)
+                            $(row).find('td:eq(6)').addClass('assign_3 text-white');
+                        else if(data.is_assigned.id_unit == 4)
+                            $(row).find('td:eq(6)').addClass('assign_4 text-white');
+                        else if(data.is_assigned.id_unit == 5)
+                            $(row).find('td:eq(6)').addClass('assign_5 text-white');
+                        else if(data.is_assigned.id_unit == 6)
+                            $(row).find('td:eq(6)').addClass('assign_6 text-white');
+                        else if(data.is_assigned.id_unit == 7)
+                            $(row).find('td:eq(6)').addClass('assign_7 text-white');
+                        else if(data.is_assigned.id_unit == 8)
+                            $(row).find('td:eq(6)').addClass('assign_8 text-white');
+                        else if(data.is_assigned.id_unit == 9)
+                            $(row).find('td:eq(6)').addClass('assign_9 text-white');
+                        else if(data.is_assigned.id_unit == 10)
+                            $(row).find('td:eq(6)').addClass('assign_10 text-white');
+                        else if(data.is_assigned.id_unit == 11)
+                            $(row).find('td:eq(6)').addClass('assign_11 text-white');
+                        else if(data.is_assigned.id_unit == 12)
+                            $(row).find('td:eq(6)').addClass('assign_12 text-white');
+                        else if(data.is_assigned.id_unit == 13)
+                            $(row).find('td:eq(6)').addClass('assign_13 text-white');
+                    }
+                },
                 processing: true,
                 serverSide: true,
                 paging: false,
                 {{--  select: true,  --}}
                 drawCallback: function() {
-                    $('.select2').select2();
+                $('.select2').select2();
                 },
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
@@ -167,15 +197,17 @@
                 columns: [
                     {data:'hora', name: 'hora', orderable:false},
                     {data: 'service', name: 'service', className: 'text-wrap width-100', orderable: false},
-                    {data: 'origin', name: 'origin', className: 'text-wrap width-100', orderable: false},
-                    {data: 'destiny', name: 'destiny', className: 'text-wrap width-100', orderable: false},
+                    {data: 'origin', name: 'origin', className: 'text-center text-wrap width-100', orderable: false},
+                    {data: 'destiny', name: 'destiny', className: 'text-center text-wrap width-100', orderable: false},
                     {data: 'observations', name: 'observations', className: 'text-wrap width-100', orderable: false},
                     {data: 'requested_unit', name: 'requested_unit', className: 'text-wrap width-100', orderable: false},
                     {data: 'unit', name: 'unit', className:  'text-wrap width-100', orderable: false},
                     {data: 'operators', name: 'operators', className:'text-wrap width-100', orderable: false},
-                    {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false},
+                    {data: 'options', name: 'options', className:'text-wrap', orderable: false},
             ],
+
         });
+
         var data = table.row( $(this).parents('tr') ).data();
 
         $('#table_reg tbody').on( 'click', '.btnassign', function () {
@@ -208,13 +240,13 @@
             $('#btnsuccess'+data.id).hide();
             $('#btncancel'+data.id).hide();
         });
-        {{-- $('#table_reg tbody').on( 'click', '.btncancel_update', function (){
+        $('#table_reg tbody').on( 'click', '.btncancel_update', function (){
             var data = table.row( $(this).parents('tr') ).data();
             $('#id_operator'+data.id).prop("disabled", true);
             $('#id_unit'+data.id).prop("disabled", true);
             $('#btnsuccess_up'+data.id).hide();
             $('#btncancel_up'+data.id).hide();
-        }); --}}
+        });
         $('#table_reg tbody').on( 'click', '.btnsuccess', function (){
             var data = table.row( $(this).parents('tr') ).data();
             console.log('Se enviara la asignacion...');
@@ -308,6 +340,36 @@
     function subsDataTables() {
         if(!$.fn.dataTable.isDataTable('#table_subs')){
         var table = $('#table_subs').DataTable({
+            rowCallback : function( row, data, dataIndex){
+                if(data.is_assigned){
+                    if( data.is_assigned.id_unit == 1)
+                            $(row).find('td:eq(6)').addClass('assign_1 text-white');
+                    else if(data.is_assigned.id_unit == 2)
+                        $(row).find('td:eq(6)').addClass('assign_2 text-white');
+                    else if(data.is_assigned.id_unit == 3)
+                        $(row).find('td:eq(6)').addClass('assign_3 text-white');
+                    else if(data.is_assigned.id_unit == 4)
+                        $(row).find('td:eq(6)').addClass('assign_4 text-white');
+                    else if(data.is_assigned.id_unit == 5)
+                        $(row).find('td:eq(6)').addClass('assign_5 text-white');
+                    else if(data.is_assigned.id_unit == 6)
+                        $(row).find('td:eq(6)').addClass('assign_6 text-white');
+                    else if(data.is_assigned.id_unit == 7)
+                        $(row).find('td:eq(6)').addClass('assign_7 text-white');
+                    else if(data.is_assigned.id_unit == 8)
+                        $(row).find('td:eq(6)').addClass('assign_8 text-white');
+                    else if(data.is_assigned.id_unit == 9)
+                        $(row).find('td:eq(6)').addClass('assign_9 text-white');
+                    else if(data.is_assigned.id_unit == 10)
+                        $(row).find('td:eq(6)').addClass('assign_10 text-white');
+                    else if(data.is_assigned.id_unit == 11)
+                        $(row).find('td:eq(6)').addClass('assign_11 text-white');
+                    else if(data.is_assigned.id_unit == 12)
+                        $(row).find('td:eq(6)').addClass('assign_12 text-white');
+                    else if(data.is_assigned.id_unit == 13)
+                        $(row).find('td:eq(6)').addClass('assign_13 text-white');
+                }
+                },
             processing: true,
             serverSide: true,
             paging: false,
@@ -334,7 +396,7 @@
 
             var data = table.row( $(this).parents('tr') ).data();
 
-            $('#table_subs tbody').on( 'click', '.btnassign', function () {
+            $('#table_subs tbody').on( 'click', '.btnassign_sub_sub', function () {
                 var data = table.row( $(this).parents('tr') ).data();
                 $('#id_operator'+data.id).prop("disabled", false);
                     $('#id_unit'+data.id).prop("disabled", false);
@@ -357,21 +419,21 @@
                     $('#btncancel'+data.id).hide();
                 } --}}
             });
-            $('#table_subs tbody').on( 'click', '.btncancel', function (){
+            $('#table_subs tbody').on( 'click', '.btncancel_sub', function (){
                 var data = table.row( $(this).parents('tr') ).data();
                 $('#id_operator'+data.id).prop("disabled", true);
                 $('#id_unit'+data.id).prop("disabled", true);
                 $('#btnsuccess'+data.id).hide();
                 $('#btncancel'+data.id).hide();
             });
-            $('#table_subs tbody').on( 'click', '.btncancel_update', function (){
+            $('#table_subs tbody').on( 'click', '.btncancel_update_sub', function (){
                 var data = table.row( $(this).parents('tr') ).data();
                 $('#id_operator'+data.id).prop("disabled", true);
                 $('#id_unit'+data.id).prop("disabled", true);
                 $('#btnsuccess_up'+data.id).hide();
                 $('#btncancel_up'+data.id).hide();
             });
-            $('#table_subs tbody').on( 'click', '.btnsuccess', function (){
+            $('#table_subs tbody').on( 'click', '.btnsuccess_sub', function (){
                 var data = table.row( $(this).parents('tr') ).data();
                 console.log('Se enviara la asignacion...');
                 $.ajax({
@@ -416,14 +478,14 @@
                     }
                 });
             });
-            $('#table_subs tbody').on( 'click', '.btnassign_update', function (){
+            $('#table_subs tbody').on( 'click', '.btnassign_update_sub', function (){
                 var data = table.row( $(this).parents('tr') ).data();
                 $('#id_operator'+data.id).prop("disabled", false);
                 $('#id_unit'+data.id).prop("disabled", false);
                 $('#btnsuccess_up'+data.id).show();
                 $('#btncancel_up'+data.id).show();
             });
-            $('#table_subs tbody').on( 'click', '.btnsuccess_update', function (){
+            $('#table_subs tbody').on( 'click', '.btnsuccess_update_sub', function (){
                 var data = table.row( $(this).parents('tr') ).data();
                 console.log('Se actualizara la asignacion...');
                 $.ajax({
@@ -466,7 +528,37 @@
     function vansDataTables() {
         if(!$.fn.dataTable.isDataTable('#table_vans')){
         var table = $('#table_vans').DataTable({
-            processing: true,
+            rowCallback : function( row, data, dataIndex){
+                if(data.is_assigned){
+                    if( data.is_assigned.id_unit == 1)
+                            $(row).find('td:eq(6)').addClass('assign_1 text-white');
+                    else if(data.is_assigned.id_unit == 2)
+                        $(row).find('td:eq(6)').addClass('assign_2 text-white');
+                    else if(data.is_assigned.id_unit == 3)
+                        $(row).find('td:eq(6)').addClass('assign_3 text-white');
+                    else if(data.is_assigned.id_unit == 4)
+                        $(row).find('td:eq(6)').addClass('assign_4 text-white');
+                    else if(data.is_assigned.id_unit == 5)
+                        $(row).find('td:eq(6)').addClass('assign_5 text-white');
+                    else if(data.is_assigned.id_unit == 6)
+                        $(row).find('td:eq(6)').addClass('assign_6 text-white');
+                    else if(data.is_assigned.id_unit == 7)
+                        $(row).find('td:eq(6)').addClass('assign_7 text-white');
+                    else if(data.is_assigned.id_unit == 8)
+                        $(row).find('td:eq(6)').addClass('assign_8 text-white');
+                    else if(data.is_assigned.id_unit == 9)
+                        $(row).find('td:eq(6)').addClass('assign_9 text-white');
+                    else if(data.is_assigned.id_unit == 10)
+                        $(row).find('td:eq(6)').addClass('assign_10 text-white');
+                    else if(data.is_assigned.id_unit == 11)
+                        $(row).find('td:eq(6)').addClass('assign_11 text-white');
+                    else if(data.is_assigned.id_unit == 12)
+                        $(row).find('td:eq(6)').addClass('assign_12 text-white');
+                    else if(data.is_assigned.id_unit == 13)
+                        $(row).find('td:eq(6)').addClass('assign_13 text-white');
+                    }
+                },
+                processing: true,
                 serverSide: true,
                 paging: false,
                 {{--  select: true,  --}}
@@ -622,7 +714,7 @@
 </script>
     <script>
         /** DESTROY ASSIGNMENT*/
-        function btncancel_up(id) {
+        function btndelete(id) {
             Swal.fire({
                 title: "Desea eliminar el servicio y la asignacion?",
                 text: "Por favor asegúrese y luego confirme!",
@@ -635,11 +727,12 @@
                 if (e.value === true) {
                     $.ajax({
                         type: 'DELETE',
-                        url: "/registers/" + id,
+                        url: "{{url('/assign')}}/" + id,
                         data: {
                             id: id,
                             _token: '{!! csrf_token() !!}'
                         },
+                        type: 'DELETE',
                         dataType: 'JSON',
                         success: function (results) {
                             if (results.success === true) {
@@ -649,7 +742,7 @@
                                     icon: "success",
                                     confirmButtonText: "Hecho!",
                                 });
-                                $('#table_registers').DataTable().ajax.reload();
+                                $('#table_reg').DataTable().ajax.reload();
                             } else {
                                 Swal.fire({
                                     title: "Error!",
@@ -669,67 +762,5 @@
         }
         /** DESTROY ASSIGNMENT*/
     </script>
-<script>
-    function btnInfo(id) {
-        $.ajax({
-            url: 'registers/'+ id,
-            data: {
-                 id : id
-            },
-            type: "GET",
-            success: function (response){
-            console.log(response);
-            var id = response.data['id'];
-            //$("ul:not([class*='bbox'])").addClass("bbox");
-            const reg = $("#reg").append("<span id=reg></span>");
-            const li_reg = $("#registro").removeClass("completed");
-            const li_asi = $("#asignado").removeClass("completed");
-            const asi  = $("#asi").append("<span id=asi></span>");
-            const li_cur = $("#en_curso").removeClass("completed");
-            const cur = $("#cur").append("<span id=asi></span>");
-            const li_fin = $("#finalizado").removeClass("completed");
-            const fin = $("#fin").append("<span id=fin></span>");
-
-            $("#agency").html(response.data.agency['business_name']);
-            $("#origin").html(response.data['origin']);
-            $("#destiny").html(response.data['destiny']);
-            $("#pas").html(response.data['passenger']);
-            $("#pas_n").html(response.data['passenger_number']);
-            $("#pck").html(response.data['pickup']);
-            $("#obs").html(response.data['observations']);
-
-            if(response.data['is_assigned'] === null){
-                li_reg;
-                reg.addClass("active-dot dot" );
-                li_asi;
-                asi.removeClass("active-dot dot");
-                li_cur;
-                cur;
-                li_fin;
-                fin
-
-                $("#date_reg").html(response.reg);
-                $("#date_asi").html('');
-
-                //$( "#registro").addClass("completed");
-            }
-            else if(response.data['is_assigned'] !== null && response.data.is_assigned['status'] === 1){
-                li_reg.addClass("completed");
-                reg.removeClass("active-dot dot");
-                li_asi;
-                asi.addClass("active-dot dot");
-                li_cur;
-                cur;
-                li_fin;
-                fin
-
-                $("#date_reg").html(response.reg);
-                $("#date_asi").html(response.data.is_assigned['created_at']);
-
-            }
-            }
-        });
-    }
-</script>
 @endpush
 @endsection

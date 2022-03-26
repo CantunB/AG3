@@ -60,13 +60,13 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="avatar-lg rounded-circle bg-soft-blue border-blue border">
-                            <i class="fe-shopping-cart font-22 avatar-title text-blue"></i>
+                            <i class="mdi mdi-office-building mdi-36px font-22 avatar-title text-blue"></i>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="text-right">
-                            <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span></h3>
-                            <p class="text-muted mb-1 text-truncate">{{ __('translation.Todays Sales') }}</p>
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $hotels }}</span></h3>
+                            <p class="text-muted mb-1 text-truncate">Hoteles</p>
                         </div>
                     </div>
                 </div> <!-- end row-->

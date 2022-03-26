@@ -29,19 +29,10 @@ class UpdateUserRequest extends FormRequest
             'paterno' => 'required',
             'phone' => 'required|phone|unique:users,phone,'.$this->route('users'),
             'email' => 'required|email|unique:users,email,'.$this->route('users'),
-            'photo_user' => 'required|mimes:jpg,jpeg,bmp,png|max:2048',
+            'photo_user' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
         ];
     }
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-        ];
-    }
+
     /**
      * Get custom attributes for validator errors.
      *
@@ -52,9 +43,23 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'nombre',
             'paterno' => 'apellido paterno',
-            'phone' => 'celular',
+            'phone' => 'telefono',
             'email' => 'correo electronico',
-            'photo_user' => 'foto del usuario',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Ingresa un :attribute',
+            'paterno.required' => 'Ingresa un :attribute',
+            'phone.required' => 'Ingresa un :attribute',
+            'email.required' => 'Ingresa un :attribute'
         ];
     }
 }

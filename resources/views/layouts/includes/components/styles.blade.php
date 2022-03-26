@@ -17,7 +17,57 @@
 @toastr_css
 @livewireStyles
 <style>
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color:#FFD038;
+    }
+
+    .border-w {
+        border: 2px solid #E7C010;
+    }
+</style>
+<style>
     .divOculto {
         display: none;
+    }
+</style>
+<style>
+    .assign_1 {
+        background-color: #5D5DDF;
+    }
+    .assign_2 {
+        background-color: #800080;
+    }
+    .assign_3 {
+        background-color: #808000;
+    }
+    .assign_4 {
+        background-color: #FF7F50;
+    }
+    .assign_5 {
+        background-color: #7FFF00;
+    }
+    .assign_6 {
+        background-color: #DC143C;
+    }
+    .assign_7 {
+        background-color: #008080;
+    }
+    .assign_8 {
+        background-color: #FF1493;
+    }
+    .assign_9 {
+        background-color: #00FF7F;
+    }
+    .assign_10 {
+        background-color: #87CEEB;
+    }
+    .assign_11 {
+        background-color: #1E90FF;
+    }
+    .assign_12 {
+        background-color: #808000;
+    }
+    .assign_13 {
+        background-color: #D87093	;
     }
 </style>

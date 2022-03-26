@@ -18,7 +18,7 @@ class CreateOperatorsTable extends Migration
             $table->string('name', 50);
             $table->string('paterno',50)->nullable();
             $table->string('materno',50)->nullable();
-            $table->string('phone',10)->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('email')->unique();
             $table->date('birthday_date')->nullable();
             $table->string('address')->nullable();

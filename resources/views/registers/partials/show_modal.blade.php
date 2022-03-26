@@ -58,12 +58,13 @@
                                     <li id="en_curso">
                                         <span id="cur"></span>
                                         <h5 class="mt-0 mb-1">En curso</h5>
-                                        <p class="text-muted">April 22 2019 <small class="text-muted">05:16 PM</small></p>
+                                        {{-- <p class="text-muted">April 22 2019 <small class="text-muted">05:16 PM</small></p> --}}
+                                        {{-- <p class="text-muted">April 22 2019 <small class="text-muted">05:16 PM</small></p> --}}
                                     </li>
                                     <li id="finalizado">
                                         <span id="fin"></span>
                                         <h5 class="mt-0 mb-1"> Finalizado</h5>
-                                        <p class="text-muted">Estimated delivery within 3 days</p>
+                                        {{-- <p class="text-muted">Estimated delivery within 3 days</p> --}}
                                     </li>
                                 </ul>
                             </div>

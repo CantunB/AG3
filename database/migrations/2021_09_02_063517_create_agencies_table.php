@@ -24,7 +24,7 @@ class CreateAgenciesTable extends Migration
             $table->string('telephone',10)->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->default();
+            // $table->string('password')->default();
             $table->rememberToken();
             $table->string('agency_logo')->nullable();
             // $table->string('contact', 100)->nullable();

@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Register extends Model
 {
+    use  SoftDeletes;
+
     const SUBURBAN = '1';
     const VAN = '2';
 
@@ -16,17 +19,23 @@ class Register extends Model
                             'agency_id',
                             'type_service_id',
                             'origin',
+                            'zo',
                             'terminal',
                             'time',
                             'duration',
+                            'airline',
                             'flight_number',
                             'flight_time',
                             'destiny',
+                            'zd',
                             'passenger',
                             'passenger_number',
                             'pickup',
                             'requested_unit',
-                            'place_service'
+                            'place_service',
+                            'tariff',
+                            'observations',
+                            'user_id'
                         ];
 
     public function Agency()

@@ -18,6 +18,7 @@ class CreateAirlinesTable extends Migration
             $table->string('terminal',10)->nullable();
             $table->string('airport',100)->nullable();
             $table->string('airline',120)->nullable();
+            $table->string('iata_code')->nullable();
             $table->string('destiny')->nullable();
             $table->string('code',3)->nullable();
             //$table->timestamps();

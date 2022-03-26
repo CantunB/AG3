@@ -37,16 +37,48 @@ class RegisterController extends Controller
             ->addIndexColumn()
             ->editColumn('date', function($registers){
                 return $registers->date;
+
             })
-            ->editColumn('hora', function($registers){
-                return $registers->pickup;
+            ->editColumn('pickup', function($registers){
+                return Carbon::createFromFormat('H:i:s',$registers->pickup)->format('H:i');
             })
-            ->editColumn('agencia', function($registers){
-                return $registers->Agency->business_name;
+            ->editColumn('origin', function($registers){
+                $origin = '';
+
+                if($registers->origin === "Aeropuerto Internacional de Cancun"){
+                    $origin .= '<span class="text-center"> AEROPUERTO  <br> '.$registers->zo.'  <br>  '.$registers->flight_number.' </span> ';
+                }else{
+                    $origin .='<span class="text-center"> '.$registers->origin.'  <br>  '.$registers->zo.' </span> ';
+                }
+                return $origin;
             })
-            ->editColumn('service', function($registers){
+            ->editColumn('destiny', function($registers){
+                $destiny = '';
+
+                if($registers->destiny === "Aeropuerto Internacional de Cancun"){
+                    $destiny .= '<span class="text-center"> AEROPUERTO  <br> '.$registers->zd.'  <br>  '.$registers->flight_number.' </span> ';
+                }else{
+                    $destiny .= '<span class="text-center"> '.$registers->destiny.'  <br>  '.$registers->zd.' </span> ';
+                }
+                return $destiny;
+            })
+            ->addColumn('agencia', function($registers){
+                return $registers->Agency->name;
+            })->filterColumn('agencia', function($query, $keyword) {
+                $query->whereHas('Agency', function($query) use ($keyword) {
+                 //   $query->whereRaw("CONCAT(nombre, paterno, materno) like ?", ["%{$keyword}%"]);
+                    $query->whereRaw("name like ?", ["%{$keyword}%"]);
+                });
+            })
+            ->addColumn('service', function($registers){
                 return $registers->Type_service->name;
+            })->filterColumn('service', function($query, $keyword) {
+                $query->whereHas('Type_service', function($query) use ($keyword) {
+                 //   $query->whereRaw("CONCAT(nombre, paterno, materno) like ?", ["%{$keyword}%"]);
+                    $query->whereRaw("name like ?", ["%{$keyword}%"]);
+                });
             })
+
             ->editColumn('status', function($registers){
                 $status = '';
                 if(!isset($registers->isAssigned)){
@@ -67,7 +99,6 @@ class RegisterController extends Controller
                 }else{
                     return 'VAN';
                 }
-
             })
             ->addColumn('options', function ($registers){
                 $opciones = '';
@@ -88,7 +119,7 @@ class RegisterController extends Controller
                 }
                 return $opciones;
             })
-            ->rawColumns(['status','options'])
+            ->rawColumns(['origin','destiny','status','options'])
             ->toJson();
         }
         //$registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
@@ -137,14 +168,21 @@ class RegisterController extends Controller
      */
     public function show(Request $request)
     {
+
         $register = Register::with(['Agency','Type_service', 'isAssigned'])
                     ->findOrFail($request->id);
         //$f_r = $register->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a');
+        $f_r = "";
+        $f_a = "";
         $f_r = $register->created_at->toFormattedDateString();
+        if($register->isAssigned){
+            $f_a = $register->isAssigned->created_at->toFormattedDateString();
+        }
 
         return response()->json([
             'data' => $register,
-            'reg' => $f_r
+            'reg' => $f_r,
+            'asi' => $f_a
         ], 201);
     }
 

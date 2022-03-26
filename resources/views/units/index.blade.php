@@ -19,12 +19,12 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="table_units" class="table table-sm table-nowrap table-borderless table-hover mb-0">
+                        <table id="table_units" class="table table-sm table-bordered">
                             <thead class="thead-light">
                                 <tr>
                                     <th>{{ __('translation.Units') }}</th>
                                     <th>{{ __('translation.License plate') }}</th>
-                                    <th>{{ __('translation.Poliza de seguro') }}</th>
+                                    <th>Poliza de seguro</th>
                                     <th>{{ __('translation.Status') }}</th>
                                     <th style="width: 82px;">{{ __('translation.Options') }}</th>
                                 </tr>

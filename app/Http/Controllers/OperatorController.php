@@ -287,8 +287,9 @@ class OperatorController extends Controller
      * @param  \App\Models\Operator  $operator
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOperatorsRequest $request, Operator $operator)
+    public function update(UpdateOperatorsRequest $request,  $id)
     {
+        $operator = Operator::findOrFail($id);
         $operator->update($request->all());
         return redirect()->back();
     }

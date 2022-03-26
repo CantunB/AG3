@@ -16,10 +16,10 @@ class TypeServiceSeeder extends Seeder
     {
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::create(['name' => 'create_typeservices']);
-        Permission::create(['name' => 'read_typeservices']);
-        Permission::create(['name' => 'update_typeservices']);
-        Permission::create(['name' => 'delete_typeservices']);
+        Permission::create(['category' => 'Tipo de Servicios', 'name' => 'create_typeservices']);
+        Permission::create(['category' => 'Tipo de Servicios', 'name' => 'read_typeservices']);
+        Permission::create(['category' => 'Tipo de Servicios', 'name' => 'update_typeservices']);
+        Permission::create(['category' => 'Tipo de Servicios', 'name' => 'delete_typeservices']);
 
         $super_admin = Role::findByName('Super-Admin');
         $super_admin->givePermissionTo([
@@ -41,20 +41,20 @@ class TypeServiceSeeder extends Seeder
         $type = TypeService::create([
             'name' => 'Circuito',
         ]);
-        $type = TypeService::create([
-            'name' => 'Transfer',
-        ]);
-        $type = TypeService::create([
-            'name' => 'Tour',
-        ]);
-        $type = TypeService::create([
-            'name' => 'Eventos',
-        ]);
-        $type = TypeService::create([
-            'name' => 'Cortesias',
-         ]);
-         $type = TypeService::create([
-            'name' => 'Balance',
-         ]);
+        // $type = TypeService::create([
+        //     'name' => 'Transfer',
+        // ]);
+        // $type = TypeService::create([
+        //     'name' => 'Tour',
+        // ]);
+        // $type = TypeService::create([
+        //     'name' => 'Eventos',
+        // ]);
+        // $type = TypeService::create([
+        //     'name' => 'Cortesias',
+        //  ]);
+        //  $type = TypeService::create([
+        //     'name' => 'Balance',
+        //  ]);
     }
 }

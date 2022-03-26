@@ -18,29 +18,41 @@ class RolesAndPermissions extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         // USUARIOS
-        Permission::create(['name' => 'create_users']);
-        Permission::create(['name' => 'read_users']);
-        Permission::create(['name' => 'update_users']);
-        Permission::create(['name' => 'delete_users']);
+        Permission::create([ 'category' => 'Usuarios', 'name' => 'create_users']);
+        Permission::create([ 'category' => 'Usuarios', 'name' => 'read_users']);
+        Permission::create([ 'category' => 'Usuarios', 'name' => 'update_users']);
+        Permission::create([ 'category' => 'Usuarios', 'name' => 'delete_users']);
         // ROLES
-        Permission::create(['name' => 'create_roles']);
-        Permission::create(['name' => 'read_roles']);
-        Permission::create(['name' => 'update_roles']);
-        Permission::create(['name' => 'delete_roles']);
+        Permission::create([ 'category' => 'Roles', 'name' => 'create_roles']);
+        Permission::create([ 'category' => 'Roles', 'name' => 'read_roles']);
+        Permission::create([ 'category' => 'Roles', 'name' => 'update_roles']);
+        Permission::create([ 'category' => 'Roles', 'name' => 'delete_roles']);
         // PERMISOS
-        Permission::create(['name' => 'create_permissions']);
-        Permission::create(['name' => 'read_permissions']);
-        Permission::create(['name' => 'update_permissions']);
-        Permission::create(['name' => 'delete_permissions']);
+        Permission::create([ 'category' => 'Permisos','name' => 'create_permissions']);
+        Permission::create([ 'category' => 'Permisos', 'name' => 'read_permissions']);
+        Permission::create([ 'category' => 'Permisos', 'name' => 'update_permissions']);
+        Permission::create([ 'category' => 'Permisos', 'name' => 'delete_permissions']);
+
+        $sa = Role::create(['name' => 'Super-Admin']);
+        $sa->givePermissionTo('create_users');
+        $sa->givePermissionTo('read_users');
+        $sa->givePermissionTo('update_users');
+        $sa->givePermissionTo('delete_users');
+        $sa->givePermissionTo('create_roles');
+        $sa->givePermissionTo('read_roles');
+        $sa->givePermissionTo('update_roles');
+        $sa->givePermissionTo('delete_roles');
+        $sa->givePermissionTo('create_permissions');
+        $sa->givePermissionTo('read_permissions');
+        $sa->givePermissionTo('update_permissions');
+        $sa->givePermissionTo('delete_permissions');
         // create roles and assign existing permissions
-        $admin = Role::create(['name' => 'administrador']);
+        $admin = Role::create(['name' => 'Administrador']);
         $admin->givePermissionTo('create_users');
         $admin->givePermissionTo('read_users');
         $admin->givePermissionTo('delete_users');
 
-        $sa = Role::create(['name' => 'Super-Admin']);
-
-        $operator = Role::create(['name' => 'operator']);
+        $operator = Role::create(['name' => 'Operador']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
         // create personal users
         $user = User::create([
@@ -68,7 +80,7 @@ class RolesAndPermissions extends Seeder
             'paterno' => 'Abreu',
             'materno' => 'Giral',
             'email' => 'joagi2000@ag3luxury.com',
-            'password' => bcrypt('Simple12!')
+            'password' => bcrypt('Ag3luxury')
         ]);
         $user->assignRole($admin);
     }

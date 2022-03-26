@@ -18,7 +18,7 @@ class CreateAssignRegisters extends Migration
             $table->foreignId('id_register')->constrained('registers');
             $table->foreignId('id_unit')->constrained('units');
             $table->foreignId('id_operator')->constrained('operators');
-            $table->float('price')->nullable();
+            $table->float('tariff')->nullable();
             $table->float('cash')->nullable();
             $table->float('usd')->nullable();
             $table->float('euros')->nullable();
