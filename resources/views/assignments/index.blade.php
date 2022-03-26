@@ -102,7 +102,7 @@
                                                     <th>Unidad Solicitada</th>
                                                     <th>Unidad</th>
                                                     <th>Operador</th>
-                                                    <th>Opciones</th>
+                                                    {{-- <th>Opciones</th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -130,7 +130,7 @@
                                                     <th>Unidad Solicitada</th>
                                                     <th>Unidad</th>
                                                     <th>Operador</th>
-                                                    <th>Opciones</th>
+                                                    {{-- <th>Opciones</th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -390,7 +390,7 @@
                 {data: 'requested_unit', name: 'requested_unit', className: 'text-wrap width-100', orderable: false},
                 {data: 'unit', name: 'unit', className:  'text-wrap width-100', orderable: false},
                 {data: 'operators', name: 'operators', className:'text-wrap width-100', orderable: false},
-                {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false},
+                {{-- {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false}, --}}
         ],
             });
 
@@ -578,7 +578,7 @@
                     {data: 'requested_unit', name: 'requested_unit', className: 'text-wrap width-100', orderable: false},
                     {data: 'unit', name: 'unit', className:  'text-wrap width-100', orderable: false},
                     {data: 'operators', name: 'operators', className:'text-wrap width-100', orderable: false},
-                    {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false},
+                    {{-- {data: 'options', name: 'options', className:'text-wrap width-100', orderable: false}, --}}
             ],
             });
 
