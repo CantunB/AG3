@@ -30,6 +30,7 @@ class AssignRegisterController extends Controller
     {
         if ($request->ajax()){
             $registers = Register::with(['Agency','Type_service', 'isAssigned'])
+                ->orderBy('date')
                 ->orderBy('pickup');
             return DataTables::of($registers)
             ->addIndexColumn()
