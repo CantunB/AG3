@@ -31,7 +31,7 @@ class RegisterController extends Controller
     {
 
         if ($request->ajax()){
-            $registers = Register::with(['Agency','Type_service', 'isAssigned']);
+            $registers = Register::with(['Agency','Type_service', 'isAssigned'])->orderBy('date')->orderBy('pickup');
 //          $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
             return DataTables::of($registers)
             ->addIndexColumn()

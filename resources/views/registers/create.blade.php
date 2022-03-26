@@ -108,7 +108,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="project-priority">Aerolinea</label>
-                                                <select  name="airline" class="form-control select2 airlines_departure services_salidas" required>
+                                                <select  name="airline" class="form-control select2 airlines_departure services_salidas" >
                                                     <option value="" disabled selected>Selecciona una aerolinea</option>
                                                     @foreach ($airlines as $airline)
                                                         <option value=" {{$airline->airline}} ">{{ $airline->airline }}</option>
@@ -122,7 +122,7 @@
                                             <span class="input-group-text" id="icon-hashtag"><i
                                                     class="fas fa-hashtag input__icon"></i></span>
                                             <span class="input-group-text iata" id="iata_departure"></span>
-                                            <input oninput="iata_code_departure()" required type="text" class="form-control services_salidas" id="flight_number_departure" aria-describedby="icon-hashtag" autocomplete="off">
+                                            <input oninput="iata_code_departure()"  type="text" class="form-control services_salidas" id="flight_number_departure" aria-describedby="icon-hashtag" autocomplete="off">
                                             <input  type="hidden" id="iata_airline_departure" name="flight_number">
                                         </div>
                                     </div>
@@ -193,7 +193,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="project-priority">Aerolinea</label>
-                                                <select id="airline" name="airline" class="form-control select2 airlines_arrival services_llegadas" required>
+                                                <select id="airline" name="airline" class="form-control select2 airlines_arrival services_llegadas">
                                                     <option value="" disabled selected>Selecciona una aerolinea</option>
                                                     @foreach ($airlines as $airline)
                                                         <option value=" {{$airline->airline}} ">{{ $airline->airline }}</option>
@@ -207,7 +207,7 @@
                                             <span class="input-group-text" id="icon-hashtag"><i
                                                     class="fas fa-hashtag input__icon"></i></span>
                                             <span class="input-group-text iata" id="iata_arrival"></span>
-                                            <input oninput="iata_code_arrival()" required type="text" class="form-control services_llegadas" id="flight_number_arrival" aria-describedby="icon-hashtag" autocomplete="off">
+                                            <input oninput="iata_code_arrival()" type="text" class="form-control services_llegadas" id="flight_number_arrival" aria-describedby="icon-hashtag" autocomplete="off">
                                             <input  type="hidden" id="iata_airline_arrival" name="flight_number">
                                         </div>
                                     </div>
