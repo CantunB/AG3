@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
         "livewire/livewire": "^2.10",
+        "sentry/sentry-laravel": "^2.11",
         "spatie/laravel-permission": "^4.0",
         "yajra/laravel-datatables-oracle": "^9.18",
         "yoeunes/toastr": "^1.2"

@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
 Route::get('subs', 'AssignRegisterController@getSubs')->name('assign.subs');
 Route::get('vans', 'AssignRegisterController@getVans')->name('assign.vans');
 
