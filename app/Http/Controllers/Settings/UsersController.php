@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Yajra\DataTables\DataTables;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -33,7 +35,7 @@ class UsersController extends Controller
             if(Auth::user()->hasrole('Super-Admin')){
                 $users = User::withTrashed()->get();
             }else{
-                $users = User::all();
+                $users = User::where('status', 1 )->get();
             }
             return DataTables::of($users)
             ->addIndexColumn()
@@ -53,13 +55,13 @@ class UsersController extends Controller
             ->addColumn('options', function ($users){
                 $opciones = '';
                 if ($users->trashed()) {
-                    $opciones .= '<a href="'.route('users.show', $users->id).'" class="btn btn-sm action-icon getInfo icon-dual-warning"><i class="mdi mdi-restore"></i></a>';
+                    $opciones .= '<button  onclick="btnRestore('.$users->id.')" class="btn btn-sm action-icon icon-dual-warning"><i class="mdi mdi-restore"></i></button>';
                 }else{
                     if (Auth::user()->can('read_usuarios')){
                         $opciones .= '<a href="'.route('users.show', $users->id).'" class="btn btn-sm action-icon getInfo icon-dual-info"><i class="mdi mdi-account-settings"></i></a>';
                     }
                     if (Auth::user()->can('delete_usuarios')){
-                        $opciones .= '<button type="button" onclick="btnDelete('.$users->id.')" class="btn btn-sm action-icon icon-dual-secondary"><i class="mdi mdi-trash-can"></i></button>';
+                        $opciones .= '<button type="button" onclick="btnDeleteUser('.$users->id.')" class="btn btn-sm action-icon icon-dual-secondary"><i class="mdi mdi-trash-can"></i></button>';
                     }
                 }
                 return $opciones;
@@ -67,9 +69,6 @@ class UsersController extends Controller
             ->rawColumns(['name','options'])
             ->toJson();
         }
-        $roles = Role::all();
-
-        return view('settings.index', compact('roles'));
     }
 
     /**
@@ -91,7 +90,7 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $avatar = 'user-profile.png';
-        $user = User::create($request->all());
+        $user = new User($request->all());
         if ($request->has('photo_user')) {
             $photo = $request->file('photo_user');
             $avatar =  $user->email.'.'.$photo->getClientOriginalExtension();
@@ -103,7 +102,7 @@ class UsersController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
         $user->syncRoles($request->rol);
-
+        Artisan::call('optimize:clear');
         return response()->json(['data' => 'Usuario registrado correctamente'], 201);
     }
 
@@ -118,7 +117,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $roles = Role::all();
 
-        return view('users.show', compact('user','roles'));
+        return view('settings.users.show', compact('user','roles'));
     }
 
     /**
@@ -152,10 +151,17 @@ class UsersController extends Controller
                     $path = public_path('/assets/images/users/');
                     $photo_user = $path . $name;
                     Image::make($photo)->resize(150, 150)->save($photo_user);
+                    $image = Image::make(Storage::get($photo_user))
+                            ->widen(600)
+                            ->limitColors(255)
+                            ->encode();
+
+                    Storage::put($photo_user, $image);
                 }
                 $user->photo_user = '/assets/images/users/'.$name;
             }
             $user->save();
+            Artisan::call('optimize:clear');
             return response()->json(['data' => 'Usuario actualizado correctamente'], 201);
         }
 
@@ -177,6 +183,29 @@ class UsersController extends Controller
         } else {
             $success = true;
             $message = "No se pudo eliminar el usuario";
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
+    }
+
+     /**
+     * Restore the specified resource from storage.
+     *
+     * @param  \App\Models\Operator  $operator
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request)
+    {
+        $user = User::withTrashed()->findOrFail($request->id);
+        $restore = $user->restore();
+        if ($restore == 1){
+            $success = true;
+            $message = "Usuario restaurado";
+        } else {
+            $success = true;
+            $message = "No se pudo restaurar el usuario";
         }
         return response()->json([
             'success' => $success,

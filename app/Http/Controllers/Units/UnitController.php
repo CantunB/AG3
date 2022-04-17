@@ -19,6 +19,10 @@ class UnitController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role_or_permission:create_unit')->only(['create','store']);
+        $this->middleware('role_or_permission:read_unit')->only(['index','show']);
+        $this->middleware('role_or_permission:update_unit')->only(['edit','update']);
+        $this->middleware('role_or_permission:delete_unit')->only(['destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -88,7 +92,7 @@ class UnitController extends Controller
         $placas_sct = null;
         $poliza_seguro =null;
         $tarjeta_circulacion = null;
-        $tia = null;
+        $tag = null;
 
         if ($request->type == 'suburban') {
             $slug_unit = IdGenerator::generate(['table' => 'units','field'=>'unit', 'length' => 5, 'prefix' =>'SUB']);
@@ -181,13 +185,13 @@ class UnitController extends Controller
         }
 
         /** Condicional para tarjeta de circulacion */
-        if ($request->has('file_tia')) {
-            $file_tia = $request->file('file_tia');
-            $tia_req = $slug_unit . '_tia' . '.' . $file_tia->getClientOriginalExtension();
+        if ($request->has('file_tag')) {
+            $file_tag = $request->file('file_tag');
+            $tag_req = $slug_unit . '_tag' . '.' . $file_tag->getClientOriginalExtension();
             $tia_path = public_path($directory);
-            $file_tia->move($tia_path, $tia_req);
+            $file_tag->move($tia_path, $tag_req);
 
-            $tia = $directory . $tia_req;
+            $tag = $directory . $tag_req;
         }
 
         Unit::create([
@@ -215,7 +219,7 @@ class UnitController extends Controller
             'file_sct_plate_number' => $placas_sct,
             'file_insurance_policy' => $poliza_seguro,
             'file_circulation_card' => $tarjeta_circulacion,
-            'file_tia' => $tia
+            'file_tag' => $tag
         ]);
 
         return response()->json(['data' => 'Unidad Almacenada'],201);
@@ -238,7 +242,7 @@ class UnitController extends Controller
             'Placas SCT' => $unit->file_sct_plate_number == null ? "" : $unit->file_sct_plate_number,
             'Poliza seguro' => $unit->file_insurance_policy == null ? "" : $unit->file_insurance_policy,
             'Tarjeta circulacion' => $unit->file_circulation_card == null ? "" : $unit->file_circulation_card,
-            'TIA' => $unit->file_tia == null ? "" : $unit->file_tia,
+            // 'TIA' => $unit->file_tia == null ? "" : $unit->file_tia,
             ];
            // $longitud = length($unit->galery);
            // return $longitud;

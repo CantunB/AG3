@@ -18,6 +18,11 @@ class RolesAndPermissions extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         // USUARIOS
+        Permission::create([ 'category' => 'Configuraciones', 'name' => 'create_settings']);
+        Permission::create([ 'category' => 'Configuraciones', 'name' => 'read_settings']);
+        Permission::create([ 'category' => 'Configuraciones', 'name' => 'update_settings']);
+        Permission::create([ 'category' => 'Configuraciones', 'name' => 'delete_settings']);
+        // USUARIOS
         Permission::create([ 'category' => 'Usuarios', 'name' => 'create_users']);
         Permission::create([ 'category' => 'Usuarios', 'name' => 'read_users']);
         Permission::create([ 'category' => 'Usuarios', 'name' => 'update_users']);
@@ -34,6 +39,10 @@ class RolesAndPermissions extends Seeder
         Permission::create([ 'category' => 'Permisos', 'name' => 'delete_permissions']);
 
         $sa = Role::create(['name' => 'Super-Admin']);
+        $sa->givePermissionTo('create_settings');
+        $sa->givePermissionTo('read_settings');
+        $sa->givePermissionTo('update_settings');
+        $sa->givePermissionTo('delete_settings');
         $sa->givePermissionTo('create_users');
         $sa->givePermissionTo('read_users');
         $sa->givePermissionTo('update_users');
@@ -48,8 +57,10 @@ class RolesAndPermissions extends Seeder
         $sa->givePermissionTo('delete_permissions');
         // create roles and assign existing permissions
         $admin = Role::create(['name' => 'Administrador']);
-        $admin->givePermissionTo('create_users');
+        $admin->givePermissionTo('read_settings');
         $admin->givePermissionTo('read_users');
+        $admin->givePermissionTo('create_users');
+        $admin->givePermissionTo('update_users');
         $admin->givePermissionTo('delete_users');
 
         $operator = Role::create(['name' => 'Operador']);
@@ -60,7 +71,7 @@ class RolesAndPermissions extends Seeder
             'paterno' => 'Cantún',
             'materno' => 'Domínguez',
             'email' => 'cantunberna@gmail.com',
-            'phone' => '9381726488',
+            'phone' => '938 172 6488',
             'status' => 2,
             'password' => bcrypt('Cantun97.-')
         ]);
@@ -70,7 +81,7 @@ class RolesAndPermissions extends Seeder
             'paterno' => 'Cantún',
             'materno' => 'Domínguez',
             'email' => 'cantundominguez@gmail.com',
-            'phone' => '9381609121',
+            'phone' => '938 160 9121',
             'status' => 2,
             'password' => bcrypt('vicocapri')
         ]);
@@ -80,6 +91,17 @@ class RolesAndPermissions extends Seeder
             'paterno' => 'Abreu',
             'materno' => 'Giral',
             'email' => 'joagi2000@ag3luxury.com',
+            'phone' => '982 103 4347',
+            'password' => bcrypt('Ag3luxury')
+        ]);
+        $user->assignRole($admin);
+
+        $user = User::create([
+            'name' => 'Luis',
+            'paterno' => 'Abreu',
+            'materno' => 'Giral',
+            'email' => 'luis@ag3luxury.com',
+            'phone' => '938 137 8856',
             'password' => bcrypt('Ag3luxury')
         ]);
         $user->assignRole($admin);

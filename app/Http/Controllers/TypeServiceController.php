@@ -26,7 +26,7 @@ class TypeServiceController extends Controller
                 ->with(['quantity'])
                 ->Active();
 
-        return view('services.index', compact('services'));
+        return view('type_services.index', compact('services'));
     }
     /**
      * Store a newly created resource in storage.
@@ -37,7 +37,7 @@ class TypeServiceController extends Controller
     public function store(Request $request)
     {
         TypeService::create($request->all());
-        return redirect()->route('services.index');
+        return redirect()->route('typp_services.index');
     }
 
     /**

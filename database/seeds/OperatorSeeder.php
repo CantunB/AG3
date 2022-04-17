@@ -28,7 +28,13 @@ class OperatorSeeder extends Seeder
             'update_operators',
             'delete_operators'
             ]);
-
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_operators',
+            'read_operators',
+            'update_operators',
+            'delete_operators'
+        ]);
         // factory(Operator::class, 5)->create();
 
         $operador = Operator::create([
@@ -116,13 +122,13 @@ class OperatorSeeder extends Seeder
             'email' => 'julio_c@ag3luxury.com',
             'password' => bcrypt('password1234'),
         ]);
-        $operador = Operator::create([
-            'name' => 'Eusebio',
-            'paterno' => 'Ulloa',
-            'materno' => 'Gonzales',
-            'email' => 'eusebio_u@ag3luxury.com',
-            'password' =>  bcrypt('password1234'),
-        ]);
+        // $operador = Operator::create([
+        //     'name' => 'Eusebio',
+        //     'paterno' => 'Ulloa',
+        //     'materno' => 'Gonzales',
+        //     'email' => 'eusebio_u@ag3luxury.com',
+        //     'password' =>  bcrypt('password1234'),
+        // ]);
 
 
     }

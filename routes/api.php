@@ -60,10 +60,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('operator/logout', 'Api\Auth\OperatorAuthController@logout');
 });
 
-Route::apiResources([
-    '/services' => 'Api\ServicesController',
-]);
-
 Route::prefix('/getdata')->group( function(){
     Route::get('/airlines', 'Api\AirlineController@getData');
     Route::get('/hotels', 'Api\HotelController@getData');

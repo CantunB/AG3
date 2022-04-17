@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
@@ -50,7 +51,7 @@ class RolesController extends Controller
                 }
                 if (Auth::user()->can('delete_roles')){
                     //$opciones .= '<a href=" '.route('Sympathizers.edit', $tocados->tocado_id).' " class="action-icon icon-dual-warning"><i class="mdi mdi-account-cog"></i></a>';
-                    $opciones .= '<button type="button"  onclick="btnDelete('.$roles->id.')" class="btn btn-sm action-icon icon-dual-secondary"><i class="mdi mdi-trash-can"></i></button>';
+                    $opciones .= '<button type="button"  onclick="btnDeleteRol('.$roles->id.')" class="btn btn-sm action-icon icon-dual-secondary"><i class="mdi mdi-trash-can"></i></button>';
                 }
                 return $opciones;
             })
@@ -128,7 +129,8 @@ class RolesController extends Controller
     {
         $role = Role::findOrFail($id);
         $role->permissions()->sync($request->get('permission'));
-        return redirect()->route('settings.users')->with('update','Role actualizado correctamente');
+        Artisan::call('optimize:clear');
+        return redirect()->route('settings.index')->with('update','Role actualizado correctamente');
     }
 
     /**

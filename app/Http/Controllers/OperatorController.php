@@ -53,7 +53,7 @@ class OperatorController extends Controller
                 $opciones = '';
                 if ($operators->trashed()) {
                     if (Auth::user()->can('update_operators')){
-                        $opciones .= '<button type="button" class="btn btn-sm action-icon icon-dual-blue"><i class="mdi mdi-restore"></i></button>';
+                        $opciones .= '<button type="button" onclick="btnRestore('.$operators->id.')" class="btn btn-sm action-icon icon-dual-blue"><i class="mdi mdi-restore"></i></button>';
                     }
                 }else {
                     if (Auth::user()->can('read_operators')){
@@ -104,6 +104,7 @@ class OperatorController extends Controller
         $ine = null;
         $licencia = null;
         $foto = null;
+        $tia = null;
 
         if ($request->has('birth_certificate')) {
             $bc = $request->file('birth_certificate');
@@ -162,6 +163,14 @@ class OperatorController extends Controller
 
             $licencia = $directory . $driverLicense;
         }
+        if ($request->has('file_tia')) {
+            $driver = $request->file('file_tia');
+            $driverTIA = 'TIA' . '.' . $driver->getClientOriginalExtension();
+            $driverPath = public_path($directory);
+            $driver->move($driverPath, $driverTIA);
+
+            $tia = $directory . $driverTIA;
+        }
         if ($request->has('operator_photo')) {
             $operator = $request->file('operator_photo');
             $operatorPhoto = $request['name'] . $request['paterno']. '.' . $operator->getClientOriginalExtension();
@@ -192,6 +201,7 @@ class OperatorController extends Controller
             'rfc' => $rfc,
             'ine' => $ine,
             'driver_license' => $licencia,
+            'file_tia' => $tia,
             'operator_photo' => $foto,
         ]);
 
@@ -221,6 +231,7 @@ class OperatorController extends Controller
             'RFC' => $operator->rfc,
             'INE' => $operator->ine,
             'Licencia' => $operator->driver_license,
+            'TIA' => $operator->tia
             ];
         foreach ($files as $key => $file) {
             $archivos[] = '<div class="p-1">
@@ -289,9 +300,23 @@ class OperatorController extends Controller
      */
     public function update(UpdateOperatorsRequest $request,  $id)
     {
+        $avatar = 'user-12.png';
+
         $operator = Operator::findOrFail($id);
         $operator->update($request->all());
-        return redirect()->back();
+        if($operator->isDirty('operator_photo')){
+            if ($request->has('operator_photo')) {
+                $photo = $request->file('operator_photo');
+                $avatar =  $operator->email.'.'.$photo->getClientOriginalExtension();
+                $path = public_path('/assets/images/users/');
+                $photo_user = $path . $avatar;
+                Image::make($photo)->resize(150, 150)->save($photo_user);
+            }
+        }
+        $operator->operator_photo = '/assets/images/users/'.$avatar;
+        $operator->save();
+        return redirect()->back()->with('update','Operador actualizado');
+
     }
 
     /**
@@ -310,6 +335,29 @@ class OperatorController extends Controller
         } else {
             $success = true;
             $message = "No se elimino el operador";
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  \App\Models\Operator  $operator
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request)
+    {
+        $operator = Operator::withTrashed()->findOrFail($request->id);
+        $restore = $operator->restore();
+        if ($restore == 1){
+            $success = true;
+            $message = "Operador restaurado";
+        } else {
+            $success = true;
+            $message = "No se pudo restaurar el operador";
         }
         return response()->json([
             'success' => $success,

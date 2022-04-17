@@ -1,33 +1,39 @@
 <div class="tab-pane show active" id="settings">
-    <form method="POST" action="{{ route('operators.update', $operator->id) }}" data-parsley-validate>
+    <form id="form_operators_update" method="POST" action="{{route('operators.update', $operator->id)}}" enctype="multipart/form-data" data-parsley-validate>
         @csrf
-        @method('PATCH')
+        @method('PUT')
         <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i>Informacion Personal</h5>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="firstname">Nombre</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ $operator->name }}" >
+                    <input type="text" class="form-control" id="name" name="name" value="{{ $operator->name }}" required  required minlength="3" data-parsley-pattern="^[a-zA-Z]+$">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="lastname">Ap.Paterno</label>
-                    <input type="text" class="form-control" id="paterno" name="paterno" value="{{ $operator->paterno }}">
+                    <input type="text" class="form-control" id="paterno" name="paterno" value="{{ $operator->paterno }}" required required minlength="3" data-parsley-pattern="^[a-zA-Z]+$">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="lastname">Ap.Materno</label>
-                    <input type="text" class="form-control" id="materno" name="materno" value="{{ $operator->materno }}">
+                    <input type="text" class="form-control" id="materno" name="materno" value="{{ $operator->materno }}" required minlength="3" data-parsley-pattern="^[a-zA-Z]+$">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="firstname">Telefono</label>
-                    <input type="number" class="form-control" id="phone" name="phone" value="{{ $operator->phone }}" data-parsley-type="number">
+                        <label for="phone" class="col-form-label">{{ __('translation.Phone') }}:</label>
+                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <select class="form-control select2 select-country"></select>
+                                </div>
+                                <input class="form-control phones input-phone" id="phone" name="phone" autocomplete="off" required placeholder="XXX-XXX-XXXX" value="{{ old('phone') ?? $operator->phone }}"
+                                data-parsley-validation-threshold="1"   data-parsley-trigger="keyup">
+                        </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -41,13 +47,13 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="useremail">Fecha Nacimiento</label>
-                    <input type="date" class="form-control flatpickr" id="birthday_date" name="birthday_date" value="{{ $operator->birthday_date }}">
+                    <input class="form-control birthday" id="birthday_date" name="birthday_date" value="{{ $operator->birthday_date }}" placeholder="XXXX-XX-XX">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="useremail">C.P</label>
-                    <input type="text" class="form-control" id="cp" name="cp" value="{{ $operator->cp }}">
+                    <input type="text" class="form-control" id="cp" name="cp" value="{{ $operator->cp }}" maxlength="5" minlength="5" >
                 </div>
             </div>
             <div class="col-md-12">

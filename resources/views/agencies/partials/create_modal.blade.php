@@ -9,56 +9,96 @@
 
             <div id="errors"></div>
             <div class="modal-body p-4">
-                <form id="form_agencies" method="POST" action="{{ route('agencies.store') }}" data-parsley-validate enctype="multipart/form-data">
+                <form id="form_agencies" method="POST" action="{{ route('agencies.store') }}" data-parsley-validate enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="form-group">
                         <label for="name">Razon Social</label>
-                        <input onkeyup="mayus(this);" data-parsley-trigger="keyup" type="text" class="form-control" id="business_name" name="business_name" placeholder="{{ __('translation.Enter') }} Razon Social" required>
+                        <input data-parsley-trigger="keyup" type="text" class="form-control" id="business_name" name="business_name" placeholder="{{ __('translation.Enter') }} Razon Social" required autocomplete="off">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Nombre Comercial</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="{{ __('translation.Enter') }} Nombre Comercial">
+                                <input type="text" class="form-control" id="name_agency" name="name_agency" placeholder="{{ __('translation.Enter') }} Nombre Comercial" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">RFC</label>
-                                <input onkeyup="mayus(this);" data-parsley-trigger="keyup" type="text" class="form-control" id="rfc" name="rfc" placeholder="{{ __('translation.Enter') }} RFC" required minlength="10"	>
+                                <input onkeyup="mayus(this);" data-parsley-trigger="keyup" type="text" class="form-control" id="rfc" name="rfc" placeholder="{{ __('translation.Enter') }} RFC" required minlength="10" autocomplete="off"	>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="address">{{ __('translation.Address') }}</label>
-                        <input type="text" class="form-control" id="category" name="address" placeholder="{{ __('translation.Enter') }} {{ __('translation.Address') }}">
+                        <input type="text" class="form-control" id="address" name="address" autocomplete="off" placeholder="{{ __('translation.Enter') }} {{ __('translation.Address') }}">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="email">{{ __('translation.Email') }}</label>
-                                <input type="email" class="form-control" id="email"  name="email" placeholder="{{ __('translation.Enter') }} {{ __('translation.Email') }}" data-parsley-type="email">
+                                <label for="email_agency">Correo agencia</label>
+                                <input type="email" class="form-control" id="email_agency"  name="email_agency" placeholder="sastl@gmail.com" data-parsley-type="email" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="telephone">{{ __('translation.Phone') }}</label>
-                                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="{{ __('translation.Enter') }} {{ __('translation.Phone') }}" data-parsley-type="digits" >
+                                <input  autocomplete="off" type="text" class="form-control" id="telephone" name="telephone" placeholder="{{ __('translation.Enter') }} {{ __('translation.Phone') }}" data-parsley-type="digits" >
                             </div>
                         </div>
                     </div>
                     <h5 class="mb-4 text-uppercase">Contacto de la agencia</h5>
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="contact">Nombre de contacto</label>
-                                <input onkeyup="mayus(this);" type="text" class="form-control" id="contact"  name="contact">
+                        <div class="col-md-12">
+                            <div class=" form-group custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="contact" name="contact">
+                                <label style="font-size: 19px" class="custom-control-label" for="contact">¿Agregar un contacto de la agencia ?</label>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="telephone_contact">{{ __('translation.Phone') }}</label>
-                                <input type="text" class="form-control" id="telephone_contact" name="telephone_contact" placeholder="{{ __('translation.Enter') }} {{ __('translation.Phone') }}" data-parsley-type="digits" >
+                    </div>
+                    <div id="divContact" class="divOculto">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Nombre:</label>
+                                    <input onkeyup="mayus(this);" type="text" class="form-control" id="name" name="name" autocomplete="off" required>
+                                    <input type="hidden" class="form-control" name="status" value="3">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="paterno" class="col-form-label">Ap.Paterno:</label>
+                                    <input onkeyup="mayus(this);" type="text" class="form-control" id="paterno" name="paterno" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="materno" class="col-form-label">Ap.Materno:</label>
+                                    <input onkeyup="mayus(this);" type="text" class="form-control" id="materno" name="materno" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 my-1">
+                                <label for="phone" class="col-form-label">Telefono contacto:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <select class="form-control select2 select-country"></select>
+                                    </div>
+                                    <input class="form-control phones input-phone" id="phone" name="phone" autocomplete="off" required placeholder="XXX-XXX-XXXX" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="email" class="col-form-label">Correo contacto:</label>
+                                    <input type="email" class="form-control" id="email" name="email" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="password" class="col-form-label">Contraseña:</label>
+                                    <input type="password" class="form-control" id="password" name="password" autocomplete="off" required>
+                                </div>
                             </div>
                         </div>
                     </div>

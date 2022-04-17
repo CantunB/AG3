@@ -52,8 +52,8 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    @include('users.tabs.activity')
-                    @include('users.tabs.settings')
+                    @include('settings.users.tabs.activity')
+                    @include('settings.users.tabs.settings')
 
                 </div>
             </div>

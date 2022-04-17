@@ -140,6 +140,7 @@
     <div class="col-12">
         <div class="card">
                 <div class="card-body">
+
                     <div class="row mb-2">
                         <div class="col-md-12">
                             <div class="text-md-right">
@@ -147,6 +148,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('commons.searcher')
                     <div class="table-responsive">
                         <table id="table_registers" class="table table-sm table-centered border table-striped dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
                             <thead class="text-center">
@@ -174,11 +176,14 @@
         </div>
     </div>
 </div>
-@include('registers.partials.show_modal')
+@include('all_services.registers.partials.show_modal')
 @push('scripts')
     <script>
         $(document).ready(function(){
-            $('#table_registers').DataTable({
+
+            load_data();
+            function load_data(from_date = '', to_date = ''){
+                $('#table_registers').DataTable({
                     processing: true,
                     serverSide: true,
                     paging: false,
@@ -186,7 +191,10 @@
                     language: {
                         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
                     },
-                    ajax: '{!! route('registers.index') !!}',
+                    ajax: {
+                        url: '{!! route('registers.index') !!}',
+                        data : { from_date: from_date , to_date: to_date }
+                    },
                     columns: [
                         {data: 'date', name:'date' ,className: 'text-center' },
                         {data: 'pickup', name:'pickup' ,className: 'text-center' },
@@ -201,7 +209,33 @@
                         {{-- {data: 'status', name:'status' ,className: 'text-center'}, --}}
                         {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
                 ],
+                });
+            }
+
+            $('#btnsearch').click(function(){
+                var from_date = $('#ID_START').val();
+                var to_date = $('#ID_END').val();
+                if(from_date != '' & to_date != ''){
+                    $('#table_registers').DataTable().destroy();
+                    load_data(from_date,to_date);
+                }else{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No has ingresado ninguna fecha',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
             });
+
+            $('#btnrefresh').click(function(){
+                var from_date = $('#ID_START').val('');
+                var to_date = $('#ID_END').val('');
+                var searcher = $('#search_date').val('');
+                $('#table_registers').DataTable().destroy();
+                load_data();
+            })
+
         });
     </script>
     <script>

@@ -97,7 +97,7 @@
         </div>
     </div>
 </div>
-@include('services.partials.create_modal')
+@include('type_services.partials.create_modal')
 @push('scripts')
 <script>
 function deleteService(id) {

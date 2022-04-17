@@ -26,7 +26,7 @@ class StoreAgenciesRequest extends FormRequest
         return [
             'business_name' => 'required',
             'rfc' => 'required|min:10|unique:agencies,rfc',
-            'email' => 'email|unique:agencies,email|nullable',
+            'email_agency' => 'email|unique:agencies,email|nullable',
             'telephone' => 'digits:10|nullable',
             'fiscal_situation' => 'nullable|mimes:pdf|max:2048',
             'current_rate' => 'nullable|mimes:pdf|max:2048',
@@ -40,10 +40,10 @@ class StoreAgenciesRequest extends FormRequest
             'business_name' => 'razón social',
             'rfc' => 'RFC',
             'telephone' => 'telefono',
-            'email' => 'correo electronico',
+            'email_agency' => 'correo electronico',
             'fiscal_situation' => 'Situacion fiscal',
-            'current_rate' => 'Tarifa vigente',
-            'proof_address' => 'Comprobante de domicilio',
+            'current_rate' => 'tarifa vigente',
+            'proof_address' => 'comprobante de domicilio',
             'covenants' => 'Convenios'
         ];
     }

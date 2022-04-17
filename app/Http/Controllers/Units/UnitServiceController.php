@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UnitServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role_or_permission:create_unit')->only(['create','store']);
+        $this->middleware('role_or_permission:read_unit')->only(['index','show']);
+        $this->middleware('role_or_permission:update_unit')->only(['edit','update']);
+        $this->middleware('role_or_permission:delete_unit')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

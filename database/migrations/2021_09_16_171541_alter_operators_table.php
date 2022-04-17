@@ -24,6 +24,9 @@ class AlterOperatorsTable extends Migration
             $table->string('curp')->after('nss')->nullable();
             $table->string('rfc')->after('curp')->nullable();
             $table->string('ine')->after('rfc')->nullable();
+            $table->string('tia_number')->nullable();
+            $table->string('file_tia')->nullable();
+
             //$table->string('operator_photo');
         });
     }

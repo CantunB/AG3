@@ -27,6 +27,12 @@ class AirlineSeeder extends Seeder
             'update_airlines',
             'delete_airlines'
             ]);
-
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_airlines',
+            'read_airlines',
+            'update_airlines',
+            'delete_airlines'
+        ]);
     }
 }

@@ -1,27 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Services;
 
-use App\Http\Requests\Registers\StoreRegistersRequest;
-use App\Models\Agency;
-use App\Models\Airline;
-use App\Models\Hotel;
-use App\Models\OriginDestiny;
-use App\Models\Register;
-use App\Models\TypeService;
-use App\Models\Unit;
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class RegisterController extends Controller
+class OperationsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -29,10 +16,21 @@ class RegisterController extends Controller
      */
     public function index(Request $request)
     {
-
         if ($request->ajax()){
-            $registers = Register::with(['Agency','Type_service', 'isAssigned'])->orderBy('date')->orderBy('pickup');
-//          $registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
+            if(!empty($request->from_date))
+            {
+                $registers = Register::with(['Agency','Type_service', 'isAssigned'])->orderBy('date')
+                                    ->whereBetween('date', array(
+                                        $request->from_date, $request->to_date))
+                                    ->orderBy('pickup');
+
+            }else{
+                $date = Carbon::today();
+                $date = $date->format('Y-m-d');
+                $registers = Register::with(['Agency','Type_service', 'isAssigned'])
+                                    ->whereDate('date', $date)
+                                    ->orderBy('date')->orderBy('pickup');
+            }
             return DataTables::of($registers)
             ->addIndexColumn()
             ->editColumn('date', function($registers){
@@ -46,9 +44,9 @@ class RegisterController extends Controller
                 $origin = '';
 
                 if($registers->origin === "Aeropuerto Internacional de Cancun"){
-                    $origin .= '<span class="text-center"> AEROPUERTO  <br> '.$registers->zo.'  <br>  '.$registers->flight_number.' </span> ';
+                    $origin .= '<span class="text-center"> AEROPUERTO   <br>  '.$registers->flight_number.' </span>   <br> <span class="text-danger">'.$registers->zo.'</span> ';
                 }else{
-                    $origin .='<span class="text-center"> '.$registers->origin.'  <br>  '.$registers->zo.' </span> ';
+                    $origin .='<span class="text-center"> '.$registers->origin.'  <br> <span class="text-danger"> '.$registers->zo.' </span></span> ';
                 }
                 return $origin;
             })
@@ -56,14 +54,14 @@ class RegisterController extends Controller
                 $destiny = '';
 
                 if($registers->destiny === "Aeropuerto Internacional de Cancun"){
-                    $destiny .= '<span class="text-center"> AEROPUERTO  <br> '.$registers->zd.'  <br>  '.$registers->flight_number.' </span> ';
+                    $destiny .= '<span class="text-center"> AEROPUERTO  <br>  '.$registers->flight_number.' </span> <br><span class="text-danger">'.$registers->zd.'</span> ';
                 }else{
-                    $destiny .= '<span class="text-center"> '.$registers->destiny.'  <br>  '.$registers->zd.' </span> ';
+                    $destiny .= '<span class="text-center"> '.$registers->destiny.'  <br>  <span class="text-danger">'.$registers->zd.'</span> </span> ';
                 }
                 return $destiny;
             })
             ->addColumn('agencia', function($registers){
-                return $registers->Agency->name;
+                return $registers->Agency->name_agency;
             })->filterColumn('agencia', function($query, $keyword) {
                 $query->whereHas('Agency', function($query) use ($keyword) {
                  //   $query->whereRaw("CONCAT(nombre, paterno, materno) like ?", ["%{$keyword}%"]);
@@ -78,7 +76,6 @@ class RegisterController extends Controller
                     $query->whereRaw("name like ?", ["%{$keyword}%"]);
                 });
             })
-
             ->editColumn('status', function($registers){
                 $status = '';
                 if(!isset($registers->isAssigned)){
@@ -121,9 +118,11 @@ class RegisterController extends Controller
             })
             ->rawColumns(['origin','destiny','status','options'])
             ->toJson();
+
         }
         //$registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
-        return view('registers.index');
+        return view('all_services.registers.index');
+        return view('all_services.operations.index');
     }
 
     /**
@@ -133,18 +132,7 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        $agencies = Agency::all();
-        $services = TypeService::all();
-        $airlines = Airline::groupBy('airline')->get();
-
-        $hotels = Hotel::all();
-        return view('registers.create', compact(
-                'agencies',
-            'services',
-            'airlines',
-            'hotels'
-            )
-        );
+        //
     }
 
     /**
@@ -153,46 +141,29 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRegistersRequest $request)
+    public function store(Request $request)
     {
-        // return $request->all();
-        $registro = Register::create($request->all());
-        return response()->json(['data' => 'Servicio Registrado'], 201);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Register  $register
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-
-        $register = Register::with(['Agency','Type_service', 'isAssigned'])
-                    ->findOrFail($request->id);
-        //$f_r = $register->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a');
-        $f_r = "";
-        $f_a = "";
-        $f_r = $register->created_at->toFormattedDateString();
-        if($register->isAssigned){
-            $f_a = $register->isAssigned->created_at->toFormattedDateString();
-        }
-
-        return response()->json([
-            'data' => $register,
-            'reg' => $f_r,
-            'asi' => $f_a
-        ], 201);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Register  $register
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Register $register)
+    public function edit($id)
     {
         //
     }
@@ -201,10 +172,10 @@ class RegisterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Register  $register
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Register $register)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -212,24 +183,11 @@ class RegisterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Register  $register
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $register = Register::findOrFail($request->id);
-
-        $delete = $register->delete();
-        if ($delete == 1){
-            $success = true;
-            $message = "Registro eliminado correctamente";
-        } else {
-            $success = true;
-            $message = "No se pudo eliminar el registro";
-        }
-        return response()->json([
-            'success' => $success,
-            'message' => $message
-        ]);
+        //
     }
 }

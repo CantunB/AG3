@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-        @can('read_sales')
+        @can('read_airlines')
         <div class="col-md-6 col-xl-3">
             <div class="widget-rounded-circle card-box">
                 <div class="row">
@@ -54,7 +54,7 @@
         </div> <!-- end col-->
         @endcan
 
-        @can('read_sales')
+        @can('read_hotels')
         <div class="col-md-6 col-xl-3">
             <div class="widget-rounded-circle card-box">
                 <div class="row">

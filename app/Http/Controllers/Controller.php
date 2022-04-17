@@ -32,7 +32,7 @@ class Controller extends BaseController
     }
     public function getTariffAgency(Request $request)
     {
-        // $data = $request->all();
+        $data = $request->all();
         if($request->service === "1"){
             $search_zone = Hotel::where('hotel', $request->origen)
             ->orWhere('hotel', 'like', '%' . $request->origen . '%')
@@ -61,5 +61,19 @@ class Controller extends BaseController
         // ->orWhere('hotel', 'like', '%' . $request->destino . '%')->first();
         // }
         // return response()->json($data);
+    }
+    public function getZone(Request $request)
+    {
+        if($request->service === "1"){
+            $search_zone = Hotel::where('hotel', $request->origen)
+            ->orWhere('hotel', 'like', '%' . $request->origen . '%')
+            ->first();
+            return $search_zone;
+        }elseif ($request->service === "2"){
+            $search_zone = Hotel::where('hotel', $request->destiny)
+            ->orWhere('hotel', 'like', '%' . $request->destiny . '%')
+            ->first();
+            return $search_zone;
+        }
     }
 }

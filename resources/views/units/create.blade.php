@@ -242,18 +242,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                <h4 class="mb-3 mt-0 font-18"> * TARJETA DE IDENTIFICACION AEROPUERTARIA (TIA)</h4>
+                <h4 class="mb-3 mt-0 font-18"> * TAG</h4>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="tia_number">No.Identificacion</label>
-                                <input type="text" id="tia_number" name="tia_number" class="form-control">
+                                <label for="tag_number">No.Identificacion</label>
+                                <input type="text" id="tag_number" name="tag_number" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="file_tia"> TIA <em><b>(Subir solo archivo pdf)</b></em></label>
-                                <input type="file" class="dropify" id="file_tia" name="file_tia" />
+                                <label for="file_tag"> TIA <em><b>(Subir solo archivo pdf)</b></em></label>
+                                <input type="file" class="dropify" id="file_tag" name="file_tag" />
                             </div>
                         </div>
                     </div>
@@ -270,42 +270,40 @@
 </form>
 </div>
 @push('scripts')
-<script>
-    $(document).ready(function() {
-        function formatText (icon) {
-            return $('<span><i class="fas ' + $(icon.element).data('icon') + '"></i> ' + icon.text + '</span>');
-        };
-        $("#type").select2({
-            width: "50%",
-            templateSelection: formatText,
-            templateResult: formatText
+    <script>
+        $(document).ready(function() {
+            function formatText (icon) {
+                return $('<span><i class="fas ' + $(icon.element).data('icon') + '"></i> ' + icon.text + '</span>');
+            };
+            $("#type").select2({
+                width: "50%",
+                templateSelection: formatText,
+                templateResult: formatText
+            });
+            });
+    </script>
+    <script>
+        $(document).ready(function() {
+            function iconColor (color) {
+                    return $('<span><i class="fas  fas fa-circle '+color.text+' "></i> ' + color.text + '</span>');
+                };
+            $("#color").select2({
+                width: "50%",
+                templateSelection: iconColor,
+                templateResult: iconColor
+            });
         });
-        });
-
-        function formatState (color) {
-            //var baseUrl = "/user/pages/images/flags";
-            var $state = $(
-                '<span><i class="mdi mdi-checkbox-blank-circle mr-1 '+color.text+' "></i>' + color.text  + '</span>'
-            );
-            return $state;
-        };
-
-        $("#color").select2({
-            templateResult: formatState,
-            templateSelection: formatState
+    </script>
+    <script>
+        $('.dropify').dropify({
+        messages: {
+            'default': 'Arrastre y suelte un archivo aquí o haga clic',
+            'replace': 'Arrastra y suelta o haz clic para reemplazar',
+            'remove':  'Eliminar',
+            'error':   'Vaya, sucedió algo mal.'
+        }
     });
-
-</script>
-<script>
-    $('.dropify').dropify({
-    messages: {
-        'default': 'Arrastre y suelte un archivo aquí o haga clic',
-        'replace': 'Arrastra y suelta o haz clic para reemplazar',
-        'remove':  'Eliminar',
-        'error':   'Vaya, sucedió algo mal.'
-    }
-});
-</script>
+    </script>
 <script>
     $("#form_register").submit(function(e) {
         e.preventDefault();
@@ -344,7 +342,7 @@
             }
         });
 });
-</script>
+</scrip>
 @endpush
 
 @endsection

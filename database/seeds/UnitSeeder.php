@@ -28,7 +28,13 @@ class UnitSeeder extends Seeder
             'update_unit',
             'delete_unit'
             ]);
-
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_unit',
+            'read_unit',
+            'update_unit',
+            'delete_unit'
+        ]);
         $unidad = Unit::create([
             'unit' => 'SUB01',
             'brand' => 'CHEVROLET',

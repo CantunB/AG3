@@ -35,6 +35,7 @@ class CreateRegistersTable extends Migration
             $table->string('place_service')->nullable();
             $table->string('observations')->nullable();
             $table->float('tariff')->nullable();
+            $table->tinyInteger('method_payment');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();

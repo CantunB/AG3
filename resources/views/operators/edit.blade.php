@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="container-fluid">
 
     @component('layouts.includes.components.breadcrumb')
@@ -18,6 +19,8 @@
                 <p class="text-muted"></p>
                 @if (!$operator->isAssigned)
                 <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Disponible</button>
+                @else
+                <button type="button" class="btn btn-primary btn-xs waves-effect mb-2 waves-light">ASIGNADO</button>
                 @endif
                 <a href="javascript: history.go(-1)" class="btn btn-soft-danger btn-xs waves-effect mb-2 waves-light">Regresar</a>
 
@@ -124,9 +127,12 @@
         </div> <!-- end col-->
     </div>
 </div>
-@push('scripts')
-    <script>
 
-    </script>
+@push('scripts')
+@include('commons.alerts')
+
+<script>
+    $('#form_operators_update').parsley();
+</script>
 @endpush
 @endsection

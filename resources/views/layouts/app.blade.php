@@ -23,7 +23,7 @@
                 @include('layouts.includes.footer')
             </div>
         </div>
-        @include('layouts.includes.rightbar')
+        {{-- @include('layouts.includes.rightbar') --}}
         <div class="rightbar-overlay"></div>
         @include('layouts.includes.components.scripts')
     </body>

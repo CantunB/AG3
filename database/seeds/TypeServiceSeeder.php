@@ -28,7 +28,10 @@ class TypeServiceSeeder extends Seeder
             'update_typeservices',
             'delete_typeservices'
             ]);
-
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'read_typeservices',
+        ]);
         $type = TypeService::create([
             'name' => 'Salidas',
         ]);
@@ -41,18 +44,18 @@ class TypeServiceSeeder extends Seeder
         $type = TypeService::create([
             'name' => 'Circuito',
         ]);
-        // $type = TypeService::create([
-        //     'name' => 'Transfer',
-        // ]);
-        // $type = TypeService::create([
-        //     'name' => 'Tour',
-        // ]);
+        $type = TypeService::create([
+            'name' => 'Transfer',
+        ]);
+        $type = TypeService::create([
+            'name' => 'Tour',
+        ]);
         // $type = TypeService::create([
         //     'name' => 'Eventos',
         // ]);
-        // $type = TypeService::create([
-        //     'name' => 'Cortesias',
-        //  ]);
+        $type = TypeService::create([
+            'name' => 'Cortesias',
+         ]);
         //  $type = TypeService::create([
         //     'name' => 'Balance',
         //  ]);

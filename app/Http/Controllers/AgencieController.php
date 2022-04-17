@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use AgencieSeeder;
 use App\Http\Requests\Agencies\StoreAgenciesRequest;
+use App\Http\Requests\Agencies\UpdateAgenciesRequest;
 use App\Models\Agency;
-use App\Models\Register;
-use Carbon\Carbon;
+use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +32,6 @@ class AgencieController extends Controller
             $agencies = Agency::with(['services'])->orderBy('business_name','asc');
             return DataTables::of($agencies)
             ->addIndexColumn()
-            ->editColumn('contact', function($agencies){
-                 return $agencies->contact ?? 'Sin contacto';
-            })
             ->addColumn('services', function($agencies){
                 return $contador = '<span class="badge badge-blue">'.$agencies->services->count().'</span>';
             })
@@ -76,8 +72,8 @@ class AgencieController extends Controller
      */
     public function store(StoreAgenciesRequest $request)
     {
-        //return $request->all();
-        $agency = Agency::create($request->all());
+        // return $request->all();
+        $agency = new Agency($request->all());
         if ($request->has('fiscal_situation')) {
             $sf = $request->file('fiscal_situation');
             $file = 'SituacionFiscal'. '.' . $sf->getClientOriginalExtension();
@@ -111,6 +107,22 @@ class AgencieController extends Controller
             $agency->save();
         }
 
+        if($request->has('contact')){
+            $user = new User;
+            $user->name = $request->input('name');
+            $user->paterno = $request->input('paterno');
+            $user->materno = $request->input('materno');
+            $user->email = $request->input('email');
+            $user->password = $request->input('password');
+            $user->save();
+
+            // $users->roles()->attach($request->get('roles'));
+            // $area = AssignedAreas::where('coordination_id','=',$request->coordinacion)
+            // ->where('department_id','=',$request->departamento)
+            // ->first();
+            $user->assigned_agency()->attach($agency->id);
+        }
+
         return response()->json(['data' => 'Agencia registrada correctamente'], 201);
         //return redirect()->route('agencies.index');
 
@@ -127,9 +139,13 @@ class AgencieController extends Controller
      */
     public function show(Request $request)
     {
-        $agencie = Agency::findOrFail($request->id);
+        $agencie = Agency::with('user_agency')->findOrFail($request->id);
+        // $btndelete = '<button onclick="deleteAgency('.$agencie->id.')" type="button" class="btn btn-block btn-soft-secondary ">ELIMINAR</button>';
+        $btnupdate = '<a href=" '. route('agencies.edit', $agencie->id) .' " class="btn btn-block btn-soft-primary ">DETALLES</a>';
         return response()->json([
             'data' => $agencie,
+            // 'btndelete' => $btndelete,
+            'btnupdate' => $btnupdate
         ], 201);
     }
 
@@ -139,9 +155,15 @@ class AgencieController extends Controller
      * @param  \App\Models\Agencie  $agencie
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agencie $agencie)
+    public function edit($id)
     {
-        //
+        $agency = Agency::with(['services', 'user_agency'])->findOrFail($id);
+        $users = User::active()->get();
+
+        return view('agencies.show', compact(
+            'agency',
+            'users'
+        ));
     }
 
     /**
@@ -151,9 +173,11 @@ class AgencieController extends Controller
      * @param  \App\Models\Agencie  $agencie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agencie $agencie)
+    public function update(UpdateAgenciesRequest $request, Agency $agency)
     {
-        //
+        $agency->update($request->all());
+        return response()->json(['data' => 'Agencia actualizada correctamente'], 201);
+
     }
 
     /**
@@ -165,6 +189,7 @@ class AgencieController extends Controller
     public function destroy(Request $request)
     {
         $agency = Agency::findOrFail($request->id);
+        $agency->contacts()->detach();
         $directory = '/documents/agencies/'. $agency->rfc;
         File::deleteDirectory(public_path($directory));
 
@@ -180,5 +205,19 @@ class AgencieController extends Controller
             'success' => $success,
             'message' => $message
         ]);
+    }
+
+
+    public function add(Request $request, Agency $agency){
+        $agency->contacts()->attach($request->contact);
+        return response()->json(['data' => 'Contacto agregado correctamente'], 201);
+
+    }
+
+    public function remove(Request $request, Agency $agency){
+        // return $agency = Agency::findOrFail($request->id_manger);
+        $agency->contacts()->detach($request->id_manager);
+        return response()->json(['data' => 'Contacto eliminado'], 201);
+
     }
 }

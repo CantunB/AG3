@@ -155,66 +155,31 @@
                         </form>
                     </div>
                        <div class="tab-pane" id="galeria">
-                        <form id="form_galery" method="POST" enctype="multipart/form-data" data-parsley-validate>
-                            @csrf
-                            <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i>GALERIA</h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Frontal</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
-                                        <input type="hidden" class="form-control select " id="unit_id" name="unit_id" value="{{ $unit->id }}" >
+                        <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i>GALERIA</h5>
 
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Trasera</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Lateral derecho</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{  asset('assets/images/attached-files/car_van.png') }}" />
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Lateral izquierdo</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Interior 1</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{  asset('assets/images/attached-files/car_van.png') }}" />
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Interior 2</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="userpassword">Interior 3</label>
-                                        <input type="file" class="dropify" id="galery[]" name="galery[]" data-default-file="{{ asset('assets/images/attached-files/car_van.png') }}" />
-                                        {{-- <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span> --}}
-                                    </div>
-                                </div>
+                        <form action="{!! route('galery.store', $unit->id) !!}" method="post" class="dropzone" id="form_galery" data-plugin="dropzone" data-previews-container="#file-previews"
+                            data-upload-preview-template="#uploadPreviewTemplate">
+
+                            @csrf
+                            <input type="hidden" class="form-control select " id="unit_id" name="unit_id" value="{{ $unit->id }}" >
+
+                            <div class="fallback">
+                                <input name="galery[]" type="file" multiple />
+
+                            </div>
+
+                            <div class="dz-message needsclick">
+                                <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                <h3>Suelte los archivos aquí o haga clic para cargar.</h3>
+                                <span class="text-muted font-13">
+                                    <strong>Ningun archivo</strong> subido actualmente.)</span>
                             </div>
                             <div class="text-right">
-                                <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i>{{ __('translation.Create') }}</button>
+                                <button type="submit" id="send_images" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i>{{ __('translation.Create') }}</button>
                             </div>
                         </form>
+
+
                         </div>
                 </div>
             </div>
@@ -422,46 +387,37 @@
     }
     /** DESTROY UNIT*/
 </script>
+    <script>
+        Dropzone.autoDiscover = false;
+        Dropzone.options.attachment = {
+                init: function(){
+                this.on('removedfile',function(file){
+                    // console.log('akjsdhaksj');
+                    var fileName = file.name;
+                    $.ajax({
+                    type: 'POST',
+                    url: "{!! route('galery.store', $unit->id) !!}",
+                    data: "id="+fileName,
+                    dataType: 'html'
+                    });
+                });
+                },
+                // params: {
+                // customerFolder: $('#toValue').substr(0, toValue.indexOf('@')),
+                // },
+                dictDefaultMessage:"Click / Drop here to upload files",
+                addRemoveLinks: true,
+                dictRemoveFile:"Remove",
+                maxFiles:3,
+                maxFilesize:8,
+        }
 
-<script>
-    $("#form_galery").submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            type: "POST",
-            url: "{!! route('galery.store', $unit->id) !!}",
-            data: formData,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function(response){
-               //console.log('Formulario enviado');
-                Swal.fire({
-                    title: "Imagenes Almacenadas!",
-                    text: response.data,
-                    icon: "success",
-                    timer: 5000
-                });
-            },
-            error: function(response){
-                //console.log(response);
-                var errors = response.responseJSON;
-                errorsHtml = '<ul>';
-                $.each(errors.errors,function (k,v) {
-                errorsHtml += '<li>'+ v + '</li>';
-                });
-                errorsHtml += '</ul>';
-                Swal.fire({
-                    title: "Ooops!",
-                    html: errorsHtml,
-                    icon: "error",
-                    confirmButtonText: "Volver!",
-                });
-            }
+        $(function(){
+
+        var uploadFilePath = "{!! route('galery.store', $unit->id) !!}";
+        var myDropzone     = new Dropzone("div#attachment", { url: uploadFilePath});
+
         });
-});
-</script>
-
-
+    </script>
 @endpush
 @endsection
