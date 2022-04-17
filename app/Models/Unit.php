@@ -25,7 +25,7 @@ class Unit extends Model
                             'insurance_start_validity',
                             'insurance_end_validity',
                             'circulation_card_number',
-                            'tia_number',
+                            'tag_number',
                             'file_contract',
                             'file_invoice_unit',
                             'file_invoice_letter',
@@ -33,7 +33,7 @@ class Unit extends Model
                             'file_sct_plate_number',
                             'file_insurance_policy',
                             'file_circulation_card',
-                            'file_tia'
+                            'file_tag'
                         ];
 
     public function scopeActive($query){

@@ -47,7 +47,7 @@
                                             </span>
                                         </a>
                                     </div>
-                                    <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel. {{ isset($url) ? ucwords($url) : ""}} {{ __('Login') }}</p>
+                                    <p class="text-muted mb-4 mt-3">Ingresa tu correo electronico y tu contraseña para iniciar sesion</p>
                                 </div>
                                 @isset($url)
                                 <form method="POST" action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
@@ -57,7 +57,7 @@
                                     @csrf
                                     <div class="form-group mb-3">
                                         <label for="emailaddress">{{ __('Email address') }}</label>
-                                        <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"  value="{{ old('email') }}" id="email" required="" autocomplete="email" autofocus placeholder="Enter your email">
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"  value="{{ old('email') }}" id="email" required="" autocomplete="email" autofocus placeholder="Ingresa tu correo electronico">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <label for="password">{{ __('Password') }}</label>
+                                        <label for="password">Contraseña</label>
                                         <div class="input-group input-group-merge">
                                             <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" required autocomplete="current-password">
                                             <div class="input-group-append" data-password="false">
@@ -95,33 +95,13 @@
                                     </div>
 
                                 </form>
-
-                            <!-- <div class="text-center">
-                                    <h5 class="mt-3 text-muted">Sign in with</h5>
-                                    <ul class="social-list list-inline mt-3 mb-0">
-                                        <li class="list-inline-item">
-                                            <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                        </li>
-                                    </ul>
-                                </div> -->
-
-                            </div> <!-- end card-body -->
                         </div>
                         <!-- end card -->
 
                         <div class="row mt-3">
                             <div class="col-12 text-center">
                                 @if (Route::has('password.request'))
-                                <p> <a href="{{ route('password.request') }}" class="text-white-50 ml-1">{{ __('Forgot Your Password?') }}</a></p>
+                                <p> <a href="{{ route('password.request') }}" class="text-white-50 ml-1">Olvidaste tu contraseña</a></p>
                                 @endif
                             </div> <!-- end col -->
                         </div>

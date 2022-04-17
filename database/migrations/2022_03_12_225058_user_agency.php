@@ -14,11 +14,8 @@ class UserAgency extends Migration
     public function up()
     {
         Schema::create('user_agency', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('id_manager')->constrained('users');
             $table->foreignId('id_agency')->constrained('agencies');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

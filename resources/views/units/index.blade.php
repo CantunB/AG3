@@ -13,7 +13,7 @@
                     <div class="row mb-2">
                         <div class="col-md-12">
                             <div class="text-md-right">
-                                <a href="{{ route('units.create') }}" class="btn btn-danger waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i>{{ __('translation.Add New')}}</a>
+                                <a href="{{ route('units.create') }}" class="btn btn-sm btn-danger waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i>{{ __('translation.Add New')}}</a>
                             </div>
                         </div><!-- end col-->
                     </div>

@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4 class="font-13 text-muted text-uppercase mb-1">Nombre:</h4>
-                        <p id="name_contact" class="mb-3"></p>
+                        <div id="name_contact" class="mb-3"></div>
                     </div>
                     <div class="col-md-6">
                         <h4 class="font-13 text-muted text-uppercase mb-1">Telefono :</h4>
@@ -76,8 +76,7 @@
                 <h5 class="mb-1 mt-1 text-uppercase bg-light p-1"><i class="mdi icon-dual-primary mdi-file-multiple mr-1"></i>Documentos</h5>
                 <div id="getFiles" class="card mb-1 shadow-none border"></div>
                     <div style="text-align: center">
-                        <button id="edit" type="button"  class="btn btn-xs btn-soft-primary ">Actualizar</button>
-                        <button id="delete" type="button" class="btn btn-xs btn-soft-secondary ">Eliminar</button>
+                        {{-- <span id="btndelete"></span> --}}
                     </div>
                 </div>
             </div>
@@ -110,7 +109,7 @@
                 ajax: '{!! route('agencies.index') !!}',
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-                    {data: 'name', name:'name'},
+                    {data: 'name_agency', name:'name_agency'},
                     {data: 'business_name', name:'business_name'},
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
             ],
@@ -129,7 +128,6 @@
             processData: false,
             contentType: false,
             success: function(response){
-               //console.log('Formulario enviado');
                 Swal.fire({
                     title: "Registro creado!",
                     text: response.data,
@@ -169,8 +167,23 @@
     })
 </script>
 <script>
+    $("#contact").click(function() {
+        if($("#contact").is(':checked')) {
+            $("#divContact").show();
+        } else {
+            $("#divContact").hide();
+            $("#name").val('');
+            $("#paterno").val('');
+            $("#materno").val('');
+            $("#phone").val('');
+            $("#email").val('');
+            $("#password").val('');
+        }
+    });
+</script>
+<script>
     /** DESTROY UNIT*/
-    function btnDelete(id) {
+    function deleteAgency(id) {
         Swal.fire({
             title: "Desea eliminar?",
             text: "Por favor asegúrese y luego confirme!",
@@ -226,23 +239,31 @@
             },
             type: "GET",
             success: function (response){
-            console.log(response);
+            $('#btnedit').html(response.btnupdate);
+            {{-- $('#btndelete').html(response.btndelete); --}}
             $('#razon_social').html(response.data['business_name']);
             $('#rfc').html(response.data['rfc']);
-            $('#nombre').html(response.data['name']);
-            $('#email').html(response.data['email']);
-            $('#telephone').html(response.data['telephone']);
-            $('#name_contact').html(response.data['contact']);
-            $('#telephone_contact').html(response.data['telephone_contact']);
-            $('#edit').html();
-
+            $('#nombre').html(response.data['name_agency'] ?? 'Sin nombre comercial');
+            $('#email').html(response.data['email_agency'] ?? 'Sin correo' );
+            $('#telephone').html(response.data['telephone'] ?? 'Sin número');
+            $('#name_contact').html("") ;
+            $('#telephone_contact').html("") ;
             $.each( response, function( key, value ) {
                 //console.log( key + ": " + value );
                 $('#getFiles').html(value) ;
             });
+            if(response.data.user_agency != ''){
+                $.each( response.data.user_agency, function( key, contact ) {
+                    $('#name_contact').append('<ul> <li>' +contact['user']+ '</li></ul>') ;
+                    $('#telephone_contact').append('<ul> <li>' +contact.get_user.phone + '</li> </ul>') ;
+                });
+            }else{
+                $('#name_contact').html("") ;
+                $('#telephone_contact').html("") ;
 
-
-
+                $('#name_contact').append('<p>Sin contacto </p>') ;
+                $('#telephone_contact').append('<p>Sin contacto </p>') ;
+            }
             }
         });
     }

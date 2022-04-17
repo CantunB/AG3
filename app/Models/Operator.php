@@ -37,6 +37,8 @@ class Operator extends Authenticatable
             'rfc',
             'ine',
             'driver_license',
+            'tia_number',
+            'tia_file',
             'operator_photo',
             'status'
         ];

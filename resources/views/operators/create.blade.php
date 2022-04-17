@@ -19,19 +19,19 @@
                         <div class="col-xl-4">
                             <div class="form-group ">
                                 <label>{{ __('translation.Name') }}</label>
-                                <input id="name" name="name" type="text" class="form-control" placeholder="{{ __('Enter name') }}" required minlength="3" >
+                                <input id="name" name="name" type="text" class="form-control" placeholder="{{ __('Enter name') }}" required minlength="3" data-parsley-pattern="^[a-zA-Z]+$">
                             </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="projectname">{{ __('translation.Last name') }}</label>
-                                <input id="paterno" name="paterno" type="text" class="form-control"  placeholder="{{ __('Enter last name') }}" required minlength="3">
+                                <input id="paterno" name="paterno" type="text" class="form-control"  placeholder="{{ __('Enter last name') }}" required minlength="3" data-parsley-pattern="^[a-zA-Z]+$">
                             </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>{{ __('translation.Mother last name') }}</label>
-                                <input id="materno" name="materno" type="text" class="form-control" placeholder="{{ __('Enter mother last name') }}">
+                                <input id="materno" name="materno" type="text" class="form-control" placeholder="{{ __('Enter mother last name') }}" data-parsley-pattern="^[a-zA-Z]+$">
                             </div>
                         </div>
                     </div>
@@ -43,8 +43,8 @@
                                             <div class="input-group-prepend">
                                                 <select class="form-control select2 select-country"></select>
                                             </div>
-                                            <input class="form-control phones input-phone" id="phone" name="phone" autocomplete="off" required placeholder="XXX-XXX-XXXX" value="{{ old('phone') }}" data-parsley-type="digits"
-                                            data-parsley-validation-threshold="1"   data-parsley-trigger="keyup" min="10">
+                                            <input class="form-control phones input-phone" id="phone" name="phone" autocomplete="off" required placeholder="XXX-XXX-XXXX" value="{{ old('phone') }}"
+                                            data-parsley-validation-threshold="1"   data-parsley-trigger="keyup">
                                     </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="col-xl-2">
                             <div class="form-group">
                                 <label for="project-priority">{{ __('translation.Postal code') }}</label>
-                                <input id="cp" name="cp" type="text" class="form-control">
+                                <input id="cp" name="cp" type="text" class="form-control"  type="number" minlength="5" maxlength="5" >
                             </div>
                         </div>
                     </div>
@@ -123,6 +123,29 @@
                                 <input type="file" class="dropify" id="operator_photo" name="operator_photo" data-default-file="{{ asset('assets/images/attached-files/img-5.jpg') }}" required />
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h4 class="mb-3 mt-0 font-18"> * TARJETA DE IDENTIFICACION AEROPUERTARIA (TIA)</h4>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="tia_number">No.Identificacion</label>
+                                                    <input type="text" id="tia_number" name="tia_number" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="file_tia"> TIA <em><b>(Subir solo archivo pdf)</b></em></label>
+                                                    <input type="file" class="dropify" id="file_tia" name="file_tia" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- end row -->
                     <div class="row mt-3">
@@ -153,40 +176,44 @@
 <script>
     $("#form_register").submit(function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            type: "POST",
-            url: "{!! route('operators.store') !!}",
-            data: formData,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function(response){
-               //console.log('Formulario enviado');
-                Swal.fire({
-                    title: "Registro creado!",
-                    text: response.data,
-                    icon: "success",
-                    timer: 3500
-                });
-                window.location = '{!! route('operators.index') !!}';
-            },
-            error: function(response){
-                //console.log(response);
-                var errors = response.responseJSON;
-                errorsHtml = '<ul>';
-                $.each(errors.errors,function (k,v) {
-                errorsHtml += '<li>'+ v + '</li>';
-                });
-                errorsHtml += '</ul>';
-                Swal.fire({
-                    title: "Ooops!",
-                    html: errorsHtml,
-                    icon: "error",
-                    confirmButtonText: "Volver!",
-                });
-            }
-        });
+        $('#form_register').parsley();
+        var registro_op = $('#form_register').parsley().validate();
+        if ( $('#form_register').parsley().isValid() {
+            var formData = new FormData(this);
+            $.ajax({
+                type: "POST",
+                url: "{!! route('operators.store') !!}",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response){
+                //console.log('Formulario enviado');
+                    Swal.fire({
+                        title: "Registro creado!",
+                        text: response.data,
+                        icon: "success",
+                        timer: 3500
+                    });
+                    window.location = '{!! route('operators.index') !!}';
+                },
+                error: function(response){
+                    //console.log(response);
+                    var errors = response.responseJSON;
+                    errorsHtml = '<ul>';
+                    $.each(errors.errors,function (k,v) {
+                    errorsHtml += '<li>'+ v + '</li>';
+                    });
+                    errorsHtml += '</ul>';
+                    Swal.fire({
+                        title: "Ooops!",
+                        html: errorsHtml,
+                        icon: "error",
+                        confirmButtonText: "Volver!",
+                    });
+                }
+            });
+        }
 });
 </script>
 @endpush

@@ -8,8 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-use function PHPSTORM_META\map;
+use App\Models\UserAgency;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -60,9 +60,23 @@ class User extends Authenticatable
     // public function getAvatarAttribute(){
     //     return  "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) );
     // }
+    public function scopeActive($query){
+        return $query->where('status', 1);
+    }
 
     public function getFullNameAttribute()
     {
         return "{$this->name} {$this->paterno} {$this->materno}";
     }
+
+    /**
+    * Get all of the comments for the Agency
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+   public function assigned_agency(): HasMany
+   {
+       return $this->hasMany(UserAgency::class, 'id_manager');
+   }
+
 }

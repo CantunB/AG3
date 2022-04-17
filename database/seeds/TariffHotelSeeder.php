@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 class TariffHotelSeeder extends Seeder
 {
     /**
@@ -12,6 +13,27 @@ class TariffHotelSeeder extends Seeder
      */
     public function run()
     {
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        Permission::create(['category' => 'Tarifas', 'name' => 'create_tariff']);
+        Permission::create(['category' => 'Tarifas', 'name' => 'read_tariff']);
+        Permission::create(['category' => 'Tarifas', 'name' => 'update_tariff']);
+        Permission::create(['category' => 'Tarifas', 'name' => 'delete_tariff']);
+
+        $super_admin = Role::findByName('Super-Admin');
+        $super_admin->givePermissionTo([
+            'create_tariff',
+            'read_tariff',
+            'update_tariff',
+            'delete_tariff'
+            ]);
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_tariff',
+            'read_tariff',
+            'update_tariff',
+            'delete_tariff'
+        ]);
         /** ZONA 1  */
         DB::table('tariff_hotels')->insert([
             'id_zona' => 1,

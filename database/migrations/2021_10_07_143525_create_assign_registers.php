@@ -26,7 +26,6 @@ class CreateAssignRegisters extends Migration
             $table->string('service_order_voucher')->nullable();
             $table->string('no_show_voucher')->nullable();
             $table->tinyInteger('trip_status')->nullable();
-            $table->string('method_payment')->nullable();
             $table->string('observations')->nullable();
             $table->timestamps();
             $table->softDeletes();

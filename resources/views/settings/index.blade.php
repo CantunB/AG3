@@ -38,6 +38,11 @@
                             </a>
                         </li>
                         @endif
+                        <li class="nav-item">
+                            <a href="#information" data-toggle="tab" aria-expanded="false" class="nav-link" onclick="permisosDataTables()">
+                                Información
+                            </a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="users">
@@ -128,8 +133,45 @@
                                     </div> <!-- end card -->
                                 </div><!-- end col-->
                             </div>
-
                         </div>
+
+                        <div class="tab-pane" id="information">
+                            <!-- end page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-header bg-info text-white text-center text-uppercase">
+                                                            Entorno
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <blockquote class="card-bodyquote mb-2">
+                                                                <ul class="list-group">
+                                                                    <li class="list-group-item">PHP version:  {{$environment['php']}} </li>
+                                                                    <li class="list-group-item">Laravel version: {{$environment['version']}} </li>
+                                                                    <li class="list-group-item">Server:</li>
+                                                                    <li class="list-group-item">Cache driver: {{$environment['cache']}}</li>
+                                                                    <li class="list-group-item">Session driver: {{$environment['session']}}</li>
+                                                                    <li class="list-group-item">Timezone:  {{$environment['time']}}</li>
+                                                                    <li class="list-group-item">Locale:  {{$environment['lang']}}</li>
+                                                                </ul>
+                                                                {{-- <footer>Someone famous in <cite title="Source Title">Source Title</cite>
+                                                                </footer> --}}
+                                                            </blockquote>
+                                                        </div>
+                                                    </div> <!-- end card-box-->
+                                                </div> <!-- end col -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
@@ -249,7 +291,7 @@
                 language: {
                         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
                     },
-                ajax: "{!! route('settings.permissions') !!}",
+                ajax: "{!! route('permissions.index') !!}",
                 columns: [
                     {data: 'DT_RowIndex', name:'DT_RowIndex' , width: '10px'},
                     {data: 'category', name: 'category', width: '110px'},
@@ -346,7 +388,7 @@
 </script>
 <script>
     /** DESTROY UNIT*/
-    function btnDelete(id) {
+    function btnDeleteUser(id) {
         Swal.fire({
             title: "Desea eliminar?",
             text: "Por favor asegúrese y luego confirme!",
@@ -396,7 +438,7 @@
 </script>
 <script>
     /** DESTROY UNIT*/
-    function btnDelete(id) {
+    function btnDeleteRol(id) {
         Swal.fire({
             title: "Desea eliminar?",
             text: "Por favor asegúrese y luego confirme!",
@@ -442,6 +484,57 @@
         })
     }
     /** DESTROY UNIT*/
+</script>
+
+<script>
+    function btnRestore(id) {
+        Swal.fire({
+            title: "Desea restaurar el usuario?",
+            text: "Por favor asegúrese y luego confirme!",
+            icon: 'question',
+            showCancelButton: !0,
+            confirmButtonText: "¡Sí, restaurar!",
+            cancelButtonText: "¡No, cancelar!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url('/restore/users')}}/" + id,
+                    data: {
+                        id: id,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            Swal.fire({
+                                title: "Hecho!",
+                                text: results.message,
+                                icon: "success",
+                                confirmButtonText: "Hecho!",
+                            });
+                            {{-- location.reload(); --}}
+                            //$('#table-sympathizers').DataTable().ajax.reload();
+                            $('#table_users').DataTable().ajax.reload();
+
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: results.message,
+                                icon: "error",
+                                confirmButtonText: "Cancelar!",
+                            });
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+        }
 </script>
 @endpush
 @endsection

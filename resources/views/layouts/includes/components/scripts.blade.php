@@ -1,5 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+
 <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -11,13 +12,13 @@
 <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
 <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.colVis.js"></script>
 <script src="{{ asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('assets/libs/jquery-tabledit/jquery.tabledit.min.js' ) }}"></script>
 <script src="{{ asset('assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
 <script src="{{ asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
 <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ asset('assets/libs/flatpickr/l10n/es.js') }}"></script>
-<script src="{{ asset('assets/libs/dropzone/min/dropzone.min.js') }}"></script>
 <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script src="{{ asset('js/airlines_iata.js') }}"></script>
@@ -32,8 +33,20 @@
 <script src="{{ asset('assets/libs/flexdatalist/jquery.flexdatalist.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/addons/cleave-phone.i18n.js"></script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
 @toastr_js
+    <script>
+        $('.dropify').dropify({
+        messages: {
+            'default': 'Arrastre y suelte un archivo aquí o haga clic',
+            'replace': 'Arrastra y suelta o haz clic para reemplazar',
+            'remove':  'Eliminar',
+            'error':   'Vaya, sucedió algo mal.'
+        }
+    });
+    </script>
     <script>
         new Cleave('.cleave', {
             {{-- numeral: true, --}}
@@ -49,6 +62,15 @@
             delimiters: ["(", ")", " ", "-"]
         });
 
+    </script>
+    <script>
+        document.getElementsByClassName("time").flatpickr({
+            locale: "es",
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            //defaultDate: "{!!  date('H:i') !!}"
+        });
     </script>
     <script>
         var cleaveCumpleaños = new Cleave('.birthday', {
@@ -86,6 +108,48 @@
     <script>
         $(".flatpickr").flatpickr({
             "locale": "es"
+        });
+    </script>
+    <script>
+        var Example = $('#search_date').flatpickr({
+            "locale": "es",
+            "mode": "range",
+            "dateFormat": "Y-m-d",
+            "autoclose" : true,
+            "onChange" :function(selectedDates){
+                var _this=this;
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                $('#ID_START').val(dateArr[0]);
+                $('#ID_END').val(dateArr[1]);
+            },
+        });
+    </script>
+    <script>
+        var Example1 = $('#search_date2').flatpickr({
+            "locale": "es",
+            "mode": "range",
+            "dateFormat": "Y-m-d",
+            "autoclose" : true,
+            "onChange" :function(selectedDates){
+                var _this=this;
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                $('#ID_START1').val(dateArr[0]);
+                $('#ID_END1').val(dateArr[1]);
+            },
+        });
+    </script>
+    <script>
+        var Example2 = $('#search_date3').flatpickr({
+            "locale": "es",
+            "mode": "range",
+            "dateFormat": "Y-m-d",
+            "autoclose" : true,
+            "onChange" :function(selectedDates){
+                var _this=this;
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                $('#ID_START2').val(dateArr[0]);
+                $('#ID_END2').val(dateArr[1]);
+            },
         });
     </script>
     <script>

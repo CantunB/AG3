@@ -197,7 +197,9 @@
                                 icon: "success",
                                 confirmButtonText: "Hecho!",
                             });
-                            location.reload();
+                            {{-- location.reload(); --}}
+                            $('#table_operators').DataTable().ajax.reload();
+
                             //$('#table-sympathizers').DataTable().ajax.reload();
                         } else {
                             Swal.fire({
@@ -216,7 +218,56 @@
             return false;
         })
         }
-    </script>
+</script>
+<script>
+    function btnRestore(id) {
+        Swal.fire({
+            title: "Desea restaurar el operador?",
+            text: "Por favor asegúrese y luego confirme!",
+            icon: 'question',
+            showCancelButton: !0,
+            confirmButtonText: "¡Sí, restaurar!",
+            cancelButtonText: "¡No, cancelar!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url('/restore/operators')}}/" + id,
+                    data: {
+                        id: id,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            Swal.fire({
+                                title: "Hecho!",
+                                text: results.message,
+                                icon: "success",
+                                confirmButtonText: "Hecho!",
+                            });
+                            {{-- location.reload(); --}}
+                            //$('#table-sympathizers').DataTable().ajax.reload();
+                            $('#table_operators').DataTable().ajax.reload();
 
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: results.message,
+                                icon: "error",
+                                confirmButtonText: "Cancelar!",
+                            });
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+        }
+</script>
 @endpush
 @endsection

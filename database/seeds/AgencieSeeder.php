@@ -28,18 +28,26 @@ class AgencieSeeder extends Seeder
             'update_agencies',
             'delete_agencies'
             ]);
+
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_agencies',
+            'read_agencies',
+            'update_agencies',
+            'delete_agencies'
+        ]);
         $agency = Agency::create([
             'business_name' => 'COMERCIALIZADORA BETANCOURT, S.A. DE C.V.',
             'rfc' => 'CBE060703MN0',
         ]);
         $agency = Agency::create([
             'business_name' => 'CANCUN VIAJES PARA ESTUDIANTES DE S.A DE C.V',
-            'name' => 'CST',
+            'name_agency' => 'CST',
             'rfc' => 'CVE110908532',
         ]);
         $agency = Agency::create([
             'business_name' => 'EXPERIENCIAS Y EXCELENCIA S.A. DE C.V.',
-            'name' => 'BON VOYAGE',
+            'name_agency' => 'BON VOYAGE',
             'rfc' => 'EEX160720DA9',
         ]);
         $agency = Agency::create([
@@ -68,12 +76,12 @@ class AgencieSeeder extends Seeder
         ]);
         $agency = Agency::create([
             'business_name' => 'SERVICOS TERRESTRES ESPECIALIZADOS MARGIS S.A. DE C.V.',
-            'name' => 'MARITUR',
+            'name_agency' => 'MARITUR',
             'rfc' => 'STE960627SV8',
         ]);
         $agency = Agency::create([
             'business_name' => 'INTERNATIONAL TRAVEL PLANNERS S.A DE C.V',
-            'name' => 'MARITUR',
+            'name_agency' => 'MARITUR',
             'rfc' => 'ITP161220BZ7',
         ]);
         $agency = Agency::create([
@@ -82,7 +90,7 @@ class AgencieSeeder extends Seeder
         ]);
         $agency = Agency::create([
             'business_name' => 'TRANSCUN SAVI, S.A. DE C.V.',
-            'name' => 'DANTIA LS',
+            'name_agency' => 'DANTIA LS',
             'rfc' => 'TSA191025U11',
         ]);
         $agency = Agency::create([
@@ -107,46 +115,54 @@ class AgencieSeeder extends Seeder
         ]);
         $agency = Agency::create([
             'business_name' => 'OPERADORA ELITE S.A. DE CV',
-            'name' => 'HAPPYS',
+            'name_agency' => 'HAPPYS',
             'rfc' => 'OEL8206237W8',
         ]);
         $agency = Agency::create([
             'business_name' => 'TRIPTOMEX S.A. DE C.V',
-            'name' => 'TRIP TO MEX',
+            'name_agency' => 'TRIP TO MEX',
             'rfc' => 'TRI160606BL8',
         ]);
         $agency = Agency::create([
             'business_name' => 'MEXICO TRAVEL INFO S.A. DE C.V.',
-            'name' => '',
+            'name_agency' => '',
             'rfc' => 'MTI1901306D7',
         ]);
         $agency = Agency::create([
             'business_name' => 'PLAYA DEL CARMEN TRANSFERS, S.A. DE C.V.',
-            'name' => '',
+            'name_agency' => '',
             'rfc' => 'PCT011219L24',
         ]);
         $agency = Agency::create([
             'business_name' => 'ROYALE DMC S.A. DE C.V.',
-            'name' => 'ROYAL TOURS',
+            'name_agency' => 'ROYAL TOURS',
             'rfc' => 'RDM0504059S4',
         ]);
         $agency = Agency::create([
             'business_name' => 'ROYALE TRANSFERS S.A. DE C.V.',
-            'name' => 'ROYAL TOURS',
+            'name_agency' => 'ROYAL TOURS',
             'rfc' => 'RTR960112QZA',
         ]);
 
         $agency = Agency::create([
             'business_name' => 'SOCIEDAD DE TRANSPORTES PROFESIONALES S.A. DE C.V.',
-            'name' => '',
+            'name_agency' => '',
             'rfc' => 'TPR020516UX7',
         ]);
         $agency = Agency::create([
             'business_name' => 'FAST TRAVEL',
-            'name' => 'FAST TRAVEL',
+            'name_agency' => 'FAST TRAVEL',
             'rfc' => 'XXXXXXXXXXXX',
         ]);
 
+        $ag3 = Agency::create([
+            'business_name' => 'AG3 DE MÉXICO S.A. DE C.V.',
+            'name_agency' => 'AG3 LUXURY TRAVEL',
+            'rfc' => 'ATM061211H76',
+            'telephone' => '9985237742',
+            'email_agency' => 'ag3mexico@gmail.com'
+        ]);
+        $ag3->contacts()->attach([3,4]);
 
     }
 }

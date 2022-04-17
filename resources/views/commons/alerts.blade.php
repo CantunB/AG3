@@ -7,7 +7,7 @@
     </div>
     --}}
     <script>
-        toastr.info("{{ @session('info')}}", "info");
+        toastr.info("{{ @session('info')}}", "Informacion");
     </script>
 @endif
 
@@ -18,7 +18,7 @@
         </h5>
     </div> --}}
     <script>
-        toastr.warning("{{ @session('update')}}", "update");
+        toastr.warning("{{ @session('update')}}", "Actualización");
     </script>
 @endif
 
@@ -29,7 +29,7 @@
             </h5>
     </div> --}}
     <script>
-        toastr.error("{{ @session('destroy')}}", "destroy");
+        toastr.error("{{ @session('destroy')}}", "Elimado");
     </script>
 @endif
 
@@ -40,7 +40,7 @@
         </h5>
     </div> --}}
     <script>
-        toastr.success("{{ @session('success')}}", "success");
+        toastr.success("{{ @session('success')}}", "Correcto");
     </script>
 @endif
 

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AssignRegisterController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -12,11 +11,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/debug-sentry', function () {
-    throw new Exception('My first Sentry error!');
-});
-Route::get('subs', 'AssignRegisterController@getSubs')->name('assign.subs');
-Route::get('vans', 'AssignRegisterController@getVans')->name('assign.vans');
+
+Route::get('subs', 'Services\AssignRegisterController@getSubs')->name('assign.subs');
+Route::get('vans', 'Services\AssignRegisterController@getVans')->name('assign.vans');
 
 Auth::routes(['register' => false]);
 
@@ -35,13 +32,14 @@ Route::view('/operator', 'operator');
 Route::prefix('login')->group(function () {
     Route::get('operator', 'Auth\LoginController@showOperatorLoginForm');
     Route::post('operator', 'Auth\LoginController@operatorLogin');
-    Route::get('agency', 'Auth\LoginController@showAgencyLoginForm');
-    Route::post('agency', 'Auth\LoginController@agencyLogin');
 });
 
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');
+Route::post('getTariffAgency', 'Controller@getTariffAgency')->name('fetchTariff');
+Route::post('getZone', 'Controller@getZone')->name('fetchZone');
 
 Route::resources([
     'agencies' => 'AgencieController',
@@ -49,16 +47,30 @@ Route::resources([
     'bookings' => 'BookingController',
     // 'airlines' => 'AirlineController',
     'units' => 'Units\UnitController',
-    //'bitacora' => '',
-    'registers' => 'RegisterController',
-    'assign' => 'AssignRegisterController',
 ]);
 
 Route::apiResources([
-    'services' => 'TypeServiceController',
+    'type_services' => 'TypeServiceController',
     'origen_destiny' =>'OriginDestinyController',
 
 ]);
+
+
+Route::group(['prefix' => 'agencies'], function() {
+    Route::post('add/{agency}', 'AgencieController@add')->name('agencies.add');
+    Route::delete('remove/{agency}', 'AgencieController@remove')->name('agencies.remove');
+});
+
+
+Route::group(['prefix' => 'services'], function() {
+    Route::resource('registers', 'Services\RegisterController');
+    Route::resource('assign', 'Services\AssignRegisterController');
+    Route::resource('operations', 'Services\OperationsController');
+    Route::prefix('canceled')->group(function () {
+        Route::get('/', 'Services\CanceledServices@index')->name('canceled.index');
+    });
+});
+
 
 Route::group(['prefix' => 'units'], function(){
     Route::group(['prefix' => '{unit_id}'], function($unit_id){
@@ -67,13 +79,26 @@ Route::group(['prefix' => 'units'], function(){
     });
 });
 
-Route::group(['web', 'settings'], function(){
-    Route::resource('users', 'Settings\UsersController');
-    Route::resource('roles', 'Settings\RolesController');
-    Route::get('permissions', 'Settings\SettingsController@permissions')->name('settings.permissions');
-    Route::get('{locale}', 'Settings\SettingsController@lang');
-
+Route::group(['prefix' => 'restore'], function(){
+    Route::post('users/{id_user}', 'Settings\UsersController@restore')->name('restore.users');
+    Route::post('operators/{id_operator}', 'OperatorController@restore')->name('restore.operators');
+    Route::post('units/{id_unit}', 'Units\UnitController@restore')->name('restore.units');
+    Route::post('agencies/{id_agency}', 'AgencieController@restore')->name('restore.agencies');
 });
 
-Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');
-Route::post('getTariffAgency', 'Controller@getTariffAgency')->name('fetchTariff');
+Route::group(['web', 'tariff'], function(){
+    Route::group(['prefix' => 'tariff'], function() {
+        Route::resource('taf_agencies', 'Tariff\TariffAgencyController');
+        Route::resource('taf_hotels', 'Tariff\TariffHotelController');
+    });
+});
+
+Route::group(['web', 'settings'], function(){
+    Route::get('settings', 'Settings\SettingsController')->name('settings.index');
+    Route::resource('users', 'Settings\UsersController');
+    Route::resource('roles', 'Settings\RolesController');
+    Route::resource('permissions', 'Settings\PermissionsController');
+    Route::get('{locale}', 'Settings\SettingsController@lang');
+});
+
+

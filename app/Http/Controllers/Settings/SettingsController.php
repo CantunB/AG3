@@ -11,9 +11,29 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
-
+use Config;
 class SettingsController extends Controller
 {
+    public function __invoke()
+    {
+        \Composer\InstalledVersions::getInstalledPackages();
+        \Composer\InstalledVersions::getAllRawData();
+        $environment = [
+            'name' => config('app.name'),
+            'time' => config('app.timezone'),
+            'php' => phpversion(),
+            'version' => app()->version(),
+            'lang' => config('app.locale'),
+            'session' => config('session.driver'),
+            'cache' => config('cache.default'),
+        ];
+        $roles = Role::all();
+    //    return  $students = json_decode(file_get_contents(storage_path() . "/composer.json"), true);
+        return view('settings.index', compact(
+            'roles',
+            'environment'
+        ));
+    }
 
     public function __construct()
     {
@@ -22,32 +42,6 @@ class SettingsController extends Controller
        // $this->middleware('role_or_permission:read_administrador')->only(['index','show']);
        // $this->middleware('role_or_permission:update_administrador')->only(['edit','update']);
        // $this->middleware('role_or_permission:delete_administrador')->only(['destroy']);
-    }
-
-    public function permissions(Request $request){
-        if ($request->ajax()) {
-            $permissions = Permission::all();
-            return DataTables::of($permissions)
-                ->addIndexColumn()
-                ->editColumn('name', function ($permissions){
-                    return $permissions->name;
-                })
-            /*    ->addColumn('rol', function ($user){
-                    return '<span class="badge badge-blue"> '.$user->getRoleNames()->first().' </span>';
-                })
-                ->addColumn('options', function ($user) {
-                    $actions = '';
-                    $auth = Auth::user();
-                    if ($auth->can('read_permisos')) {
-                        return $actions .= '<a href=""
-                           class="waves-effect waves-light action-icon icon-dual-warning">
-                            <i class="mdi mdi-alert-rhombus-outline"></i></a>';
-                    }
-                    return $actions;
-                })  */
-                ->rawColumns(['name'])
-                ->make(true);
-        }
     }
 
     public function lang($locale)

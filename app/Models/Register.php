@@ -34,6 +34,7 @@ class Register extends Model
                             'requested_unit',
                             'place_service',
                             'tariff',
+                            'method_payment',
                             'observations',
                             'user_id'
                         ];
@@ -55,6 +56,11 @@ class Register extends Model
     public function isAssigned(): BelongsTo
     {
         return $this->belongsTo(AssingRegister::class, 'id','id_register');
+    }
+
+    public function type_unit()
+    {
+        return $this->belongsTo(TypeUnit::class, 'requested_unit');
     }
 
 }

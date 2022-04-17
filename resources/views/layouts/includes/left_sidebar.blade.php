@@ -45,7 +45,12 @@
 
                 </div>
             </div>
-            <p class="text-muted">{{ Auth::user()->roles[0]->name  ?? 'OPERADOR'}}</p>
+            <p class="text-muted">
+                @forelse (Auth::user()->assigned_agency as $i => $agencies)
+                    {{$agencies->agencia}}
+                    @empty
+                    <span class="badge badge-dark">Sin agencia</span>
+                @endforelse
         </div>
 
         <!--- Sidemenu -->
@@ -56,15 +61,15 @@
                 <li class="menu-title">{{ __('translation.Navigation') }}</li>
                 <li>
                     <a href="{{ route('home') }}">
-                        <i data-feather="home" class="icon-dual-dark"></i>
+                        <i data-feather="home" class="icon-dual-warning"></i>
                         <span> {{ __('translation.Dashboard') }} </span>
                     </a>
                 </li>
                 <li class="menu-title mt-2">{{ __('translation.Apps') }}</li>
 
-                @can('read_administrators')
+                @can('read_settings')
                     <li>
-                        <a href="{{ route('users.index') }}">
+                        <a href="{{ route('settings.index') }}">
                             <i data-feather="settings" class="icon-dual-dark"></i>
                             <span> {{ __('translation.Administrator') }} </span>
                         </a>
@@ -73,13 +78,13 @@
 
                 @can('read_registers')
                     <li>
-                        <a href="#sidebarDashboards" data-toggle="collapse">
+                        <a href="#sidebarRegisters" data-toggle="collapse">
                             <i data-feather="book-open" class="icon-dual-info"></i>
                             {{-- <span class="badge badge-success badge-pill float-right">4</span> --}}
                             <span class="menu-arrow"></span>
                             <span> @lang('translation.Registers') </span>
                         </a>
-                        <div class="collapse" id="sidebarDashboards">
+                        <div class="collapse" id="sidebarRegisters">
                             <ul class="nav-second-level">
                                 <li>
                                     <a href="{{ route('registers.index') }}">Servicios</a>
@@ -88,11 +93,27 @@
                                     <a href="{{ route('assign.index') }}">Asignaciones</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('assign.index') }}">Estados</a>
+                                    <a href="{{ route('operations.index') }}">Operaciones</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('assign.index') }}">Cancelados</a>
+                                    <a href="{{ route('canceled.index') }}">Cancelados</a>
                                 </li>
+                                <li>
+                                    <a href="#sidebarMultilevel2" data-toggle="collapse">
+                                        Second Level <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarMultilevel2">
+                                        <ul class="nav-second-level">
+                                            <li>
+                                                <a href="javascript: void(0);">Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript: void(0);">Item 2</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
@@ -105,6 +126,25 @@
                         </a>
                     </li>
                 @endcan
+                @can('read_tariff')
+                <li>
+                    <a href="#sidebarTariff" data-toggle="collapse">
+                        <i data-feather="trending-up" class="icon-dual-pink"></i>
+                        <span class="menu-arrow"></span>
+                        <span> Tarifas </span>
+                    </a>
+                    <div class="collapse" id="sidebarTariff">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('taf_agencies.index') }}">Tarifas Agencias </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('taf_hotels.index') }}">Tarifas Hoteles</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endcan
                 @can('read_agencies')
                     <li>
                         <a href="{{ route('agencies.index') }}">
@@ -115,7 +155,7 @@
                 @endcan
                 @can('read_services')
                 <li>
-                    <a href="{{ route('services.index') }}">
+                    <a href="{{ route('type_services.index') }}">
                         <i data-feather="layers" class="icon-dual-warning"></i>
                         <span> Tipo de servicios </span>
                     </a>

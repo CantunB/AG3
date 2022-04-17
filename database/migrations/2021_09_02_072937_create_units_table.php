@@ -32,7 +32,7 @@ class CreateUnitsTable extends Migration
             $table->date('insurance_start_validity')->nullable();
             $table->date('insurance_end_validity')->nullable();
             $table->string('circulation_card_number')->nullable();
-            $table->string('tia_number')->nullable();
+            $table->string('tag_number')->nullable();
             $table->string('file_contract')->nullable();
             $table->string('file_invoice_unit')->nullable();
             $table->string('file_invoice_letter')->nullable();
@@ -40,7 +40,7 @@ class CreateUnitsTable extends Migration
             $table->string('file_sct_plate_number')->nullable();
             $table->string('file_insurance_policy')->nullable();
             $table->string('file_circulation_card')->nullable();
-            $table->string('file_tia')->nullable();
+            $table->string('file_tag')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });

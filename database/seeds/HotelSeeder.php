@@ -29,5 +29,12 @@ class HotelSeeder extends Seeder
             'update_hotels',
             'delete_hotels'
             ]);
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_hotels',
+            'read_hotels',
+            'update_hotels',
+            'delete_hotels'
+        ]);
     }
 }

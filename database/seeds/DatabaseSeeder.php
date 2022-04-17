@@ -17,11 +17,14 @@ class DatabaseSeeder extends Seeder
         $this->call(AgencieSeeder::class);
         $this->call(TypeServiceSeeder::class);
         $this->call(OperatorSeeder::class);
+        $this->call(HotelSeeder::class);
         $this->call(AirlineSeeder::class);
         $this->call(RegisterSeeder::class);
         $this->call(UnitSeeder::class);
         $this->call(TypeUnitsSeeder::class);
         $this->call(TypeTripSeeder::class);
         $this->call(TariffHotelSeeder::class);
+        $this->call(CanceledSeeder::class);
+        $this->call(PaymentMethodsSeeder::class);
     }
 }

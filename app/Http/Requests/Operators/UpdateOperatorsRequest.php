@@ -26,8 +26,8 @@ class UpdateOperatorsRequest extends FormRequest
         return [
             'name' => 'required',
             'paterno' => 'required',
-            'phone' => 'required|digits:10|unique:operators,phone,'. $this->route('operators'),
-            'email' => 'required|email|unique:operators,email,'. $this->route('operators'),
+            'phone' => 'required|unique:operators,phone,'. $this->route('operator'),
+            'email' => 'required|email|unique:operators,email,'. $this->route('operator'),
             'birth_certificate' => 'mimes:pdf|max:2048',
             'proof_address' => 'max:2048',
             'nss' => 'mimes:pdf|max:2048',

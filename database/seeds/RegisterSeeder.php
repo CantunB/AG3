@@ -27,5 +27,12 @@ class RegisterSeeder extends Seeder
             'update_registers',
             'delete_registers'
             ]);
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_registers',
+            'read_registers',
+            'update_registers',
+            'delete_registers'
+        ]);
     }
 }

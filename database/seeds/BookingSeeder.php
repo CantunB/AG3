@@ -27,5 +27,12 @@ class BookingSeeder extends Seeder
             'update_bookings',
             'delete_bookings'
             ]);
+        $admin = Role::findByName('Administrador');
+        $admin->givePermissionTo([
+            'create_bookings',
+            'read_bookings',
+            'update_bookings',
+            'delete_bookings'
+        ]);
     }
 }
