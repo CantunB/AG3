@@ -119,8 +119,9 @@
                                                 <label for="project-priority">{{ __('translation.Requested unit') }}</label>
                                                 <select id="requested_unit" name="requested_unit" class="form-control select2 sel_sl sel_ll" required>
                                                     <option value="" selected disabled>Selecciona una unidad</option>
-                                                    <option data-icon="mdi mdi-car-estate" value="1">SUBURBAN</option>
-                                                    <option data-icon="mdi mdi-van-utility" value="2">VAN (TP)</option>
+                                                    @foreach ($type_units as $type_u)
+                                                        <option  value=" {{$type_u->id}} "> {{$type_u->type_units}} </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -148,13 +149,13 @@
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="tariff">Metodo de pago</label>
-                                                    <input type="text" name="method_payment" class="form-control" list="payment_method" autocomplete="off">
-                                                        <datalist id="payment_method">
-                                                            <option value="1" label="BALANCE" >
-                                                            <option value="2" label="CASH">
-                                                            <option value="3" label="CLIP">
-                                                            <option value="4" label="TRANSFER">
-                                                        </datalist>
+                                                    <select name="method_payment" class="form-control select2" autocomplete="off">
+                                                        <option disabled selected value="">Selecciona un metodo de pago</option>
+                                                            @foreach ($methods as $method)
+                                                                <option value="{{ $method->id}}" > {{$method->method}} </option>
+                                                            @endforeach
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

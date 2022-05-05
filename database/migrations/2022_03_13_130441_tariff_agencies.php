@@ -16,6 +16,7 @@ class TariffAgencies extends Migration
         Schema::create('tariff_agencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('zona');
+            $table->string('title_zone')->nullable();
             $table->integer('id_agency')->references('id')->on('agencies')->nullable();
             $table->integer('type_unit')->references('id')->on('type_units')->nullable();
             $table->string('place_service')->nullable();

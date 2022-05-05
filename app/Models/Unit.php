@@ -45,10 +45,10 @@ class Unit extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function isAssigned(): BelongsTo
-    {
-        return $this->belongsTo(AssingRegister::class, 'id', 'id_unit');
-    }
+    // public function isAssigned(): BelongsTo
+    // {
+    //     return $this->belongsTo(AssingRegister::class, 'id', 'id_unit');
+    // }
 
     /**
      * Get all of the bitacora for the Unit

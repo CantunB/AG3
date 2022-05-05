@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Services;
 
 use App\Http\Controllers\Controller;
+use App\Models\ServiceOperation;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -16,112 +17,97 @@ class OperationsController extends Controller
      */
     public function index(Request $request)
     {
+
+        // $operations = ServiceOperation::with(['unit']);
+
         if ($request->ajax()){
-            if(!empty($request->from_date))
-            {
-                $registers = Register::with(['Agency','Type_service', 'isAssigned'])->orderBy('date')
-                                    ->whereBetween('date', array(
-                                        $request->from_date, $request->to_date))
-                                    ->orderBy('pickup');
+            // if(!empty($request->from_date))
+            // {
+            //     $registers = Register::with(['Agency','Type_service', 'isAssigned'])->orderBy('date')
+            //                         ->whereBetween('date', array(
+            //                             $request->from_date, $request->to_date))
+            //                         ->orderBy('pickup');
 
-            }else{
-                $date = Carbon::today();
-                $date = $date->format('Y-m-d');
-                $registers = Register::with(['Agency','Type_service', 'isAssigned'])
-                                    ->whereDate('date', $date)
-                                    ->orderBy('date')->orderBy('pickup');
-            }
-            return DataTables::of($registers)
+            // }else{
+            //     $date = Carbon::today();
+            //     $date = $date->format('Y-m-d');
+            //     $registers = Register::with(['Agency','Type_service', 'isAssigned'])
+            //                         ->whereDate('date', $date)
+            //                         ->orderBy('date')->orderBy('pickup');
+            // }
+                $operations = ServiceOperation::groupBy(['id_unit']);
+            return DataTables::of($operations)
             ->addIndexColumn()
-            ->editColumn('date', function($registers){
-                return $registers->date;
+            ->addColumn('unit', function($operations){
+                return $operations->unit->unit;
+            })
+            ->addColumn('start', function($operations){
+                $op = $operations->getStart($operations->id_unit);
+                // return
+                //     '<table>
+                //     <tr><td> holaholaholaholaholahola </td></tr>
+                //     <tr><td> holaholaholahola </td></tr>
+                //     </table>';
+
+                // $roles = $users->getRoleNames();
+                // $rol = '<ul>';
+                // for( $i = 0; $i < count($roles); $i++){
+                //     $rol .= '<li>'.$roles[$i].'</li>';
+                // }
+                // $rol .= '</ul>';
+                // return $rol;
+                $start = '';
+                    $start .= '<table>';
+                                for($i = 0; $i < count($op); $i++){
+                                    $start .= '<tr >';
+                                        $start .= '<td>'.$op[$i]['time'].'</td>';
+                                    $start .= '</tr>';
+                                }
+                    $start .= '</table>';
+                return $start;
+            })
+            ->addColumn('start_mileage', function($operations){
+                $op = $operations->getStart($operations->id_unit);
+                $start = '';
+                    $start .= '<table>';
+                                for($i = 0; $i < count($op); $i++){
+                                    $start .= '<tr>';
+                                        $start .= '<td>'.$op[$i]['mileage'].' Km</td>';
+                                    $start .= '</tr>';
+                                }
+                    $start .= '</table>';
+                return $start;
 
             })
-            ->editColumn('pickup', function($registers){
-                return Carbon::createFromFormat('H:i:s',$registers->pickup)->format('H:i');
+            ->addColumn('finish', function($operations){
+                $op = $operations->getFinish($operations->id_unit);
+                $start = '';
+                    $start .= '<table>';
+                                for($i = 0; $i < count($op); $i++){
+                                    $start .= '<tr>';
+                                        $start .= '<td>'.$op[$i]['time'] .'</td>';
+                                    $start .= '</tr>';
+                                }
+                    $start .= '</table>';
+                return $start;
             })
-            ->editColumn('origin', function($registers){
-                $origin = '';
-
-                if($registers->origin === "Aeropuerto Internacional de Cancun"){
-                    $origin .= '<span class="text-center"> AEROPUERTO   <br>  '.$registers->flight_number.' </span>   <br> <span class="text-danger">'.$registers->zo.'</span> ';
-                }else{
-                    $origin .='<span class="text-center"> '.$registers->origin.'  <br> <span class="text-danger"> '.$registers->zo.' </span></span> ';
-                }
-                return $origin;
+            ->addColumn('finish_mileage', function($operations){
+                $op = $operations->getFinish($operations->id_unit);
+                $start = '';
+                    $start .= '<table>';
+                                for($i = 0; $i < count($op); $i++){
+                                    $start .= '<tr>';
+                                        $start .= '<td>'.$op[$i]['mileage'].' Km</td>';
+                                    $start .= '</tr>';
+                                }
+                    $start .= '</table>';
+                return $start;
             })
-            ->editColumn('destiny', function($registers){
-                $destiny = '';
-
-                if($registers->destiny === "Aeropuerto Internacional de Cancun"){
-                    $destiny .= '<span class="text-center"> AEROPUERTO  <br>  '.$registers->flight_number.' </span> <br><span class="text-danger">'.$registers->zd.'</span> ';
-                }else{
-                    $destiny .= '<span class="text-center"> '.$registers->destiny.'  <br>  <span class="text-danger">'.$registers->zd.'</span> </span> ';
-                }
-                return $destiny;
-            })
-            ->addColumn('agencia', function($registers){
-                return $registers->Agency->name_agency;
-            })->filterColumn('agencia', function($query, $keyword) {
-                $query->whereHas('Agency', function($query) use ($keyword) {
-                 //   $query->whereRaw("CONCAT(nombre, paterno, materno) like ?", ["%{$keyword}%"]);
-                    $query->whereRaw("name like ?", ["%{$keyword}%"]);
-                });
-            })
-            ->addColumn('service', function($registers){
-                return $registers->Type_service->name;
-            })->filterColumn('service', function($query, $keyword) {
-                $query->whereHas('Type_service', function($query) use ($keyword) {
-                 //   $query->whereRaw("CONCAT(nombre, paterno, materno) like ?", ["%{$keyword}%"]);
-                    $query->whereRaw("name like ?", ["%{$keyword}%"]);
-                });
-            })
-            ->editColumn('status', function($registers){
-                $status = '';
-                if(!isset($registers->isAssigned)){
-                    $status = '<div class="text-center button-list">
-                                    <a href="'. route('assign.show', $registers->id) .'" class="btn btn-xs btn-soft-secondary waves-effect waves-light">Asignar</a>
-                            </div>';
-                }
-                else{
-                    $status = '<div class="text-center button-list">
-                                    <a href="javascript: void(0);" class="btn btn-xs btn-primary waves-effect waves-light">Asignada</a>
-                                </div>';
-                }
-                return $status;
-            })
-            ->editColumn('requested_unit', function($registers){
-                if ($registers->requested_unit == 1) {
-                    return 'SUBURBAN';
-                }else{
-                    return 'VAN';
-                }
-            })
-            ->addColumn('options', function ($registers){
-                $opciones = '';
-                if (Auth::user()->can('read_registers')){
-                    $opciones .= '<button type="button" onclick="btnInfo('.$registers->id.')"  data-toggle="modal" data-target="#myModal" class="btn btn-sm action-icon icon-dual-info"><i class="mdi mdi-alert-rhombus-outline"></i></button>';
-                    // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
-                }
-                if (Auth::user()->can('update_registers')) {
-                    if(!isset($registers->isAssigned)){
-                        $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning"> <i class="mdi mdi-pencil-outline"></i></button>';
-                        // $opciones .= '<a href="'. route('assign.show', $registers->id) .'"  class="btn btn-sm action-icon getInfo icon-dual-primary"><i class="mdi mdi-book-account-outline"></i></a>';
-                    }
-                }
-                if (Auth::user()->can('delete_registers')) {
-                    if(!isset($registers->isAssigned)){
-                        $opciones .= '<button type="button" onclick="btnDelete('.$registers->id.')" class="btn action-icon icon-dual-danger "> <i class="mdi mdi-trash-can-outline"></i></button>';
-                    }
-                }
-                return $opciones;
-            })
-            ->rawColumns(['origin','destiny','status','options'])
+            ->rawColumns(['start','start_mileage','finish','finish_mileage'])
             ->toJson();
 
         }
         //$registers = Register::with(['Agency','Type_service','Airline', 'isAssigned'])->get();
-        return view('all_services.registers.index');
         return view('all_services.operations.index');
     }
 

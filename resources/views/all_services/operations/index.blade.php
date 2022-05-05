@@ -24,21 +24,18 @@
                 <div class="card-body">
                     @include('commons.searcher')
                     <div class="table-responsive">
-                        <table id="table_registers" class="table table-sm table-centered border table-striped dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
+                        <table id="table_operations"  class="table table-sm table-centered table-bordered  nowrap w-100 no-footer dtr-inline mt-2">
                             <thead class="text-center">
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Hora</th>
-                                    <th>Servicio</th>
-                                    <th>Origen</th>
-                                    <th>Destino</th>
-                                    <th>Pasajero</th>
-                                    <th>Pax</th>
-                                    <th>Comentarios</th>
-                                    <th>Agencia</th>
-                                    <th>Unidad</th>
-                                    <th>Status</th>
-                                    <th style="width: 82px;">{{ __('translation.Options') }}</th>
+                                    <th rowspan="2">Unidad</th>
+                                    <th colspan="2">INICIO</th>
+                                    <th colspan="2">TERMINO</th>
+                                </tr>
+                                <tr>
+                                    <th>Hora inicio</th>
+                                    <th>KM inicio</th>
+                                    <th>Hora termino</th>
+                                    <th>KM termino</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -51,6 +48,28 @@
 </div>
 @include('all_services.registers.partials.show_modal')
     @push('scripts')
-        <script></script>
+        <script>
+            $(document).ready(function(){
+                $('#table_operations').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    paging: false,
+                    {{-- select: true, --}}
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+                    },
+                    ajax: {
+                        url: '{!! route('operations.index') !!}',
+                    },
+                    columns: [
+                        {data: 'unit', name:'unit',className: 'text-center text-wrap width-200' ,searchable: false, orderable: false},
+                        {data: 'start', name:'start',className: 'text-center text-wrap width-200' ,searchable: false, orderable: false},
+                        {data: 'start_mileage', name:'start_mileage',className: 'text-center text-wrap width-200' ,searchable: false, orderable: false},
+                        {data: 'finish', name:'finish',className: 'text-center text-wrap width-200' ,searchable: false, orderable: false},
+                        {data: 'finish_mileage', name:'finish_mileage',className: 'text-center text-wrap width-200' ,searchable: false, orderable: false},
+                    ],
+                });
+            });
+        </script>
     @endpush
 @endsection

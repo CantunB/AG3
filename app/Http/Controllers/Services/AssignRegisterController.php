@@ -125,10 +125,13 @@ class AssignRegisterController extends Controller
                 $opciones = '';
                 if (Auth::user()->can('update_registers')) {
                     if(isset($registers->isAssigned)){
-                        $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning btnassign_update"> <i class="mdi mdi-account-cog"></i></button>';
-                        $opciones .= '<button  id="btnsuccess_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-success btnsuccess_update divOculto"> <i class="mdi mdi-check-bold"></i></button>';
-                        $opciones .= '<button  id="btncancel_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-danger btncancel_update divOculto"> <i class="mdi mdi-close"></i></button>';
-                        $opciones .= '<button   onclick="btndelete('.$registers->isAssigned->id.')" id="btndelete'.$registers->id.'" type="button" class="btn action-icon icon-dual-secondary "> <i class="mdi mdi-trash-can"></i></button>';
+                        if(!isset($registers->isAssigned->status)) {
+                            $opciones .= '<button  type="button" class="btn action-icon icon-dual-warning btnassign_update"> <i class="mdi mdi-account-cog"></i></button>';
+                     /* Creating a button with the id of btnsuccess_up and btncancel_up. */
+                            $opciones .= '<button  id="btnsuccess_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-success btnsuccess_update divOculto"> <i class="mdi mdi-check-bold"></i></button>';
+                            $opciones .= '<button  id="btncancel_up'.$registers->id.'" type="button" class="btn action-icon icon-dual-danger btncancel_update divOculto"> <i class="mdi mdi-close"></i></button>';
+                            $opciones .= '<button   onclick="btndelete('.$registers->isAssigned->id.')" id="btndelete'.$registers->id.'" type="button" class="btn action-icon icon-dual-secondary "> <i class="mdi mdi-trash-can"></i></button>';
+                        }
                     }else{
                         $opciones .= '<button  type="button" class="btn btn-sm action-icon icon-dual-primary btnassign"> <i class="mdi mdi-account-arrow-right"></i></button>';
                         $opciones .= '<button id="btnsuccess'.$registers->id.'" type="button" class="btn btn-sm action-icon icon-dual-success btnsuccess divOculto"> <i class="mdi mdi-check-bold"></i></button>';
@@ -428,20 +431,17 @@ class AssignRegisterController extends Controller
     public function destroy($id)
     {
         $assign = AssingRegister::findOrFail($id);
-        $register = Register::findOrFail($assign->id_register);
-
-        $assign->delete();
-        $delete = $register->delete();
+        $delete = $assign->delete();
         if ($delete == 1){
             $success = true;
-            $message = "Registro y asignacion eliminado correctamente";
+            $message = "Asignación eliminada";
         } else {
             $success = true;
-            $message = "No se pudo eliminar el registro";
+            $message = "No se pudo eliminar la asignación";
         }
         return response()->json([
             'success' => $success,
             'message' => $message
-        ]);
+        ],200);
     }
 }

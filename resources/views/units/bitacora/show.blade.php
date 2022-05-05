@@ -5,7 +5,7 @@
     @component('layouts.includes.components.breadcrumb')
     @slot('title') {{ config('app.name', 'Laravel') }} @endslot
     @slot('subtitle') {{ __('translation.Bitacora') }} @endslot
-    @slot('teme') {{ __('translation.Registro') }} @endslot
+    @slot('teme') Detalles @endslot
     @endcomponent
 
     <div class="row">
@@ -81,7 +81,7 @@
                 <div class="tab-content">
                     <div class="tab-pane show active" id="settings">
 
-                        <form id="form_bitacora" method="POST" enctype="multipart/form-data" data-parsley-validate>
+                        <form id="form_bitacora" method="POST" enctype="multipart/form-data"  data-parsley-validate>
                             @csrf
                             <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i>REGISTRAR SERVICIOS REALIZADOS</h5>
                             <div class="row">
@@ -154,32 +154,29 @@
                             </div>
                         </form>
                     </div>
-                       <div class="tab-pane" id="galeria">
+                       <div class="tab-pane" id="galeria" >
                         <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i>GALERIA</h5>
 
-                        <form action="{!! route('galery.store', $unit->id) !!}" method="post" class="dropzone" id="form_galery" data-plugin="dropzone" data-previews-container="#file-previews"
+                        <form method="post" enctype="multipart/form-data" id="form_galery" data-plugin="dropzone" data-previews-container="#file-previews"
                             data-upload-preview-template="#uploadPreviewTemplate">
-
                             @csrf
-                            <input type="hidden" class="form-control select " id="unit_id" name="unit_id" value="{{ $unit->id }}" >
-
+{{--
                             <div class="fallback">
                                 <input name="galery[]" type="file" multiple />
 
-                            </div>
-
-                            <div class="dz-message needsclick">
-                                <i class="h1 text-muted dripicons-cloud-upload"></i>
-                                <h3>Suelte los archivos aquí o haga clic para cargar.</h3>
-                                <span class="text-muted font-13">
-                                    <strong>Ningun archivo</strong> subido actualmente.)</span>
+                            </div> --}}
+                            <div class="dropzone" id="kt_dropzonejs_example_1">
+                                <div class="dz-message needsclick">
+                                    <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                    <h3>Suelte los archivos aquí o haga clic para cargar.</h3>
+                                    <span class="text-muted font-13">
+                                        <strong>Ningun archivo</strong> subido actualmente.)</span>
+                                </div>
                             </div>
                             <div class="text-right">
-                                <button type="submit" id="send_images" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i>{{ __('translation.Create') }}</button>
+                                <button type="submit" id="upload"  class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> {{ __('translation.Create') }}</button>
                             </div>
                         </form>
-
-
                         </div>
                 </div>
             </div>
@@ -389,35 +386,30 @@
 </script>
     <script>
         Dropzone.autoDiscover = false;
-        Dropzone.options.attachment = {
-                init: function(){
-                this.on('removedfile',function(file){
-                    // console.log('akjsdhaksj');
-                    var fileName = file.name;
-                    $.ajax({
-                    type: 'POST',
-                    url: "{!! route('galery.store', $unit->id) !!}",
-                    data: "id="+fileName,
-                    dataType: 'html'
-                    });
-                });
-                },
-                // params: {
-                // customerFolder: $('#toValue').substr(0, toValue.indexOf('@')),
-                // },
-                dictDefaultMessage:"Click / Drop here to upload files",
-                addRemoveLinks: true,
-                dictRemoveFile:"Remove",
-                maxFiles:3,
-                maxFilesize:8,
-        }
 
-        $(function(){
-
-        var uploadFilePath = "{!! route('galery.store', $unit->id) !!}";
-        var myDropzone     = new Dropzone("div#attachment", { url: uploadFilePath});
-
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
+            autoProcessQueue: false,
+            url: "{!! route('galery.store', $unit->id) !!}", // Set the url for your upload script location
+            headers: {
+                'x-csrf-token': CSRF_TOKEN,
+            },
+            paramName: "image", // The name that will be used to transfer the file
+            maxFiles: 10,
+            maxFilesize: 10, // MB
+            addRemoveLinks: true,
+            uploadMultiple: true,
+            accept: function(file, done) {
+                if (file.name == "wow.jpg") {
+                    done("Naha, you don't.");
+                } else {
+                    done();
+                }
+            }
         });
+        $('#upload').click(function(){
+            myDropzone.processQueue();
+         });
     </script>
 @endpush
 @endsection

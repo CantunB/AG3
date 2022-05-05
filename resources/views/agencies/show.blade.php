@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-lg-4 col-xl-4">
             <div class="card-box text-center">
-                <img src=" {{ $agency->agency_logo ? asset($agency->agency_logo) : asset('assets/images/SASTL_v1.png') }} " class="rounded-circle avatar-lg img-thumbnail"
+                <img src=" {{ $agency->agency_logo ? asset($agency->agency_logo) : asset('assets/images/logo.png') }} " class="rounded-circle avatar-lg img-thumbnail"
                     alt="agency-logo">
 
                 <h4 class="mb-0">{{$agency->business_name}}</h4>

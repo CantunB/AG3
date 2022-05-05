@@ -11,21 +11,12 @@ class AssingRegister extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'assign_registers';
+    protected $table = 'assigned_registers';
 
     protected $fillable = [
         'id_register',
         'id_unit',
         'id_operator',
-        'tariff',
-        'cash',
-        'usd',
-        'invoice',
-        'observations',
-        'payment',
-        'service',
-        'start_trip',
-        'finish_trip'
     ];
 
     protected $appends = ['servicio', 'agencia'];
@@ -53,9 +44,19 @@ class AssingRegister extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function Operator(): BelongsTo
+    public function operator(): BelongsTo
     {
         return $this->belongsTo(Operator::class, 'id_operator');
+    }
+
+    /**
+     * Get the user associated with the AssingRegister
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function status(): HasOne
+    {
+        return $this->hasOne(AssignRegisterStatus::class, 'id_assigned');
     }
 
     public function getServicioAttribute(){

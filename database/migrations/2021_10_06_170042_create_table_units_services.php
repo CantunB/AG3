@@ -17,7 +17,7 @@ class CreateTableUnitsServices extends Migration
             $table->id();
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
             $table->date('date');
-            $table->double('mileage');
+            $table->unsignedBigInteger('mileage');
             $table->string('service');
             $table->string('workshop');
             $table->float('cost');

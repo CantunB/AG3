@@ -25,7 +25,6 @@ class TypeServiceController extends Controller
     $services = TypeService::query()
                 ->with(['quantity'])
                 ->Active();
-
         return view('type_services.index', compact('services'));
     }
     /**

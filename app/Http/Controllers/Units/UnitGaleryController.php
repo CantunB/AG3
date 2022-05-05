@@ -47,17 +47,17 @@ class UnitGaleryController extends Controller
     public function store(StoreUnitsGaleryRequest $request, $id)
     {
         $unit = Unit::findOrFail($id);
-        $directory = '/images/units/'. $unit->unit .'/';
-        if($request->hasFile('galery')){
-        foreach ($request->galery as $item => $v ) {
-                $filename = $unit->unit . $item .  $request->galery[$item]->getClientOriginalExtension();
+        $directory = '/assets/images/units/'. $unit->unit .'/';
+        if($request->hasFile('image')){
+        foreach ($request->image as $item => $v ) {
+                $filename = $unit->unit  .'-'. $item .'.'.  $request->image[$item]->getClientOriginalExtension();
                 $data2=array(
                     //'quote_file' => $request->quote_file[$item],
                     'unit_id' => $request->unit_id,
-                    'images' => $filename,
+                    'images' => $directory.$filename,
                     //'quantity' => $request->quantity[$item],
                 );
-                $request->galery[$item]->move(public_path('images/units/' . $unit->unit . '/'), $filename);
+                $request->image[$item]->move(public_path('assets/images/units/' . $unit->unit . '/'), $filename);
                 UnitGalery::insert($data2);
             }
         }

@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 
 class TariffHotelController extends Controller
 {
-     /**
-     * Display a listing of the resource.
+    /**
+    * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,8 +18,8 @@ class TariffHotelController extends Controller
     {
 
         $tarifas =TariffHotel::all();
-        $zonas = TariffAgency::groupBy('zona')->pluck('zona');
-        return view('tariff.tariff_hotel.index', compact(
+        $zonas = TariffHotel::groupBy('id_zona')->pluck('id_zona');
+        return view('tariff.tariff_web.index', compact(
             'tarifas',
             'zonas'
         ));

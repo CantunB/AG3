@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Image;
 
 class AgencieController extends Controller
 {
@@ -176,6 +177,18 @@ class AgencieController extends Controller
     public function update(UpdateAgenciesRequest $request, Agency $agency)
     {
         $agency->update($request->all());
+        if ($request->has('agency_logo')) {
+            $logo = $request->file('agency_logo');
+            $name =  $agency->rfc.'.'.$logo->getClientOriginalExtension();
+            $path = public_path('/assets/images/agencies/');
+            $logo_file = $path . $name;
+            Image::make($logo)->resize(150, 150)->save($logo_file);
+
+            $agency->agency_logo = '/assets/images/agencies/'.$name;
+            $agency->save();
+        }
+
+
         return response()->json(['data' => 'Agencia actualizada correctamente'], 201);
 
     }

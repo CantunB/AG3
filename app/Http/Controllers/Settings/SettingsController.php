@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\User;
 use Illuminate\Support\Facades\App;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -12,14 +10,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 use Config;
+use Illuminate\Http\Request;
+
 class SettingsController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         \Composer\InstalledVersions::getInstalledPackages();
         \Composer\InstalledVersions::getAllRawData();
         $environment = [
             'name' => config('app.name'),
+            'server' => $request->server('REMOTE_ADDR'),
             'time' => config('app.timezone'),
             'php' => phpversion(),
             'version' => app()->version(),
