@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Unit;
 
-class UnitService extends Model
+class UnitService extends Unit
 {
     protected $table = 'units_services';
     protected $fillable = [ 'unit_id',

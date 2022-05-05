@@ -113,7 +113,7 @@ function deleteService(id) {
         if (e.value === true) {
             $.ajax({
                 type: 'DELETE',
-                url: "{{url('/services')}}/" + id,
+                url: "{{url('/type_services')}}/" + id,
                 data: {
                     id: id,
                     _token: '{!! csrf_token() !!}'

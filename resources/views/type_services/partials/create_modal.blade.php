@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body p-4">
-                <form id="form_agencies" method="POST" action="{{ route('services.store') }}">
+                <form id="form_agencies" method="POST" action="{{ route('type_services.store') }}">
                     @csrf
                     <div class="form-group">
                         <label for="name">{{ __('translation.Name') }}</label>

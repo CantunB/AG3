@@ -152,7 +152,7 @@
                                                                 <ul class="list-group">
                                                                     <li class="list-group-item">PHP version:  {{$environment['php']}} </li>
                                                                     <li class="list-group-item">Laravel version: {{$environment['version']}} </li>
-                                                                    <li class="list-group-item">Server:</li>
+                                                                    <li class="list-group-item">Server: {{$environment['server']}}</li>
                                                                     <li class="list-group-item">Cache driver: {{$environment['cache']}}</li>
                                                                     <li class="list-group-item">Session driver: {{$environment['session']}}</li>
                                                                     <li class="list-group-item">Timezone:  {{$environment['time']}}</li>

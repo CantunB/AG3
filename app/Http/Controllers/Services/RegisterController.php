@@ -8,6 +8,7 @@ use App\Http\Requests\Registers\StoreRegistersRequest;
 use App\Models\Agency;
 use App\Models\Airline;
 use App\Models\Hotel;
+use App\Models\PaymentMethods;
 use App\Models\Register;
 use App\Models\TypeService;
 use App\Models\TypeUnit;
@@ -74,12 +75,7 @@ class RegisterController extends Controller
                 return $destiny;
             })
             ->addColumn('agencia', function($registers){
-                return $registers->Agency ? $registers->Agency->name_agency : $registers->Agency->business_name;
-            })->filterColumn('agencia', function($query, $keyword) {
-                $query->whereHas('Agency', function($query) use ($keyword) {
-                 //   $query->whereRaw("CONCAT(nombre, paterno, materno) like ?", ["%{$keyword}%"]);
-                    $query->whereRaw("name_agency like ?", ["%{$keyword}%"]);
-                });
+                return $registers->Agency->name_agency ? $registers->Agency->name_agency : $registers->Agency->business_name;
             })
             ->addColumn('service', function($registers){
                 return $registers->Type_service->name;
@@ -147,12 +143,17 @@ class RegisterController extends Controller
         $agencies = Agency::orderBy('business_name','ASC')->get();
         $services = TypeService::all();
         $airlines = Airline::groupBy('airline')->get();
+        $type_units = TypeUnit::all();
         $hotels = Hotel::all();
+        $methods = PaymentMethods::all();
+
         return view('all_services.registers.create', compact(
                 'agencies',
             'services',
             'airlines',
-            'hotels'
+            'hotels',
+            'methods',
+            'type_units'
             )
         );
     }
@@ -208,13 +209,15 @@ class RegisterController extends Controller
         $airlines = Airline::groupBy('airline')->get();
         $type_units = TypeUnit::all();
         $hotels = Hotel::all();
+        $methods = PaymentMethods::all();
         return view('all_services.registers.edit',compact(
             'register',
             'agencies',
             'airlines',
             'hotels',
             'services',
-            'type_units'
+            'type_units',
+            'methods'
         ));
     }
 

@@ -21,6 +21,23 @@ class OperatorAuthController extends Controller
         'data' => null
     ];
 
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
+        ]);
+        $operator = Operator::where('email', $request->email)->first();
+        if (! $operator || ! Hash::check($request->password, $operator->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        $token = $operator->createToken($request->device_name)->plainTextToken;
+        return response()->json([ 'operator' => $operator, 'token' => $token], 200);
+    }
+
     public function me()
     {
         $operator = auth()->guard('driver')->user();

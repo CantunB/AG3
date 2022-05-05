@@ -24,7 +24,6 @@ class StoreUnitsGaleryRequest extends FormRequest
     public function rules()
     {
         return [
-            'unit_id' => 'required',
             'images' => 'nullable|mimes:jpeg,bmp,png|max:2048',
         ];
     }

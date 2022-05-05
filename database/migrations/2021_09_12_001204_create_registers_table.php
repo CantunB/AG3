@@ -15,6 +15,7 @@ class CreateRegistersTable extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->id();
+            $table->string('service_order')->nullable();
             $table->date('date');
             $table->foreignId('agency_id')->references('id')->on('agencies');
             $table->foreignId('type_service_id')->references('id')->on('type_services');

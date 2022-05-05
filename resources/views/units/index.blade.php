@@ -96,7 +96,7 @@
 <script>
     function btnInfo(id) {
         $.ajax({
-            url: 'units/'+ id,
+            url: "{{url('/units')}}/" + id,
             data: {
                 id : id
             },

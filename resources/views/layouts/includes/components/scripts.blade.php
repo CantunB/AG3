@@ -35,17 +35,29 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/addons/cleave-phone.i18n.js"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-
-@toastr_js
     <script>
-        $('.dropify').dropify({
-        messages: {
-            'default': 'Arrastre y suelte un archivo aquí o haga clic',
-            'replace': 'Arrastra y suelta o haz clic para reemplazar',
-            'remove':  'Eliminar',
-            'error':   'Vaya, sucedió algo mal.'
+
+        /*Si clicamos en el botón del sol, borrarémos la clase css dark-mode del div
+        con id page y se aplicará el estilo active al sol*/
+        document.getElementById('light-mode-check').onclick = function(){
+            $('.my-class').attr('data-layout', 'myValue');
         }
-    });
+        /*Si clicamos en el botón de la luna, añadiremos la clase css dark-mode del div
+        con id page y se aplicará el estilo active a la luna*/
+        document.getElementById('dark-mode-check').onclick = function(){
+            $('.my-class').attr('data-num', 'myValue');
+        }
+    </script>
+        @toastr_js
+            <script>
+                $('.dropify').dropify({
+                messages: {
+                    'default': 'Arrastre y suelte un archivo aquí o haga clic',
+                    'replace': 'Arrastra y suelta o haz clic para reemplazar',
+                    'remove':  'Eliminar',
+                    'error':   'Vaya, sucedió algo mal.'
+                }
+            });
     </script>
     <script>
         new Cleave('.cleave', {

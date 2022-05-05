@@ -13,16 +13,16 @@ class PaymentMethodsSeeder extends Seeder
     public function run()
     {
         $method = PaymentMethods::create([
+            'method' => 'Factura',
+        ]);
+        $method = PaymentMethods::create([
             'method' => 'Balance',
         ]);
         $method = PaymentMethods::create([
-            'method' => 'Cash',
+            'method' => 'Sin balance',
         ]);
         $method = PaymentMethods::create([
-            'method' => 'Clip',
-        ]);
-        $method = PaymentMethods::create([
-            'method' => 'Transfer',
+            'method' => 'Transferencia',
         ]);
     }
 }

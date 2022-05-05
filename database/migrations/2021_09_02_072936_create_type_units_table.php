@@ -16,6 +16,10 @@ class CreateTypeUnitsTable extends Migration
         Schema::create('type_units', function (Blueprint $table) {
             $table->id();
             $table->string('type_units');
+            $table->string('slug')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->integer('max_pax')->nullable();
+            $table->integer('max_suitcases')->nullable();
         });
     }
 

@@ -33,7 +33,7 @@ class UnitController extends Controller
     {
         //$units = Unit::with('isAssigned')->Active();
         if ($request->ajax()){
-            $unit = Unit::with(['isAssigned','bitacora', 'galery'])->Active();
+            $unit = Unit::with(['bitacora', 'galery'])->Active();
             return DataTables::of($unit)
             ->addIndexColumn()
             ->addColumn('status', function($unit){
@@ -246,54 +246,41 @@ class UnitController extends Controller
             ];
            // $longitud = length($unit->galery);
            // return $longitud;
-        if (count($unit->galery) > 0) {
-            $images = [
-                'Imagen01' => $unit->galery[0]->photo_front_unit,
-                'Imagen02' => $unit->galery[0]->photo_rear_unit,
-                'Imagen03' => $unit->galery[0]->photo_right_unit,
-                'Imagen04' => $unit->galery[0]->photo_left_unit,
-                'Imagen05' => $unit->galery[0]->photo_inside_unit_1,
-                'Imagen06' => $unit->galery[0]->photo_inside_unit_2,
-                'Imagen07' => $unit->galery[0]->photo_inside_unit_3,
-            ];
-        }else{
-            $images = [
-                'Imagen' => 'assets/images/attached-files/no_disponible.png',
-            ];
-
-        }
-
-        if ((count($files) > 0) ) {
-            foreach ($files as $key => $file) {
-                $archivos[] = '<div class="p-1">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <div class="avatar-sm">
-                            <span class="avatar-title badge-soft-primary text-primary rounded">
-                            '.pathinfo(storage_path($file), PATHINFO_EXTENSION).'
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col pl-0">
-                        <a href="'.$file .'" class="text-muted font-weight-bold">'.$key.' </a>
-                        <p class="mb-0 font-12">'.round(File::size(public_path($file)) / 1024 ) . 'KB' .'</p>
-                    </div>
-                    <div class="col-auto">
-                        <!-- Button -->
-                        <a href="'.$file.'" class="btn btn-link font-16 text-muted" download>
-                            <i class="dripicons-download"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>';
+        // if ((count($files) > 0) ) {
+        //     foreach ($files as $key => $file) {
+        //         $archivos[] = '<div class="p-1">
+        //         <div class="row align-items-center">
+        //             <div class="col-auto">
+        //                 <div class="avatar-sm">
+        //                     <span class="avatar-title badge-soft-primary text-primary rounded">
+        //                     '.pathinfo(storage_path($file), PATHINFO_EXTENSION).'
+        //                     </span>
+        //                 </div>
+        //             </div>
+        //             <div class="col pl-0">
+        //                 <a href="'.$file .'" class="text-muted font-weight-bold">'.$key.' </a>
+        //                 <p class="mb-0 font-12">'.round(File::size(public_path($file)) / 1024 ) . 'KB' .'</p>
+        //             </div>
+        //             <div class="col-auto">
+        //                 <!-- Button -->
+        //                 <a href="'.$file.'" class="btn btn-link font-16 text-muted" download>
+        //                     <i class="dripicons-download"></i>
+        //                 </a>
+        //             </div>
+        //         </div>
+        //     </div>';
+        //     }
+        // }else{
+        // }
+            $archivos = "Sin archivos";
+            if(is_null($unit->galery)){
+                $galery = '<img class="d-flex mr-3 rounded-circle avatar-lg" src="" alt="Generic placeholder image">';
+            }else{
+                foreach ($unit->galery as $key => $image) {
+                    $galery[] = '<img class="d-flex mr-3 rounded-circle avatar-lg" src="'. asset($image->images).'" alt="Generic placeholder image">';
+                }
             }
-        }else{
-        }
 
-
-        foreach ($images as $key => $image) {
-            $galery[] = '<img class="d-flex mr-3 rounded-circle avatar-lg" src="'. asset($image).'" alt="Generic placeholder image">';
-        }
 
         return response()->json([
             'data' => $unit,

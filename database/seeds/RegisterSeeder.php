@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Register;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -34,5 +35,7 @@ class RegisterSeeder extends Seeder
             'update_registers',
             'delete_registers'
         ]);
+
+        // factory(Register::class, 30)->create();
     }
 }

@@ -321,19 +321,8 @@
                 dataType: "json",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response){
-                    console.log(response);
                     toastr.success("Servicio asignado correctamente!");
                     $('#table_reg').DataTable().ajax.reload();
-
-                    {{--  Swal.fire({
-                        title: "Registro creado!",
-                        text: response.data,
-                        icon: "success",
-                        timer: 3500,
-                        didDestroy: () => {
-                            window.location = '{!! route('registers.index') !!}';
-                        }
-                    });  --}}
                 },
                 error: function(response){
                     var errors = response.responseJSON;
@@ -373,7 +362,6 @@
                 dataType: "json",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response){
-                    console.log(response);
                     toastr.success("Servicio actualizado correctamente!");
                     $('#table_reg').DataTable().ajax.reload();
                 },
@@ -850,7 +838,7 @@
                 if (e.value === true) {
                     $.ajax({
                         type: 'DELETE',
-                        url: "{{url('/assign')}}/" + id,
+                        url: "{{url('/services/assign')}}/" + id,
                         data: {
                             id: id,
                             _token: '{!! csrf_token() !!}'

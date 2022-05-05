@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class UnitGalery extends Model
+use App\Models\Unit;
+class UnitGalery extends Unit
 {
     protected $table = 'units_images';
     protected $fillable = [ 'unit_id',

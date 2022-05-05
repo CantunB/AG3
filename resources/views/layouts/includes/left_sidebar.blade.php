@@ -93,12 +93,15 @@
                                     <a href="{{ route('assign.index') }}">Asignaciones</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('status.index') }}">Estatus</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('operations.index') }}">Operaciones</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('canceled.index') }}">Cancelados</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="#sidebarMultilevel2" data-toggle="collapse">
                                         Second Level <span class="menu-arrow"></span>
                                     </a>
@@ -112,7 +115,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </li>
+                                </li> --}}
 
                             </ul>
                         </div>
@@ -139,7 +142,7 @@
                                 <a href="{{ route('taf_agencies.index') }}">Tarifas Agencias </a>
                             </li>
                             <li>
-                                <a href="{{ route('taf_hotels.index') }}">Tarifas Hoteles</a>
+                                <a href="{{ route('taf_hotels.index') }}">Tarifas Pagina Web</a>
                             </li>
                         </ul>
                     </div>

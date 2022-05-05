@@ -17,14 +17,6 @@ Route::get('vans', 'Services\AssignRegisterController@getVans')->name('assign.va
 
 Auth::routes(['register' => false]);
 
-Route::get('/', function () {
-    if(auth()->check()){
-        return view('home');
-    }else{
-        return redirect()->route('login');
-    }
-});
-
 //Language Translation
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
@@ -65,6 +57,7 @@ Route::group(['prefix' => 'agencies'], function() {
 Route::group(['prefix' => 'services'], function() {
     Route::resource('registers', 'Services\RegisterController');
     Route::resource('assign', 'Services\AssignRegisterController');
+    Route::resource('status', 'Services\StatusRegisterController');
     Route::resource('operations', 'Services\OperationsController');
     Route::prefix('canceled')->group(function () {
         Route::get('/', 'Services\CanceledServices@index')->name('canceled.index');

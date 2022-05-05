@@ -70,6 +70,18 @@
                     </div>
             </form>
 
+            @switch($register->type_service_id)
+                @case(1)
+                    @include('all_services.registers.partials.salidas_edit')
+                @break
+                @case(2)
+                    @include('all_services.registers.partials.llegadas_edit')
+
+                @break
+                @default
+
+            @endswitch
+
             {{---------------------------------------------------------------------------- */
             /* INICIO --- CARD PASAJEROS                                       */
             /* ----------------------------------------------------------------------------}}
@@ -143,13 +155,13 @@
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="tariff">Metodo de pago</label>
-                                                    <input type="text" name="method_payment" class="form-control" list="payment_method" autocomplete="off">
-                                                        <datalist id="payment_method">
-                                                            <option value="1" label="BALANCE" >
-                                                            <option value="2" label="CASH">
-                                                            <option value="3" label="CLIP">
-                                                            <option value="4" label="TRANSFER">
-                                                        </datalist>
+                                                    <select name="method_payment" class="form-control select2" autocomplete="off">
+                                                        <option disabled selected value="">Selecciona un metodo de pago</option>
+                                                            @foreach ($methods as $method)
+                                                                <option {{ $register->payment_method()->pluck('id')->contains($method->id) ? 'selected' : ''  }} value="{{ $method->id}}" > {{$method->method}} </option>
+                                                            @endforeach
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
