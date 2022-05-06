@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,7 @@ Route::get('subs', 'Services\AssignRegisterController@getSubs')->name('assign.su
 Route::get('vans', 'Services\AssignRegisterController@getVans')->name('assign.vans');
 
 Auth::routes(['register' => false]);
+
 
 //Language Translation
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
@@ -57,7 +60,7 @@ Route::group(['prefix' => 'agencies'], function() {
 Route::group(['prefix' => 'services'], function() {
     Route::resource('registers', 'Services\RegisterController');
     Route::resource('assign', 'Services\AssignRegisterController');
-    Route::resource('status', 'Services\StatusRegisterController');
+    Route::resource('status', 'Services\StatusController');
     Route::resource('operations', 'Services\OperationsController');
     Route::prefix('canceled')->group(function () {
         Route::get('/', 'Services\CanceledServices@index')->name('canceled.index');
@@ -79,14 +82,14 @@ Route::group(['prefix' => 'restore'], function(){
     Route::post('agencies/{id_agency}', 'AgencieController@restore')->name('restore.agencies');
 });
 
-Route::group(['web', 'tariff'], function(){
+Route::group(['prefix', 'tariff'], function(){
     Route::group(['prefix' => 'tariff'], function() {
         Route::resource('taf_agencies', 'Tariff\TariffAgencyController');
         Route::resource('taf_hotels', 'Tariff\TariffHotelController');
     });
 });
 
-Route::group(['web', 'settings'], function(){
+Route::group(['prefix', 'settings'], function(){
     Route::get('settings', 'Settings\SettingsController')->name('settings.index');
     Route::resource('users', 'Settings\UsersController');
     Route::resource('roles', 'Settings\RolesController');
