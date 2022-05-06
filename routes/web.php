@@ -1,35 +1,18 @@
 <?php
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('subs', 'Services\AssignRegisterController@getSubs')->name('assign.subs');
 Route::get('vans', 'Services\AssignRegisterController@getVans')->name('assign.vans');
 
 Auth::routes(['register' => false]);
 
-
-//Language Translation
-//Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
-
 Route::view('/operator', 'operator');
 Route::prefix('login')->group(function () {
     Route::get('operator', 'Auth\LoginController@showOperatorLoginForm');
     Route::post('operator', 'Auth\LoginController@operatorLogin');
 });
-
-
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('getCodeIATA', 'Controller@getCodeIATA')->name('fetchIata');
@@ -50,26 +33,23 @@ Route::apiResources([
 
 ]);
 
-
 Route::group(['prefix' => 'agencies'], function() {
     Route::post('add/{agency}', 'AgencieController@add')->name('agencies.add');
     Route::delete('remove/{agency}', 'AgencieController@remove')->name('agencies.remove');
 });
 
-
 Route::group(['prefix' => 'services'], function() {
     Route::resource('registers', 'Services\RegisterController');
     Route::resource('assign', 'Services\AssignRegisterController');
-    Route::resource('status', 'Services\StatusController');
+    Route::resource('status', 'Services\StatusRegisterController');
     Route::resource('operations', 'Services\OperationsController');
     Route::prefix('canceled')->group(function () {
         Route::get('/', 'Services\CanceledServices@index')->name('canceled.index');
     });
 });
 
-
 Route::group(['prefix' => 'units'], function(){
-    Route::group(['prefix' => '{unit_id}'], function($unit_id){
+    Route::group(['prefix' => '{unit_id}'], function(){
     Route::resource('bitacora', 'Units\UnitServiceController');
     Route::resource('galery', 'Units\UnitGaleryController');
     });
