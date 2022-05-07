@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-
-
-use function PHPUnit\Framework\isEmpty;
-
 class UnitController extends Controller
 {
     public function __construct()
