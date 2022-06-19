@@ -17,8 +17,10 @@ class CreateAssignedServicesChargesTable extends Migration
             $table->id();
             $table->foreignId('id_assigned')
                 ->constrained('assigned_registers')
-            // ->cascadeOnUpdate()
+                ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->string('coin');    
+            $table->string('waytopay');    
             $table->float('amount',8,2);
             $table->float('tip', 8, 2);
             $table->timestamps();

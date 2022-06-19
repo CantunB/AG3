@@ -19,7 +19,7 @@ class AssingRegister extends Model
         'id_operator',
     ];
 
-    protected $appends = ['servicio', 'agencia'];
+    protected $appends = ['servicio', 'agencia','unidad'];
     /**
      * Get the registers that owns the AssingRegister
      *
@@ -57,6 +57,11 @@ class AssingRegister extends Model
     public function status(): HasOne
     {
         return $this->hasOne(AssignRegisterStatus::class, 'id_assigned');
+    }
+
+    public function getUnidadAttribute(){
+
+        return $this->unit->unit;
     }
 
     public function getServicioAttribute(){

@@ -228,9 +228,9 @@ class RegisterController extends Controller
      * @param  \App\Models\Register  $register
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Register $register)
+    public function update(Request $request)
     {
-        //
+        return $request;
     }
 
     /**

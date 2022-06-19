@@ -15,7 +15,7 @@ class CreateAssignRegisters extends Migration
     {
         Schema::create('assigned_registers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_register')->constrained('registers')->onDelete('cascade');;
+            $table->foreignId('id_register')->constrained('registers')->onDelete('cascade');
             $table->foreignId('id_unit')->constrained('units')->onDelete('cascade');
             $table->foreignId('id_operator')->constrained('operators')->onDelete('cascade');
             // $table->float('tariff')->nullable();
