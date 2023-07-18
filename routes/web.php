@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    // return view('welcome');
+    return redirect()->route('login');
+});
 Route::get('subs', 'Services\AssignRegisterController@getSubs')->name('assign.subs');
 Route::get('vans', 'Services\AssignRegisterController@getVans')->name('assign.vans');
 

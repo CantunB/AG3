@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Operators\StoreOperatorsRequest;
 use App\Http\Requests\Operators\UpdateOperatorsRequest;
 use App\Models\Operator;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use File;
 use Yajra\DataTables\DataTables;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -39,13 +37,10 @@ class OperatorController extends Controller
             })
             ->addColumn('status', function($operator){
                 $status = '';
-                if ($operator->isAssigned) {
-                    $status .= '<span class="badge badge-primary">Asignado</span>';
-                }elseif ($operator->deleted_at != null) {
+                if ($operator->deleted_at != null) {
                     $status .= '<span class="badge badge-danger">Inactivo</span>';
-                }
-                else{
-                    $status .= '<span class="badge badge-success">Disponible</span>';
+                }else{
+                    $status .= '<span class="badge badge-success">Activo</span>';
                 }
                 return $status;
             })
@@ -53,7 +48,7 @@ class OperatorController extends Controller
                 $opciones = '';
                 if ($operators->trashed()) {
                     if (Auth::user()->can('update_operators')){
-                        $opciones .= '<button type="button" onclick="btnRestore('.$operators->id.')" class="btn btn-sm action-icon icon-dual-blue"><i class="mdi mdi-restore"></i></button>';
+                        $opciones .= '<button type="button" onclick="btnRestore('.$operators->id.')" class="btn btn-sm action-icon icon-dual-secondary"><i class="mdi mdi-restore"></i></button>';
                     }
                 }else {
                     if (Auth::user()->can('read_operators')){
@@ -64,7 +59,7 @@ class OperatorController extends Controller
                         $opciones .= '<a href="'.route('operators.edit', $operators->id).'" class="btn btn-sm action-icon icon-dual-warning"><i class="mdi mdi-account-cog"></i></a>';
                     }
                     if (Auth::user()->can('delete_operators')){
-                        $opciones .= '<button type="button" onclick="btnDelete('.$operators->id.')" class="btn btn-sm action-icon icon-dual-danger"><i class="mdi mdi-delete-empty"></i></button>';
+                        $opciones .= '<button type="button" onclick="btnDelete('.$operators->id.')" class="btn btn-sm action-icon icon-dual-secondary"><i class="mdi mdi-delete-empty"></i></button>';
                     }
                 }
                 return $opciones;

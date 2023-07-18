@@ -168,6 +168,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Yoeunes\Toastr\ToastrServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

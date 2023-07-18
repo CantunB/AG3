@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use PhpParser\Node\Expr\Assign;
-
+use DB;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -45,6 +45,16 @@ class AppServiceProvider extends ServiceProvider
             $airlines = Airline::count();
             $type_services = TypeService::count();
             $agencies = Agency::count();
+
+            $services = DB::table('registers')
+                            ->select(
+                                array(
+                                    DB::raw('type_service_id as title'),
+                                    DB::raw('date as start'),
+                                    DB::raw('date as end'),
+                                    DB::raw('passenger as description'),
+                                    ))
+                            ->get();
             // $sales = Assign
             $view->with([
                 'units' => $units,
@@ -53,6 +63,7 @@ class AppServiceProvider extends ServiceProvider
                 'airlines' => $airlines,
                 'type_services' => $type_services,
                 'agencies' => $agencies,
+                'services' => $services,
             ]);
         });
         // view()->composer('layouts.includes.components.topbar', function ($view) {

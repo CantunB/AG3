@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHotelsTable extends Migration
+class CreateZoneTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateHotelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hotels', function (Blueprint $table) {
+        Schema::create('zone', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('zona');
-            $table->foreignId('id_zona')->constrained('zona')->onDelete('cascade');
-
+            $table->string('zone');
             $table->string('state',50)->nullable();
             $table->string('municipio',100)->nullable();
             $table->string('head',100)->nullable();
-            $table->string('hotel',120)->nullable();
-            //$table->timestamps();
+            // $table->timestamps();
         });
     }
 
@@ -33,6 +30,6 @@ class CreateHotelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hotels');
+        Schema::dropIfExists('zone');
     }
 }

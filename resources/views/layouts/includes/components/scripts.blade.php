@@ -35,6 +35,46 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/addons/cleave-phone.i18n.js"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+<script src="{{ asset('assets/libs/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@2.9.0/dist/fullcalendar.min.css' rel='stylesheet' />
+
+<script src="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>
+<script src="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>
+<script src="{{ asset('assets/libs/@fullcalendar/list/main.min.js') }}"></script>
+<script src="{{ asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>
+{{--  <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>  --}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/locale/es.js'></script>
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                themeSystem : 'bootstrap4',
+                header: {
+                    left: 'prev,next today list',
+                    right: 'month,agendaWeek,agendaDay',
+                    center: 'title'
+                },
+                locale: 'es',
+                gotoDate : 'currentDate',
+                buttonIcons: false,
+                weekNumbers: false,
+                editable: false,
+                eventLimit: true,
+                events: {!! $services !!},
+                dayClick: function (date, jsEvent, view) {
+                    alert('Has hecho click en: '+ date.format());
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    $('#event-title').text(calEvent.title);
+                    $('#event-description').html(calEvent.description);
+                    $('#modal-event').modal();
+                },
+            });
+        });
+    </script>
+
     <script>
 
         /*Si clicamos en el botón del sol, borrarémos la clase css dark-mode del div

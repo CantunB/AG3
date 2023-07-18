@@ -53,9 +53,13 @@ class TariffHotelController extends Controller
      * @param  \App\odel  $odel
      * @return \Illuminate\Http\Response
      */
-    public function show(odel $odel)
+    public function show($zona)
     {
-        //
+        $zona = $zona;
+        $tarifas_sub = TariffHotel::where('id_zona',$zona)->where('type_unit_id',1)->get();
+        $tarifas_van = TariffHotel::where('id_zona',$zona)->where('type_unit_id',2)->get();
+
+        return view('tariff.tariff_web.show', compact('zona','tarifas_sub','tarifas_van'));
     }
 
     /**
@@ -76,9 +80,29 @@ class TariffHotelController extends Controller
      * @param  \App\odel  $odel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, odel $odel)
+    public function update(Request $request, $zona)
     {
-        //
+        $sencillo_suburban = TariffHotel::where("id_zona", $zona)
+            ->where('type_unit_id', $request->subsencillo_unit)
+            ->where('type_trip_id', $request->subsencillo_trip)
+            ->update(["MXN" => $request->subsencillo_tarifa ]);
+
+        $redondo_suburban = TariffHotel::where("id_zona", $zona)
+            ->where('type_unit_id', $request->subredondo_unit)
+            ->where('type_trip_id', $request->subredondo_trip)
+            ->update(["MXN" => $request->subredondo_tarifa ]);
+
+        $van_sencillo = TariffHotel::where("id_zona", $zona)
+            ->where('type_unit_id',$request->vansencillo_unit)
+            ->where('type_trip_id', $request->vansencillo_trip)
+            ->update(["MXN" => $request->vansencillo_tarifa ]);
+
+        $redondo_van = TariffHotel::where("id_zona", $zona)
+            ->where('type_unit_id', $request->vanredondo_unit)
+            ->where('type_trip_id', $request->vanredondo_trip)
+            ->update(["MXN" => $request->vanredondo_tarifa ]);
+
+        return redirect()->route('taf_hotels.index');
     }
 
     /**

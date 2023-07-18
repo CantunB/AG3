@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $query->where('status', 1);
     }
 
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
     public function getFullNameAttribute()
     {
         return "{$this->name} {$this->paterno} {$this->materno}";
@@ -74,9 +79,9 @@ class User extends Authenticatable
     *
     * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-   public function assigned_agency(): HasMany
-   {
-       return $this->hasMany(UserAgency::class, 'id_manager');
-   }
+    public function assigned_agency(): HasMany
+    {
+        return $this->hasMany(UserAgency::class, 'id_manager');
+    }
 
 }

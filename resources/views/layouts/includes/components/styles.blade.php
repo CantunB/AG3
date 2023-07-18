@@ -1,3 +1,10 @@
+<!-- Plugin css -->
+<link href="{{ asset('assets/libs/@fullcalendar/core/main.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/libs/@fullcalendar/bootstrap/main.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/libs/@fullcalendar/list/main.min.css') }}" rel="stylesheet" type="text/css" />
+
 <link rel="shortcut icon" href="{{ asset('assets/images/icons/logo.ico') }}" />
 <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
@@ -13,6 +20,8 @@
 <link href="{{ asset('assets/libs/flexdatalist/jquery.flexdatalist.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href=" {{asset('assets/libs/dropify/css/dropify.min.css')}} " rel="stylesheet" type="text/css" />
+
+
 @toastr_css
 @livewireStyles
 <style>

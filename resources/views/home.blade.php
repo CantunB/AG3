@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container-fluid">
 
@@ -113,6 +112,20 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
         @endcan
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id='calendar'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

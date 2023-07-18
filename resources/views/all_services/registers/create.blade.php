@@ -616,5 +616,28 @@ $(document).ready(function() {
 });
 
 </script>
+
+{{-- Nueva prueba para los divs --}}
+    <script>
+        const initDiv = document.getElementById('init');
+        const classList = ["first" , "second" ,"third"];
+        const inputClassList = ['one' ,'two' ,'three'];
+        let linkIndex = -1;
+        initDiv.addEventListener('click' , showInput);
+        function showInput(e){
+            let linkIndex = classList.indexOf(e.target.classList[0]);
+            if(linkIndex >= 0){
+                const inputDiv = document.getElementById(inputClassList[linkIndex]);
+                const inputButton = inputDiv.children[0];
+                inputDiv.classList.remove('noDisplay');;
+                initDiv.classList.add('noDisplay');
+                inputButton.addEventListener('click' ,function(){
+                    initDiv.classList.remove('noDisplay');
+                    inputDiv.classList.add('noDisplay');
+                })
+            }
+        }
+    </script>
+{{-- Termino de la prueba  --}}
 @endpush
 @endsection

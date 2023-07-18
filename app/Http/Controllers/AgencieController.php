@@ -183,7 +183,6 @@ class AgencieController extends Controller
             $path = public_path('/assets/images/agencies/');
             $logo_file = $path . $name;
             Image::make($logo)->resize(150, 150)->save($logo_file);
-
             $agency->agency_logo = '/assets/images/agencies/'.$name;
             $agency->save();
         }
