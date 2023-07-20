@@ -155,6 +155,12 @@
                             <span> {{ __('translation.Agencies') }} </span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('hoteles.index') }}">
+                            <i class="mdi mdi-domain"></i>
+                            <span> Hoteles </span>
+                        </a>
+                    </li>
                 @endcan
                 @can('read_services')
                 <li>

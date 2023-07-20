@@ -35,7 +35,7 @@ class TariffAgencyController extends Controller
         //     ->toJson();
         // }
         $agencies = TariffAgency::with('agency','unit')->groupBy('id_agency')->get();
-        $zonas = TariffAgency::groupBy('zona')->pluck('zona');
+        $zonas = TariffAgency::groupBy('id_zona')->pluck('id_zona');
         $tarifas = TariffAgency::all();
         return view('tariff.tariff_agency.index', compact('agencies','zonas','tarifas'));
     }

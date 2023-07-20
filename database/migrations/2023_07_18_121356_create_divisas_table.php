@@ -18,7 +18,7 @@ class CreateDivisasTable extends Migration
             $table->string('CurrencyISO',3);
             $table->string('Languague', 3);
             $table->string('CurrencyName',35);
-            $table->string('money',30);
+            $table->string('Money',30);
             $table->string('Symbol',3);
             $table->float('CurrencyValue');
             // $table->timestamps();

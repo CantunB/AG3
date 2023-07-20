@@ -17,11 +17,16 @@ class CreateHotelsTable extends Migration
             $table->id();
             // $table->unsignedBigInteger('zona');
             $table->foreignId('id_zona')->constrained('zona')->onDelete('cascade');
-
+            $table->string('country',50)->nullable();
             $table->string('state',50)->nullable();
             $table->string('municipio',100)->nullable();
-            $table->string('head',100)->nullable();
+            $table->string('localidad')->nullable();
             $table->string('hotel',120)->nullable();
+            $table->string('address')->nullable();
+            $table->string('cp',5)->nullable();
+            $table->string('telephone')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             //$table->timestamps();
         });
     }

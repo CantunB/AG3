@@ -22,20 +22,20 @@ class TariffAgency extends Model
 
     public function getPlace($zona, $agency)
     {
-        $agencia = TariffAgency::where('zona',$zona)
+        $agencia = TariffAgency::where('id_zona',$zona)
                             ->where('id_agency', $agency)
                             ->first('place_service');
         return collect($agencia);
     }
     public static function getTariff($zona, $agency)
     {
-        return TariffAgency::where('zona',$zona)
+        return TariffAgency::where('id_zona',$zona)
                             ->where('id_agency', $agency)
                             ->get();
     }
     public static function getUnit($zona, $agency)
     {
-        return  TariffAgency::where('zona',$zona)
+        return  TariffAgency::where('id_zona',$zona)
                             ->where('id_agency', $agency)
                             ->get();
     }

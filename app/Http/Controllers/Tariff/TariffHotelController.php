@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tariff;
 use App\Http\Controllers\Controller;
 use App\Models\TariffAgency;
 use App\Models\TariffHotel;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class TariffHotelController extends Controller
@@ -16,12 +17,13 @@ class TariffHotelController extends Controller
      */
     public function index()
     {
-
+        $currency = Currency::all();
         $tarifas =TariffHotel::all();
         $zonas = TariffHotel::groupBy('id_zona')->pluck('id_zona');
         return view('tariff.tariff_web.index', compact(
             'tarifas',
-            'zonas'
+            'zonas',
+            'currency'
         ));
 
     }

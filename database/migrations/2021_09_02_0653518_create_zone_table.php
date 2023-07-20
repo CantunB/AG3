@@ -13,9 +13,9 @@ class CreateZoneTable extends Migration
      */
     public function up()
     {
-        Schema::create('zone', function (Blueprint $table) {
+        Schema::create('zona', function (Blueprint $table) {
             $table->id();
-            $table->string('zone');
+            $table->string('zona');
             $table->string('state',50)->nullable();
             $table->string('municipio',100)->nullable();
             $table->string('head',100)->nullable();
@@ -30,6 +30,6 @@ class CreateZoneTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zone');
+        Schema::dropIfExists('zona');
     }
 }

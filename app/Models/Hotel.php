@@ -8,11 +8,17 @@ class Hotel extends Model
 {
     protected $table = 'hotels';
     protected $fillable = [
-        'zona',
+        'id_zona',
+        'country',
         'state',
         'municipio',
-        'head',
+        'localidad',
         'hotel',
+        'address',
+        'cp',
+        'telephone',
+        'latitude',
+        'longitude'
     ];
 
     public $timestamps = false;

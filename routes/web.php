@@ -3,12 +3,27 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
-    // return view('welcome');
-    return redirect()->route('login');
+    if(auth()->check()){
+        Route::get('/home', 'HomeController@index')->name('home');
+    }else{
+        return view('auth.login');
+    }
+});
+
+Route::group(['prefix' => 'restore'], function(){
+    Route::post('users/{id_user}', 'Settings\UsersController@restore')->name('restore.users');
+    Route::post('operators/{id_operator}', 'OperatorController@restore')->name('restore.operators');
+    Route::post('units/{id_unit}', 'Units\UnitController@restore')->name('restore.units');
+    Route::post('agencies/{id_agency}', 'AgencieController@restore')->name('restore.agencies');
 });
 Route::get('subs', 'Services\AssignRegisterController@getSubs')->name('assign.subs');
 Route::get('vans', 'Services\AssignRegisterController@getVans')->name('assign.vans');
+
+// SECTION[Country_States] Dropdown Paises Estados
+Route::post('getState', 'HomeController@getState')->name('fetchState');
+Route::post('getCity', 'HomeController@getCity')->name('fetchCities');
 
 Auth::routes(['register' => false]);
 
@@ -25,6 +40,7 @@ Route::post('getZone', 'Controller@getZone')->name('fetchZone');
 
 Route::resources([
     'agencies' => 'AgencieController',
+    'hoteles' => 'HotelController',
     'operators' => 'OperatorController',
     'bookings' => 'BookingController',
     // 'airlines' => 'AirlineController',

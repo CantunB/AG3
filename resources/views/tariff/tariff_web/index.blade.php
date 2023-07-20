@@ -8,6 +8,29 @@
         @endcomponent
 
         <div class="row">
+            @foreach ($currency as $cu)
+                <div class="col-md-6 col-xl-3">
+                    <div class="widget-rounded-circle card-box">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded bg-soft-primary">
+                                    <i class="font-24 avatar-title text-primary">{{  $cu->Symbol  }}</i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-right">
+                                    <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ $cu->CurrencyValue }}</span></h3>
+                                    <p class="text-muted mb-1 text-truncate">( {{ $cu->CurrencyISO }} )</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div> <!-- end widget-rounded-circle-->
+                </div>
+            @endforeach
+
+        </div>
+
+        <div class="row">
             <div class="col-xl-12">
                 <div class="card-box">
             <!--        <h4 class="header-title mb-4">{{ __('Administrator') }}</h4>  -->

@@ -43,7 +43,7 @@ class UsersController extends Controller
                 return '<img src="'.asset($users->photo_user).'" alt="table-user" class="mr-2 avatar-xs rounded-circle">
                 <strong style="text-transform: uppercase;">'. $users->FullName .'</strong>';
             })
-           /* ->addColumn('rol', function ($usuarios){
+            ->addColumn('rol', function ($usuarios){
                 $roles = $usuarios->getRoleNames();
                 $rol = '<ul>';
                 for( $i = 0; $i < count($roles); $i++){
@@ -51,7 +51,7 @@ class UsersController extends Controller
                 }
                 $rol .= '</ul>';
                 return $rol;
-            })*/
+            })
             ->addColumn('options', function ($users){
                 $opciones = '';
                 if ($users->trashed()) {
@@ -66,7 +66,7 @@ class UsersController extends Controller
                 }
                 return $opciones;
             })
-            ->rawColumns(['name','options'])
+            ->rawColumns(['name','rol','options'])
             ->toJson();
         }
     }

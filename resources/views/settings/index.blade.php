@@ -69,6 +69,7 @@
                                                 <tr>
                                                     <th>{{ __('#') }}</th>
                                                     <th>{{ __('translation.Fullname') }}</th>
+                                                    <th>Rol </th>
                                                     <th>{{ __('translation.Email') }}</th>
                                                     <th>{{ __('translation.Phone') }}</th>
                                                     <th>{{ __('translation.Options') }}</th>
@@ -228,6 +229,7 @@
                 columns: [
                     {data: 'DT_RowIndex', name:'DT_RowIndex' ,className: 'text-center ', orderable:'false', searchable: 'false'},
                     {data: 'name', name:'name' },
+                    {data: 'rol', name: 'rol'},
                     {data: 'email', name:'email',orderable: false },
                     {data: 'phone', name:'phone', orderable: false },
                     {data: 'options', name:'options',className: 'text-center' ,searchable: false, orderable: false},
