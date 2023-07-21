@@ -38,16 +38,16 @@ class HotelController extends Controller
             })
             ->addColumn('options', function ($hotel){
                 $opciones = '';
-                if (Auth::user()->can('read_registers')){
-                    $opciones .= '<button type="button" onclick="btnInfo('.$hotel->id.')"  data-toggle="modal" data-target="#myModal" class="btn btn-sm action-icon icon-dual-info"><i class="mdi mdi-alert-rhombus-outline"></i></button>';
-                    // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
-                }
-                if (Auth::user()->can('update_registers')) {
-                    if(!isset($hotel->isAssigned)){
-                        $opciones .= '<a href=" '.route('hoteles.show', $hotel->id).' " type="button" class="btn action-icon icon-dual-warning"> <i class="mdi mdi-pencil-outline"></i></a>';
-                        // $opciones .= '<a href="'. route('assign.show', $registers->id) .'"  class="btn btn-sm action-icon getInfo icon-dual-primary"><i class="mdi mdi-book-account-outline"></i></a>';
-                    }
-                }
+                // if (Auth::user()->can('read_registers')){
+                //     $opciones .= '<button type="button" onclick="btnInfo('.$hotel->id.')"  data-toggle="modal" data-target="#myModal" class="btn btn-sm action-icon icon-dual-info"><i class="mdi mdi-alert-rhombus-outline"></i></button>';
+                //     // return ' <button onclick="btonLider('.$sympathizers->id.')" data-toggle="modal" data-target="#modalInfoLider" class="btn btn-sm btn-xs btn-info"><i class="mdi mdi-check"></i> LIDER</button>';
+                // }
+                // if (Auth::user()->can('update_registers')) {
+                //     if(!isset($hotel->isAssigned)){
+                //         $opciones .= '<a href=" '.route('hoteles.show', $hotel->id).' " type="button" class="btn action-icon icon-dual-warning"> <i class="mdi mdi-pencil-outline"></i></a>';
+                //         // $opciones .= '<a href="'. route('assign.show', $registers->id) .'"  class="btn btn-sm action-icon getInfo icon-dual-primary"><i class="mdi mdi-book-account-outline"></i></a>';
+                //     }
+                // }
                 if (Auth::user()->can('delete_registers')) {
                     if(!isset($hotel->isAssigned)){
                         $opciones .= '<button type="button" onclick="btnDelete('.$hotel->id.')" class="btn action-icon icon-dual-danger "> <i class="mdi mdi-trash-can-outline"></i></button>';
@@ -122,6 +122,18 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hotel = Hotel::findOrFail($id);
+        $delete = $hotel->delete();
+        if ($delete == 1){
+            $success = true;
+            $message = "Hotel eliminado correctamente";
+        } else {
+            $success = true;
+            $message = "No se pudo eliminar el hotel";
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
 }

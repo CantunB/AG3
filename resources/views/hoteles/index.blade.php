@@ -431,5 +431,54 @@
             });
         });
     </script>
+    <script>
+        /** DESTROY UNIT*/
+        function btnDelete(id) {
+            Swal.fire({
+                title: "Desea eliminar?",
+                text: "Por favor asegúrese y luego confirme!",
+                icon: 'warning',
+                showCancelButton: !0,
+                confirmButtonText: "¡Sí, borrar!",
+                cancelButtonText: "¡No, cancelar!",
+                reverseButtons: !0
+            }).then(function (e) {
+                if (e.value === true) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "/hoteles/" + id,
+                        data: {
+                            id: id,
+                            _token: '{!! csrf_token() !!}'
+                        },
+                        dataType: 'JSON',
+                        success: function (results) {
+                            if (results.success === true) {
+                                Swal.fire({
+                                    title: "Hecho!",
+                                    text: results.message,
+                                    icon: "success",
+                                    confirmButtonText: "Hecho!",
+                                });
+                                $('#table_hotel').DataTable().ajax.reload();
+                            } else {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: results.message,
+                                    icon: "error",
+                                    confirmButtonText: "Cancelar!",
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    e.dismiss;
+                }
+            }, function (dismiss) {
+                return false;
+            })
+        }
+        /** DESTROY UNIT*/
+    </script>
 @endpush
 @endsection
